@@ -8,9 +8,9 @@ Followed SQL Installation and test instructions from this youtube video https://
 
 TODO
 
-- Finish schema diagram (with key values) to make tables
+- Finish schema diagram (with key values) to make tables-Josh
 - Create the req. tables in database (with supabase or code) - Ben
-- Add some functions for adding and removing data from DB (patient records etc.)
+- Add some functions for adding and removing data from DB (patient records etc.)-Josh
 
 - Create User interfaces in html - Liam
 - Figure out how we will connect interfaces to Python code - Liam and Riley

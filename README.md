@@ -12,9 +12,9 @@ TODO
 - Create the req. tables in database (with supabase or code) - Ben
 - Add some functions for adding and removing data from DB (patient records etc.)
 
-- Create User interfaces in html
-- Figure out how we will connect interfaces to Python code
-- Create JS code for connecting to our Python code?
+- Create User interfaces in html - Liam
+- Figure out how we will connect interfaces to Python code - Liam and Riley
+- Create JS code for connecting to our Python code? - Riley
 
 - Create login interface
 - Create validation code to log in users and make sure they have the right permissions

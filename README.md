@@ -9,7 +9,7 @@ Followed SQL Installation and test instructions from this youtube video https://
 TODO
 
 - Finish schema diagram (with key values) to make tables
-- Create the req. tables in database (with supabase or code)
+- Create the req. tables in database (with supabase or code) - Ben
 - Add some functions for adding and removing data from DB (patient records etc.)
 
 - Create User interfaces in html

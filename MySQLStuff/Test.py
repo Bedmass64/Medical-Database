@@ -1,3 +1,5 @@
+#Supabase Host link https://supabase.com/dashboard/project/rdiogfocbfebfkvoyvoj
+
 import os
 from supabase import create_client, Client
 

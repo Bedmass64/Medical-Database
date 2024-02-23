@@ -1,0 +1,24 @@
+Backend TODO MVP
+    1. Set up Github personal token or SSH info
+    2. Clone github repository to PythonAnywhere
+    3. Test supabase connection in PythonAnywhere
+    4. Setup Flask in PythonAnywhere
+    5. Learn how to use Flask session management
+    6. Implement Flask Session Managament
+    7. Test making a request to our Python code from an HTML form
+
+
+General TODO Notes
+- User validation
+    - Need to choose an approach (Flask for session management or generating cookies and sending to user)
+
+- Hosting Backend (PythonAnywhere seems like a good solution)
+    - Do we host online right away or start by making local requests?
+
+- Python and Javascript / Ajax functions for:
+    - Making API requests to our database and returning the data
+    - 
+
+
+
+Backend TODO Extras

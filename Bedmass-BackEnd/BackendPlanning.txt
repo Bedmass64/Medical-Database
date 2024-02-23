@@ -1,5 +1,5 @@
 Backend TODO MVP
-    1. Set up Github personal token or SSH info
+    DONE - 1. Set up Github personal token or SSH info
     2. Clone github repository to PythonAnywhere
     3. Test supabase connection in PythonAnywhere
     4. Setup Flask in PythonAnywhere

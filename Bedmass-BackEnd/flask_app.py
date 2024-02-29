@@ -1,5 +1,6 @@
 
-# A very simple Flask Hello World app for you to get started with...
+# Continue this tutorial the next time you work on this
+# https://blog.pythonanywhere.com/121/
 
 from flask import Flask, render_template
 

@@ -3,6 +3,8 @@ Medical Database
 
 This is the ReadMe file for our database - Please keep it updated with essential information to review. Thanks guys!
 
+Slide 29 in Module_5 powerpoint contains the naming conventions we need to use for the presentation
+
 - Ben
 
 TODO

@@ -33,3 +33,15 @@
 .logo-dimensions {
     width: 20px;
 }
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: 100%;
+    flex: 0 0 200px;
+    padding: 20px;
+}
+
+.min-width-500 {
+    min-width: 500px;
+}

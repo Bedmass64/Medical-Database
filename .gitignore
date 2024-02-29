@@ -1,2 +1,10 @@
 *.pyc
+<<<<<<< HEAD
 /Bedmass-BackEnd/__pycache__
+=======
+__pycache__
+
+.DS_Store
+
+/node_modules
+>>>>>>> 4553ddd7caac2516b27eae46ac984598d3836a2f

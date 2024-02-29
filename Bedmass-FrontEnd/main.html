@@ -9,14 +9,17 @@
     <title>Bedmass Medical Database Software</title>
 </head>
 <body class="bg-lightblue">
-    <nav class="navbar sticky-top bg-darker rounded-bottom"> <!--Sticky top is not working?-->
+    <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top"> <!--Sticky top is not working?-->
         <div class="container-fluid w-100">
             <div class="row w-100">
                 <ul class="navbar-nav flex-row text-white">
-                    <li class="nav-item my-0 py-0" ><img src="imgs/LogoNoText.png" alt="Logo" width="90"></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Option2</a></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Option3</a></li>
-                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="#">Login</a></li>
+                    <li class="nav-item my-0 py-0" ><a href="main.html"><img src="imgs/LogoNoText.png" alt="Logo" width="90"></a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Workbench</a></li>
+                    <!--If not logged in this button goes to login page, if staff it goes to staff, else it goes to admin hmtl page-->
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Document Generator</a></li>
+                    <!--If not logged in this goes to login page, else it goes to pdf generator page-->
+                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="login.html">Login</a></li>
+                    <!--If logged it this goes is logout and we add functionality yo the button-->
                 </ul>
             </div>
         </div>
@@ -38,6 +41,19 @@ Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lo
             </pre>
         </div>
     </div>
-
+    <div class="container">
+        <div class="row">
+            <img src="imgs/stethoscope.jpg" alt="Stethoscope" width="100">
+        </div>
+    </div>
+    <div class="container bg-blue mt-3 rounded-top">
+        <div class="row">
+            <footer class="footer font-cambria mt-2">
+                <h4>COMP 3753</h6>
+                <h6>Group Project by:</h6>
+                <p>Names Here</p>
+            </footer>
+        </div>
+    </div>
 </body>
 </html>

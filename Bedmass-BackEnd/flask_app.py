@@ -13,20 +13,20 @@ def index():
 
 @app.route('/admin')
 def admin():
-    return render_template("admin_page.html")
+    return render_template("admin.html")
 
 @app.route('/login')
 def login():
-    return render_template("login_page.html")
+    return render_template("login.html")
 
 @app.route('/staff')
 def staff():
-    return render_template("staff_page.html")
+    return render_template("staff.html")
 
 @app.route('/createAccount')
 def create_account():
-    return render_template("create_account_page.html")
+    return render_template("createAccount.html")
 
 @app.route('/main')
 def main():
-    return render_template("main_page.html")
+    return render_template("main.html")

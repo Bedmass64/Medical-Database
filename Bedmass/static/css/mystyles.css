@@ -1,0 +1,47 @@
+.font-tnr {
+    font-family:'Times New Roman', Times, serif;
+}
+
+.font-cambria {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.bg-darkblue {
+    background-color: #3d5a80;
+}
+
+.bg-blue {
+    background-color: #98c1d9;
+}
+
+.bg-lightblue {
+    background-color: #e0fbfc;
+}
+
+.bg-red {
+    background-color: #ee6c4d;
+}
+
+.bg-darker{
+    background-color: #293241;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+.logo-dimensions {
+    width: 20px;
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: 100%;
+    flex: 0 0 200px;
+    padding: 20px;
+}
+
+.min-width-500 {
+    min-width: 500px;
+}

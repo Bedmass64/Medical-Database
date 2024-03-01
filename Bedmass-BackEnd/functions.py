@@ -1,6 +1,6 @@
 from supabase import create_client, Client
 
-print("Hello World")
+# print("Hello World")
 
 url: str = "https://rdiogfocbfebfkvoyvoj.supabase.co"
 #key: str = "sbp_0df95d125573379f2aee1499a8ad1d3978c70cdf "
@@ -15,3 +15,13 @@ def addDataPatient(tableName: str, data: dict):
     print("Data added to table: " + tableName)
         
 # addDataPatient(tableName, data)
+
+def readTableData(tableName: str):
+    response = supabase.table(tableName).select("*").execute()
+    print(response)
+
+
+readTableData("billing")
+
+# response = supabase.table('billing').select("*").execute()
+# print(response)

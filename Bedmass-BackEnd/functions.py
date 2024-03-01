@@ -31,9 +31,14 @@ def deleteRow(tableName: str, row: str, rowValue):
     supabase.table(tableName).delete().eq(row,rowValue).execute()
     print(f"Data row {rowValue} deleted from " + tableName)
 
+def filterTable(tableName: str, row: str, rowValue):
+    response = supabase.table(tableName).select("*").eq(row, rowValue).execute()
+    print(response)
+
 #updateRow('billing', 'amount', 400, 'billid', 15)
 #deleteRow('billing', 'billid',16)
-readTableData("patient")
+#readTableData("patient")
+filterTable('billing','billid',16)
 
 # response = supabase.table('billing').select("*").execute()
 # print(response)

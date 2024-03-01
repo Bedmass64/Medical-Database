@@ -19,18 +19,21 @@ def addDataPatient(tableName: str, data: dict):
 
 def readTableData(tableName: str):
     response = supabase.table(tableName).select("*").execute()
-    print(response)
+    print(f"{tableName} response: ",response)
 
-# supabase.table('billing').update({'amount': 400}).eq('billid',15).execute()
+supabase.table('billing').update({'amount': 400}).eq('billid',15).execute()
 
-def updateRowData(tableName: str, coloum: str, value, row: str, rowValue):
+def updateRow(tableName: str, coloum: str, value, row: str, rowValue):
     supabase.table(tableName).update({coloum:value}).eq(row, rowValue).execute()
+    print("Data added to " + tableName)
 
+def deleteRow(tableName: str, row: str, rowValue):
+    supabase.table(tableName).delete().eq(row,rowValue).execute()
+    print(f"Data row {rowValue} deleted from " + tableName)
 
-
-updateRowData('billing', 'amount', 400, 'billid', 15)
-
-readTableData("billing")
+#updateRow('billing', 'amount', 400, 'billid', 15)
+#deleteRow('billing', 'billid',16)
+readTableData("patient")
 
 # response = supabase.table('billing').select("*").execute()
 # print(response)

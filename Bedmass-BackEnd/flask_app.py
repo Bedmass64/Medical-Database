@@ -34,7 +34,7 @@ def main():
 
 @app.route('/Functiontest')
 def Functiontest():
-    return render_template("Bedmass-FrontEnd/Functiontest.html")
+    return render_template("Functiontest.html")
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -49,4 +49,3 @@ def submit():
         addDataPatient("patient", data)
     except Exception as e:
         return f'Error: {str(e)}'
-    

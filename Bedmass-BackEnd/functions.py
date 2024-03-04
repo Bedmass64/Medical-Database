@@ -38,6 +38,37 @@ def addDataAdmin(data: dict):
     supabase.table("admin").insert(data).execute()
     print("Data added to table")
 
+#
+#     DELETING FUNCTIONS:
+#    
+
+def deleteDataPatient(patientid: int):
+    supabase.table("patient").delete().eq("patientid", patientid).execute()
+    print("Data deleted from table")
+
+def deleteDataAppointment(appointmentid: int):
+    supabase.table("appointment").delete().eq("appointmentid", appointmentid).execute()
+    print("Data deleted from table")
+
+def deleteDataBilling(billid: int):
+    supabase.table("billing").delete().eq("billid", billid).execute()
+    print("Data deleted from table")
+
+def deleteDataDoctor(doctorid: int):
+    supabase.table("doctor").delete().eq("doctorid", doctorid).execute()
+    print("Data deleted from table")
+
+def deleteDataMedicalHistory(historyid: int):
+    supabase.table("medical_history").delete().eq("historyid", historyid).execute()
+    print("Data deleted from table")
+
+def deleteDataAdmin(adminid: int):
+    supabase.table("admin").delete().eq("adminid", adminid).execute()
+    print("Data deleted from table")
+
+ 
+
+
    
         
 def readTableData(tableName: str):

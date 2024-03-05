@@ -38,7 +38,7 @@ def filterTable(tableName: str, row: str, rowValue):
 #updateRow('billing', 'amount', 400, 'billid', 15)
 #deleteRow('billing', 'billid',16)
 #readTableData("patient")
-filterTable('billing','billid',16)
-
+# filterTable('billing','billid',16)
+readTableData("doctor")
 # response = supabase.table('billing').select("*").execute()
 # print(response)

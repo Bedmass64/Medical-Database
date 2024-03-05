@@ -95,10 +95,17 @@ def filterTable(tableName: str, row: str, rowValue):
     print(response)
     return response
 
-#updateRow('billing', 'amount', 400, 'billid', 15)
+
+#SearchByUsernameFunctionForDocotor:Returns Password
+#SearchByUsernameFunctionForAdmin: Returns Password 
+#FilterAppointmentFunction by Date: Returns Appointment 
+#SearchFunction
+
+#AllReadFuncitons Return output 
+updateRow('admin', 'password', 'password2', 'adminid', 2)
 #deleteRow('billing', 'billid',16)
 #readTableData("patient")
 # filterTable('billing','billid',16)
-readTableData("doctor")
+readTableData("admin")
 # response = supabase.table('billing').select("*").execute()
 # print(response)

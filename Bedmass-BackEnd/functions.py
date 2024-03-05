@@ -77,8 +77,6 @@ def readTableData(tableName: str):
     print(f"{tableName} response: ",response)
     return response
 
-#supabase.table('billing').update({'amount': 400}).eq('billid',15).execute()
-
 def updateRow(tableName: str, coloum: str, value, row: str, rowValue):
     supabase.table(tableName).update({coloum:value}).eq(row, rowValue).execute()
     print("Data added to " + tableName)
@@ -142,8 +140,8 @@ getAppointmentsByDate('2024-02-24')
 
 #SearchByUsernameFunctionForDocotor:Returns Password Done
 #SearchByUsernameFunctionForAdmin: Returns Password Done
-#FilterAppointmentFunction by Date: Returns Appointments
-#SearchFunction
+#FilterAppointmentFunction by Date: Returns Appointments Done
+#SearchFunction ?
 
 #AllReadFuncitons Return output 
 #updateRow('admin', 'password', 'password2', 'adminid', 2)

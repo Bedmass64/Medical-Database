@@ -8,35 +8,35 @@ from functions import *
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
     return render_template("main.html")
 
-@app.route('/admin')
+@app.route('/admin', methods=["GET", "POST"])
 def admin():
     return render_template("admin.html")
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
     return render_template("login.html")
 
-@app.route('/staff')
+@app.route('/staff', methods=["GET", "POST"])
 def staff():
     return render_template("staff.html")
 
-@app.route('/createAccount')
+@app.route('/createAccount', methods=["GET", "POST"])
 def create_account():
     return render_template("createAccount.html")
 
-@app.route('/main')
+@app.route('/main', methods=["GET", "POST"])
 def main():
     return render_template("main.html")
 
-@app.route('/Functiontest')
+@app.route('/Functiontest', methods=["GET", "POST"])
 def Functiontest():
     return render_template("Functiontest.html")
 
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=["GET", "POST"])
 def submit():
     try:
         data = {
@@ -51,7 +51,7 @@ def submit():
         return f'Error: {str(e)}'
     
 #These all have temp route names and will be changed later
-@app.route('/submit2', methods=['POST'])
+@app.route('/submit2', methods=["GET", "POST"])
 def submit2():
     try:
         data = {
@@ -66,7 +66,7 @@ def submit2():
     except Exception as e:
         return f'Error: {str(e)}'
     
-@app.route('/submit3', methods=['POST'])
+@app.route('/submit3', methods=["GET", "POST"])
 def submit3():
     try:
         data = {
@@ -81,7 +81,7 @@ def submit3():
     except Exception as e:
         return f'Error: {str(e)}'
 
-@app.route('/submit4', methods=['POST'])
+@app.route('/submit4', methods=["GET", "POST"])
 def submit4():
     try:
         data = {
@@ -95,7 +95,7 @@ def submit4():
     except Exception as e:
         return f'Error: {str(e)}'
 
-@app.route('/submit5', methods=['POST'])
+@app.route('/submit5', methods=["GET", "POST"])
 def submit5():
     try:
         data = {
@@ -109,7 +109,7 @@ def submit5():
     except Exception as e:
         return f'Error: {str(e)}'
 
-@app.route('/submit6', methods=['POST'])
+@app.route('/submit6', methods=["GET", "POST"])
 def submit6():
     try:
         data = {

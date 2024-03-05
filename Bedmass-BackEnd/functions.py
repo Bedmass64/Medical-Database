@@ -95,6 +95,15 @@ def filterTable(tableName: str, row: str, rowValue):
     print(response)
     return response
 
+def searchByUsernameDoctor(Username: str):
+    response = supabase.table('doctor').select("password").eq('login', Username).execute()
+    # Extracting password from response
+    password = response.data[0]['password'] if response.data else None
+    print(password)
+    return password
+
+
+searchByUsernameDoctor("IAmDoingWork0_0")
 
 #SearchByUsernameFunctionForDocotor:Returns Password
 #SearchByUsernameFunctionForAdmin: Returns Password 
@@ -102,10 +111,10 @@ def filterTable(tableName: str, row: str, rowValue):
 #SearchFunction
 
 #AllReadFuncitons Return output 
-updateRow('admin', 'password', 'password2', 'adminid', 2)
+#updateRow('admin', 'password', 'password2', 'adminid', 2)
 #deleteRow('billing', 'billid',16)
 #readTableData("patient")
 # filterTable('billing','billid',16)
-readTableData("admin")
+#readTableData("admin")
 # response = supabase.table('billing').select("*").execute()
 # print(response)

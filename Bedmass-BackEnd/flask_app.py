@@ -20,6 +20,11 @@ def index():
 
 @app.route('/admin', methods=["GET", "POST"])
 def admin():
+    if request.method == 'POST':
+        input_data = request.form['input_data']
+        #process data (add html?)
+        processed_data = readTableData(input_data)
+        return render_template('admin.html', data=processed_data)
     return render_template("admin.html")
 
 @app.route('/login', methods=["GET", "POST"])
@@ -36,10 +41,27 @@ def login():
 
 @app.route('/staff', methods=["GET", "POST"])
 def staff():
-    return render_template("staff.html")
+    if request.method == 'POST':
+        input_data = request.form['input_data']
+        #process data (add html?)
+        processed_data = readTableData(input_data)
+        return render_template('staff.html', data=processed_data)
+
+    return render_template('staff.html')
 
 @app.route('/createAccount', methods=["GET", "POST"])
 def create_account():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        phone_number = request.form['phone_number']
+        email_address = request.form['email_address']
+        password = request.form['password']
+        speciality = request.form['speciality']
+        #check if the account can be created
+        #add it to the database
+        #create role for the database? or do we just use one role shared for all staff
+        return render_template("createAccount.html", response="Success!")
     return render_template("createAccount.html")
 
 @app.route('/main', methods=["GET", "POST"])

@@ -12,35 +12,38 @@ supabase: Client = create_client(url, key)
 
 #
 #     WRITING FUNCTIONS:
-#      
-   
+#
+def getConnection():
+    supabase: Client = create_client(url, key)
+
+
 def addDataPatient(data: dict):
     supabase.table("patient").insert(data).execute()
     print("Data added to table")
-    
+
 def addDataAppointment(data: dict):
     supabase.table("appointment").insert(data).execute()
     print("Data added to table")
-    
+
 def addDataBilling(data: dict):
     supabase.table("billing").insert(data).execute()
     print("Data added to table")
-    
+
 def addDataDoctor(data: dict):
     supabase.table("doctor").insert(data).execute()
     print("Data added to table")
-    
+
 def addDataMedicalHistory(data: dict):
     supabase.table("medical_history").insert(data).execute()
     print("Data added to table")
-    
+
 def addDataAdmin(data: dict):
     supabase.table("admin").insert(data).execute()
     print("Data added to table")
 
 #
 #     DELETING FUNCTIONS:
-#    
+#
 
 def deleteDataPatient(patientid: int):
     supabase.table("patient").delete().eq("patientid", patientid).execute()
@@ -66,14 +69,16 @@ def deleteDataAdmin(adminid: int):
     supabase.table("admin").delete().eq("adminid", adminid).execute()
     print("Data deleted from table")
 
- 
 
 
-   
-        
+
+
+
 def readTableData(tableName: str):
+    getConnection()
     response = supabase.table(tableName).select("*").execute()
     print(f"{tableName} response: ",response)
+    return response
 
 #supabase.table('billing').update({'amount': 400}).eq('billid',15).execute()
 
@@ -88,6 +93,7 @@ def deleteRow(tableName: str, row: str, rowValue):
 def filterTable(tableName: str, row: str, rowValue):
     response = supabase.table(tableName).select("*").eq(row, rowValue).execute()
     print(response)
+    return response
 
 #updateRow('billing', 'amount', 400, 'billid', 15)
 #deleteRow('billing', 'billid',16)

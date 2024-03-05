@@ -30,15 +30,19 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col my-1 font-tnr">
-                <h6>Search by:</h6>
+            <form action="admin" method="post">
+                <div class="col my-1 font-tnr">
+                    <h6>Search by:</h6>
 
-                <input type="text" class="w-">
-            </div>
-            <div class="col my-2"><button class="btn btn-primary">Search</button> </div>
+                    <input type="text" name="input_data" class="w-">
+                </div>
+                <div class="col my-2"><button class="btn btn-primary">Search</button> </div>
+            </form>
         </div>
         <div class="row" id="appointmentcontent">
-
+            {% if data %}
+            <p>{{ data }}</p>
+            {% endif %}
         </div>
     </div>
 </body>

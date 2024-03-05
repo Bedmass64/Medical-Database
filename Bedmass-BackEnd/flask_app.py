@@ -2,11 +2,17 @@
 # Continue this tutorial the next time you work on this
 # https://blog.pythonanywhere.com/121/
 
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from functions import *
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+
+app.secret_key = 'your_secret_key'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -18,6 +24,14 @@ def admin():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        # This is where you would validate the username and password.
+        user = User(1, 'user1', 'password') # Example user, replace with database lookup
+        if username == user.username and password == user.password:
+            login_user(user)
+            return redirect(url_for('admin'))
     return render_template("login.html")
 
 @app.route('/staff', methods=["GET", "POST"])
@@ -31,6 +45,21 @@ def create_account():
 @app.route('/main', methods=["GET", "POST"])
 def main():
     return render_template("main.html")
+
+class User(UserMixin):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+users = {1: User(1, 'user1', 'password')}
+
+#Login Functionality
+@login_manager.user_loader
+def load_user(user_id):
+    return users.get(int(user_id))
+
+
 
 @app.route('/Functiontest', methods=["GET", "POST"])
 def Functiontest():
@@ -49,7 +78,7 @@ def submit():
         addDataPatient("patient", data)
     except Exception as e:
         return f'Error: {str(e)}'
-    
+
 #These all have temp route names and will be changed later
 @app.route('/submit2', methods=["GET", "POST"])
 def submit2():
@@ -65,7 +94,7 @@ def submit2():
         addDataAppointment("appointment", data)
     except Exception as e:
         return f'Error: {str(e)}'
-    
+
 @app.route('/submit3', methods=["GET", "POST"])
 def submit3():
     try:

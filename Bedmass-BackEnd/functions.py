@@ -98,7 +98,7 @@ def filterTable(tableName: str, row: str, rowValue):
 
 #SearchByUsernameFunctionForDocotor:Returns Password
 #SearchByUsernameFunctionForAdmin: Returns Password 
-#FilterAppointmentFunction by Date: Returns Appointment 
+#FilterAppointmentFunction by Date: Returns Appointments
 #SearchFunction
 
 #AllReadFuncitons Return output 

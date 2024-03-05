@@ -103,7 +103,16 @@ def searchByUsernameDoctor(Username: str):
     return password
 
 
-searchByUsernameDoctor("IAmDoingWork0_0")
+def searchByUsernameAdmin(Username: str):
+    response = supabase.table('admin').select("password").eq('login', Username).execute()
+    # Extracting password from response
+    password = response.data[0]['password'] if response.data else None
+    print(password)
+    return password
+
+
+#searchByUsernameDoctor("IAmDoingWork0_0")
+#searchByUsernameAdmin("login1")
 
 #SearchByUsernameFunctionForDocotor:Returns Password
 #SearchByUsernameFunctionForAdmin: Returns Password 

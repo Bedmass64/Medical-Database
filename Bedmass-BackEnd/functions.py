@@ -1,4 +1,5 @@
 from supabase import create_client, Client
+from datetime import datetime
 #Tables include:
 #admin, appointment, billing, doctor, medical_history, patient
 # print("Hello World")
@@ -40,10 +41,6 @@ def addDataMedicalHistory(data: dict):
 def addDataAdmin(data: dict):
     supabase.table("admin").insert(data).execute()
     print("Data added to table")
-
-#
-#     DELETING FUNCTIONS:
-#
 
 def deleteDataPatient(patientid: int):
     supabase.table("patient").delete().eq("patientid", patientid).execute()
@@ -110,12 +107,41 @@ def searchByUsernameAdmin(Username: str):
     print(password)
     return password
 
+def getAppointmentsByDate(date_str: str):
+    # Ensure the input date is in the correct format (YYYY-MM-DD)
+    try:
+        desired_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+    except ValueError:
+        print("Incorrect date format, should be YYYY-MM-DD")
+        return None
+
+    # Query to select all appointments
+    response = supabase.table('appointment').select("*").execute()
+
+    # Check if data is present in the response
+    if not response.data:  # Simplified error handling
+        print("No data found or error in fetching appointments")
+        return None
+
+    # Filter appointments by date on the client side
+    appointments_on_date = [
+        appointment for appointment in response.data
+        if 'date' in appointment and datetime.strptime(appointment['date'], '%Y-%m-%dT%H:%M:%S+00:00').date() == desired_date
+    ]
+    
+    print(appointments_on_date)
+    return appointments_on_date
+
+
+
+getAppointmentsByDate('2024-02-24')
+
 
 #searchByUsernameDoctor("IAmDoingWork0_0")
 #searchByUsernameAdmin("login1")
 
-#SearchByUsernameFunctionForDocotor:Returns Password
-#SearchByUsernameFunctionForAdmin: Returns Password 
+#SearchByUsernameFunctionForDocotor:Returns Password Done
+#SearchByUsernameFunctionForAdmin: Returns Password Done
 #FilterAppointmentFunction by Date: Returns Appointments
 #SearchFunction
 
@@ -124,6 +150,6 @@ def searchByUsernameAdmin(Username: str):
 #deleteRow('billing', 'billid',16)
 #readTableData("patient")
 # filterTable('billing','billid',16)
-#readTableData("admin")
+# readTableData("appointment")
 # response = supabase.table('billing').select("*").execute()
 # print(response)

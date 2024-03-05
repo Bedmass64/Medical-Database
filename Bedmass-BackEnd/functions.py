@@ -10,18 +10,77 @@ supabase: Client = create_client(url, key)
 # tableName: str = "patient"
 # data: dict = {"patientid": 3948, "name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}
 
+#
+#     WRITING FUNCTIONS:
+#
+def getConnection():
+    supabase: Client = create_client(url, key)
 
-def addDataPatient(tableName: str, data: dict):
-    supabase.table(tableName).insert(data).execute()
-    print("Data added to table: " + tableName)
-        
-# addDataPatient(tableName, data)
+
+def addDataPatient(data: dict):
+    supabase.table("patient").insert(data).execute()
+    print("Data added to table")
+
+def addDataAppointment(data: dict):
+    supabase.table("appointment").insert(data).execute()
+    print("Data added to table")
+
+def addDataBilling(data: dict):
+    supabase.table("billing").insert(data).execute()
+    print("Data added to table")
+
+def addDataDoctor(data: dict):
+    supabase.table("doctor").insert(data).execute()
+    print("Data added to table")
+
+def addDataMedicalHistory(data: dict):
+    supabase.table("medical_history").insert(data).execute()
+    print("Data added to table")
+
+def addDataAdmin(data: dict):
+    supabase.table("admin").insert(data).execute()
+    print("Data added to table")
+
+#
+#     DELETING FUNCTIONS:
+#
+
+def deleteDataPatient(patientid: int):
+    supabase.table("patient").delete().eq("patientid", patientid).execute()
+    print("Data deleted from table")
+
+def deleteDataAppointment(appointmentid: int):
+    supabase.table("appointment").delete().eq("appointmentid", appointmentid).execute()
+    print("Data deleted from table")
+
+def deleteDataBilling(billid: int):
+    supabase.table("billing").delete().eq("billid", billid).execute()
+    print("Data deleted from table")
+
+def deleteDataDoctor(doctorid: int):
+    supabase.table("doctor").delete().eq("doctorid", doctorid).execute()
+    print("Data deleted from table")
+
+def deleteDataMedicalHistory(historyid: int):
+    supabase.table("medical_history").delete().eq("historyid", historyid).execute()
+    print("Data deleted from table")
+
+def deleteDataAdmin(adminid: int):
+    supabase.table("admin").delete().eq("adminid", adminid).execute()
+    print("Data deleted from table")
+
+
+
+
+
 
 def readTableData(tableName: str):
+    getConnection()
     response = supabase.table(tableName).select("*").execute()
     print(f"{tableName} response: ",response)
+    return response
 
-supabase.table('billing').update({'amount': 400}).eq('billid',15).execute()
+#supabase.table('billing').update({'amount': 400}).eq('billid',15).execute()
 
 def updateRow(tableName: str, coloum: str, value, row: str, rowValue):
     supabase.table(tableName).update({coloum:value}).eq(row, rowValue).execute()
@@ -34,6 +93,7 @@ def deleteRow(tableName: str, row: str, rowValue):
 def filterTable(tableName: str, row: str, rowValue):
     response = supabase.table(tableName).select("*").eq(row, rowValue).execute()
     print(response)
+    return response
 
 #updateRow('billing', 'amount', 400, 'billid', 15)
 #deleteRow('billing', 'billid',16)

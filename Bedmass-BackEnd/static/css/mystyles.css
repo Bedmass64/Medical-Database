@@ -45,3 +45,8 @@
 .min-width-500 {
     min-width: 500px;
 }
+
+.w-750 {
+    min-width: 750px;
+    max-width: 850px;
+}

@@ -1,0 +1,72 @@
+Staff.html:
+- For appointments:
+<div class="container bg-blue my-3 rounded" id="content">
+        <div class="row font-tnr">
+            <div class="col mt-4"><h1>Appointments:</h1></div>
+            <div class="col d-flex justify-content-end my-0"><input type="submit" class="btn btn-primary mx-5 my-3" value="Create New Appointment"></div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col my-1 font-tnr">
+                <h6>Search by:</h6>
+
+                <input type="text" class="w-">
+            </div>
+            <div class="col my-2"><button class="btn btn-primary">Search</button> </div>
+        </div>
+        <div class="row" id="appointmentcontent">
+
+        </div>
+    </div>
+
+- For Patients:
+<div class="container bg-blue my-3 rounded" id="content">
+        <div class="row font-tnr">
+            <div class="col mt-4"><h1>Patients:</h1></div>
+            <div class="col d-flex justify-content-end my-0"><input type="submit" class="btn btn-primary mx-5 my-3" value="Create New Patient"></div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col my-1 font-tnr">
+                <h6>Search by:</h6>
+
+                <input type="text" class="w-">
+            </div>
+            <div class="col my-2"><button class="btn btn-primary">Search</button> </div>
+        </div>
+        <div class="row" id="patientcontent">
+
+        </div>
+    </div>
+
+
+- For Medical History:
+<div class="container bg-blue my-3 rounded" id="content">
+        <div class="row font-tnr">
+            <div class="col mt-4"><h1>Medical Records:</h1></div>
+            <div class="col d-flex justify-content-end my-0"><input type="submit" class="btn btn-primary mx-5 my-3" value="Create New Medical Record"></div>
+        </div>
+        <hr>
+        <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->
+            <div class="col ms-2">
+                <h5>Search By Patient Id:</h5>
+                <input type="text" name="PatientId">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+            </div>
+            <div class="col bg-lightblue rounded mx-2">
+                <h6 class="mb-2 ms-1">Search for Patient ID by Last Name:</h6>
+                <input type="text" name="LastName">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                <table id="IDresponses" class="table">
+                    <tr>
+                        <th>Name:</th>
+                        <th>ID:</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+For Admin.html
+- 

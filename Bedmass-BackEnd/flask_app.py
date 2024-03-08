@@ -14,6 +14,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+
 @app.route('/', methods=["GET", "POST"])
 def index():
     return render_template("main.html")
@@ -68,6 +70,8 @@ def create_account():
 def main():
     return render_template("main.html")
 
+
+
 @app.route('/viewPatients', methods=["GET", "POST"])
 def viewPatients():
     return render_template("admin.html", view='patients')
@@ -75,7 +79,6 @@ def viewPatients():
 @app.route('/newPatient', methods=["GET", "POST"])
 def newPatient():
     return render_template("createUpdateUser.html")
-
 
 
 
@@ -105,9 +108,32 @@ def viewBillingLastName():
     return render_template("admin.html", view='billing')
 
 
+
+@app.route('/newAppointment', methods=["GET", "POST"])
+def newAppointment():
+    return render_template("createUpdateAppointment.html")
+
 @app.route('/viewAppointments', methods=["GET", "POST"])
 def viewAppointments():
     return render_template("admin.html", view='appointments')
+
+
+
+
+
+@app.route('/viewMedicalRecords', methods=["GET", "POST"])
+def viewMedicalRecords():
+    return render_template("admin.html", view='medical_records')
+
+
+
+
+
+
+
+
+
+
 
 
 class User(UserMixin):

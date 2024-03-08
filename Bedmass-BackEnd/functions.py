@@ -68,14 +68,35 @@ def deleteDataAdmin(adminid: int):
 
 
 
-
-
-
 def readTableData(tableName: str):
-    getConnection()
+    # Assuming getConnection() establishes your database connection
+    getConnection()  
+    # Perform the database query
     response = supabase.table(tableName).select("*").execute()
-    print(f"{tableName} response: ",response)
-    return response
+
+    # Check if data is present in the response
+    if not response.data:  # Simplified error handling
+        print(f"No data found or error in fetching data from {tableName}")
+        return None
+
+    # Construct HTML table from response data
+    html_output = "<table border='1'>"  # Start the table and add headers
+
+    # Add column headers based on the first item keys if there's data
+    if response.data:
+        html_output += '<tr>' + ''.join([f'<th>{col}</th>' for col in response.data[0].keys()]) + '</tr>'
+
+        # Fill the table rows with the data
+        for item in response.data:
+            html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
+
+    html_output += "</table>"  # Close the table
+    print(html_output)  # Print the HTML table
+    return html_output
+
+# Test the function
+readTableData("doctor")
+
 
 def updateRow(tableName: str, coloum: str, value, row: str, rowValue):
     supabase.table(tableName).update({coloum:value}).eq(row, rowValue).execute()
@@ -85,10 +106,34 @@ def deleteRow(tableName: str, row: str, rowValue):
     supabase.table(tableName).delete().eq(row,rowValue).execute()
     print(f"Data row {rowValue} deleted from " + tableName)
 
+
+
 def filterTable(tableName: str, row: str, rowValue):
+    # Perform the database query
     response = supabase.table(tableName).select("*").eq(row, rowValue).execute()
-    print(response)
-    return response
+
+    # Check if data is present in the response
+    if not response.data:  # Simplified error handling
+        print("No data found or error in fetching data")
+        return None
+
+    # Construct HTML table from response data
+    html_output = "<table border='1'>"  # Start the table and add headers
+
+    # Add column headers based on the first item keys if there's data
+    if response.data:
+        html_output += '<tr>' + ''.join([f'<th>{col}</th>' for col in response.data[0].keys()]) + '</tr>'
+
+        # Fill the table rows with the data
+        for item in response.data:
+            html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
+
+    html_output += "</table>"  # Close the table
+    print(html_output)  # Print the HTML table
+    return html_output
+
+# # Test the function
+# filterTable('billing', 'billid', 15)
 
 def searchByUsernameDoctor(Username: str):
     response = supabase.table('doctor').select("password").eq('login', Username).execute()
@@ -105,7 +150,10 @@ def searchByUsernameAdmin(Username: str):
     print(password)
     return password
 
-def getAppointmentsByDate(date_str: str):
+
+def getAppointmentsByDate(date_str: str):  # JSON into HTML
+    from datetime import datetime  # Make sure to import datetime
+
     # Ensure the input date is in the correct format (YYYY-MM-DD)
     try:
         desired_date = datetime.strptime(date_str, '%Y-%m-%d').date()
@@ -113,6 +161,7 @@ def getAppointmentsByDate(date_str: str):
         print("Incorrect date format, should be YYYY-MM-DD")
         return None
 
+    # Your existing code for fetching and filtering appointments here...
     # Query to select all appointments
     response = supabase.table('appointment').select("*").execute()
 
@@ -126,14 +175,28 @@ def getAppointmentsByDate(date_str: str):
         appointment for appointment in response.data
         if 'date' in appointment and datetime.strptime(appointment['date'], '%Y-%m-%dT%H:%M:%S+00:00').date() == desired_date
     ]
-    
-    print(appointments_on_date)
-    return appointments_on_date
+
+    # Construct HTML table
+    if appointments_on_date:
+        html_output = "<table border='1'>"
+        html_output += "<tr><th>Appointment ID</th><th>Doctor ID</th><th>Patient ID</th><th>Date</th><th>Time</th><th>Purpose</th></tr>"
+
+        for appointment in appointments_on_date:
+            html_output += f"<tr><td>{appointment['appointmentid']}</td><td>{appointment['doctorid']}</td><td>{appointment['patientid']}</td><td>{appointment['date']}</td><td>{appointment['time']}</td><td>{appointment['purpose']}</td></tr>"
+
+        html_output += "</table>"
+        print(html_output)  # Print the HTML table
+        return html_output
+    else:
+        print("No appointments found on the specified date")
+        return None
+
+# Test the function
+# getAppointmentsByDate('2024-02-24')
 
 
-
-getAppointmentsByDate('2024-02-24')
-
+#Some functions for processing the data we get from supabase into a string that's formatted into an HTML table 
+#Add coloums for update and delete
 
 #searchByUsernameDoctor("IAmDoingWork0_0")
 #searchByUsernameAdmin("login1")

@@ -86,7 +86,8 @@
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Appointments:</h1></div>
             <div class="col d-flex justify-content-end my-0">
-                <a href="{{ url_for('newAppointment') }}" class="btn btn-primary mx-5 my-3">Create New Appointment</a></div>
+                <a href="{{ url_for('newAppointment') }}" class="btn btn-primary mx-5 my-3">Create New Appointment</a>
+            </div>
         </div>
         <hr>
         <div class="row">
@@ -106,7 +107,7 @@
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Medical Records:</h1></div>
-            <div class="col d-flex justify-content-end my-0"><input type="submit" class="btn btn-primary mx-5 my-3" value="Create New Medical Record"></div>
+            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('newMedicalRecord') }}" class="btn btn-primary mx-5 my-3">Create New Medical Record</a></div>
         </div>
         <hr>
         <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->

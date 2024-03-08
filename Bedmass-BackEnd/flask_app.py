@@ -72,13 +72,33 @@ def main():
 
 
 
+@app.route('/newPatient', methods=["GET", "POST"])
+def newPatient():
+    return render_template("createUser.html")
+
+@app.route('/createPatient', methods=["GET", "POST"])
+def createPatient():
+    name = request.form.get('FirstName') + " " + request.form.get('LastName')
+    address = request.form.get('Address') + " " + request.form.get('Province') + " " + request.form.get('Country')
+    dob = "1999-02-14"
+    contact = request.form.get('Number')
+
+    patient_info = {
+        'name': name,
+        'address': address,
+        'dob': dob,
+        'contact': contact
+    }
+
+    result = addDataPatient(patient_info)
+
+    return result
+
+
 @app.route('/viewPatients', methods=["GET", "POST"])
 def viewPatients():
     return render_template("admin.html", view='patients')
 
-@app.route('/newPatient', methods=["GET", "POST"])
-def newPatient():
-    return render_template("createUser.html")
 
 
 
@@ -111,7 +131,7 @@ def viewBillingLastName():
 
 @app.route('/newAppointment', methods=["GET", "POST"])
 def newAppointment():
-    return render_template("createUpdateAppointment.html")
+    return render_template("createAppointment.html")
 
 @app.route('/viewAppointments', methods=["GET", "POST"])
 def viewAppointments():
@@ -119,7 +139,9 @@ def viewAppointments():
 
 
 
-
+@app.route('/newMedicalRecord', methods=["GET", "POST"])
+def newMedicalRecord():
+    return render_template("createRecord.html")
 
 @app.route('/viewMedicalRecords', methods=["GET", "POST"])
 def viewMedicalRecords():

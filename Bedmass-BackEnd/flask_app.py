@@ -78,7 +78,7 @@ def viewPatients():
 
 @app.route('/newPatient', methods=["GET", "POST"])
 def newPatient():
-    return render_template("createUpdateUser.html")
+    return render_template("createUser.html")
 
 
 

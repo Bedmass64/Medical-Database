@@ -1,0 +1,3 @@
+To do: 
+- Careful examination of each page identifying functionalities needed
+- Implement forms for inputs

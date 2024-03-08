@@ -76,6 +76,10 @@ def viewBilling():
         #patient_last_name = request.form['last_name']
         search_data = filterTable('billing', 'patientid', patient_id)
         return render_template("admin.html", view='billing', data=search_data)
+    if request.method == 'GET':
+        name = request.form.get('name')
+        search_data = filterTable('patient', 'name', name)
+        return render_template("admin.html", view='billing', data=search_data)
     return render_template("admin.html", view='billing')
 
 

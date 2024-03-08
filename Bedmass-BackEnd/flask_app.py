@@ -82,7 +82,13 @@ def viewBilling():
         return render_template("admin.html", view='billing', data=search_data)
     return render_template("admin.html", view='billing')
 
-
+@app.route('/viewBillingLastName', methods=["GET", "POST"])
+def viewBillingLastName():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        search_data = filterTable('patient', 'name', name)
+        return render_template("admin.html", view='billing', data=search_data)
+    return render_template("admin.html", view='billing')
 
 @app.route('/viewAppointments', methods=["GET", "POST"])
 def viewAppointments():

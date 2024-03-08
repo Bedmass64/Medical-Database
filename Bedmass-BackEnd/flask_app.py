@@ -68,14 +68,15 @@ def create_account():
 def main():
     return render_template("main.html")
 
+@app.route('/viewPatients', methods=["GET", "POST"])
+def viewPatients():
+    return render_template("admin.html", view='patients')
 
 @app.route('/newPatient', methods=["GET", "POST"])
 def newPatient():
     return render_template("createUpdateUser.html")
 
-@app.route('/viewPatients', methods=["GET", "POST"])
-def viewPatients():
-    return render_template("admin.html", view='patients')
+
 
 
 @app.route('/newBill', methods=["GET", "POST"])

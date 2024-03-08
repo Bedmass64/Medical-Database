@@ -69,6 +69,19 @@ def main():
     return render_template("main.html")
 
 
+@app.route('/newPatient', methods=["GET", "POST"])
+def newPatient():
+    return render_template("createUpdateUser.html")
+
+@app.route('/viewPatients', methods=["GET", "POST"])
+def viewPatients():
+    return render_template("admin.html", view='patients')
+
+
+@app.route('/newBill', methods=["GET", "POST"])
+def newBill():
+    return render_template("createBill.html")
+
 @app.route('/viewBilling', methods=["GET", "POST"])
 def viewBilling():
     if request.method == 'POST':
@@ -90,13 +103,11 @@ def viewBillingLastName():
         return render_template("admin.html", view='billing', data=search_data)
     return render_template("admin.html", view='billing')
 
+
 @app.route('/viewAppointments', methods=["GET", "POST"])
 def viewAppointments():
     return render_template("admin.html", view='appointments')
 
-@app.route('/viewPatients', methods=["GET", "POST"])
-def viewPatients():
-    return render_template("admin.html", view='patients')
 
 class User(UserMixin):
     def __init__(self, id, username, password):

@@ -30,7 +30,8 @@
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Billing:</h1></div>
-            <div class="col d-flex justify-content-end my-0"><input type="submit" class="btn btn-primary mx-5 my-3" value="Create New Bill"></div>
+            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('newBill') }}" class="btn btn-primary mx-5 my-3">Create New Bill</a>
+</div>
         </div>
         <hr>
         <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->
@@ -65,7 +66,7 @@
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Patients:</h1></div>
-            <div class="col d-flex justify-content-end my-0"><input type="submit" class="btn btn-primary mx-5 my-3" value="Create New Patient"></div>
+            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('newPatient') }}" class="btn btn-primary mx-5 my-3">Create New Patient</a></div>
         </div>
         <hr>
         <div class="row">

@@ -46,6 +46,31 @@ def deleteDataPatient(patientid: int):
     supabase.table("patient").delete().eq("patientid", patientid).execute()
     print("Data deleted from table")
 
+def updateDataPatient(patientid: int, updates: dict):
+    # Filter out any keys where the value is None (null)
+    filtered_updates = {k: v for k, v in updates.items() if v is not None}
+
+    # Assuming getConnection is called if needed
+    # getConnection()
+
+    # Execute the update operation with the filtered updates
+    response = supabase.table("patient").update(filtered_updates).eq("patientid", patientid).execute()
+
+    # Check if the update was successful based on the response structure
+    if hasattr(response, 'status_code') and response.status_code == 200:
+        print(f"Data updated for patientid {patientid}")
+    elif hasattr(response, 'data') and response.data:
+        # Assuming the update is successful if there's data (adjust based on actual response structure)
+        print(f"Data updated for patientid {patientid}")
+    else:
+        # If the response structure is different, adjust this part accordingly
+        print("Error updating data")
+
+updateDataPatient(12345, {"name": None})
+
+
+
+
 def deleteDataAppointment(appointmentid: int):
     supabase.table("appointment").delete().eq("appointmentid", appointmentid).execute()
     print("Data deleted from table")
@@ -95,7 +120,7 @@ def readTableData(tableName: str):
     return html_output
 
 # Test the function
-readTableData("doctor")
+readTableData("patient")
 
 
 def updateRow(tableName: str, coloum: str, value, row: str, rowValue):
@@ -191,12 +216,14 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
         print("No appointments found on the specified date")
         return None
 
+#Create update functions for each table 
 # Test the function
 # getAppointmentsByDate('2024-02-24')
 
 
-#Some functions for processing the data we get from supabase into a string that's formatted into an HTML table 
-#Add coloums for update and delete
+#Some functions for processing the data we get from supabase into a string that's formatted into an HTML table Done 
+#Add functions for update (Delete functions)
+#When a row is updated, check to see which attributes are actually being updated and just update those attributes  
 
 #searchByUsernameDoctor("IAmDoingWork0_0")
 #searchByUsernameAdmin("login1")

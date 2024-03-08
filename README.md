@@ -3,6 +3,12 @@ Medical Database
 
 Link:https://skyjam99.pythonanywhere.com/main
 
+Riley Todo 08/03/2024
+Finish hooking together interfaces
+Setup front-end create and read functionality
+
+When you update a row, if any of the form fields are null, then use the existing values in the database for those attributes. You will get the existing version of the row, and use the existing values for any input attributes that are set to null
+
 This is the ReadMe file for our database - Please keep it updated with essential information to review. Thanks guys!
 
 Slide 29 in Module_5 powerpoint contains the naming conventions we need to use for the presentation

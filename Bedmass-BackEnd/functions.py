@@ -86,6 +86,7 @@ def deleteRow(tableName: str, row: str, rowValue):
     print(f"Data row {rowValue} deleted from " + tableName)
 
 def filterTable(tableName: str, row: str, rowValue):
+    getConnection()
     response = supabase.table(tableName).select("*").eq(row, rowValue).execute()
     print(response)
     return response
@@ -126,7 +127,7 @@ def getAppointmentsByDate(date_str: str):
         appointment for appointment in response.data
         if 'date' in appointment and datetime.strptime(appointment['date'], '%Y-%m-%dT%H:%M:%S+00:00').date() == desired_date
     ]
-    
+
     print(appointments_on_date)
     return appointments_on_date
 
@@ -143,7 +144,7 @@ getAppointmentsByDate('2024-02-24')
 #FilterAppointmentFunction by Date: Returns Appointments Done
 #SearchFunction ?
 
-#AllReadFuncitons Return output 
+#AllReadFuncitons Return output
 #updateRow('admin', 'password', 'password2', 'adminid', 2)
 #deleteRow('billing', 'billid',16)
 #readTableData("patient")

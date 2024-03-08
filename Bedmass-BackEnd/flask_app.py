@@ -20,11 +20,11 @@ def index():
 
 @app.route('/admin', methods=["GET", "POST"])
 def admin():
-    if request.method == 'POST':
-        input_data = request.form['input_data']
+    #if request.method == 'POST':
+        #input_data = request.form['input_data']
         #process data (add html?)
-        processed_data = readTableData(input_data)
-        return render_template('admin.html', data=processed_data)
+        #processed_data = readTableData(input_data)
+        #return render_template('admin.html', data=processed_data)
     return render_template("admin.html")
 
 @app.route('/login', methods=["GET", "POST"])
@@ -67,6 +67,26 @@ def create_account():
 @app.route('/main', methods=["GET", "POST"])
 def main():
     return render_template("main.html")
+
+
+@app.route('/viewBilling', methods=["GET", "POST"])
+def viewBilling():
+    if request.method == 'POST':
+        patient_id = int(request.form['patient_id'])
+        #patient_last_name = request.form['last_name']
+        search_data = filterTable('billing', 'patientid', patient_id)
+        return render_template("admin.html", view='billing', data=search_data)
+    return render_template("admin.html", view='billing')
+
+
+
+@app.route('/viewAppointments', methods=["GET", "POST"])
+def viewAppointments():
+    return render_template("admin.html", view='appointments')
+
+@app.route('/viewPatients', methods=["GET", "POST"])
+def viewPatients():
+    return render_template("admin.html", view='patients')
 
 class User(UserMixin):
     def __init__(self, id, username, password):

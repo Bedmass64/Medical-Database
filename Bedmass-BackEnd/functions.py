@@ -109,7 +109,11 @@ def deleteRow(tableName: str, row: str, rowValue):
 
 
 def filterTable(tableName: str, row: str, rowValue):
+<<<<<<< HEAD
     # Perform the database query
+=======
+    getConnection()
+>>>>>>> 99e3efb0d5c47b92218e85e0a40a9d987b61a874
     response = supabase.table(tableName).select("*").eq(row, rowValue).execute()
 
     # Check if data is present in the response
@@ -176,6 +180,7 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
         if 'date' in appointment and datetime.strptime(appointment['date'], '%Y-%m-%dT%H:%M:%S+00:00').date() == desired_date
     ]
 
+<<<<<<< HEAD
     # Construct HTML table
     if appointments_on_date:
         html_output = "<table border='1'>"
@@ -193,6 +198,10 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
 
 # Test the function
 # getAppointmentsByDate('2024-02-24')
+=======
+    print(appointments_on_date)
+    return appointments_on_date
+>>>>>>> 99e3efb0d5c47b92218e85e0a40a9d987b61a874
 
 
 #Some functions for processing the data we get from supabase into a string that's formatted into an HTML table 
@@ -206,7 +215,7 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
 #FilterAppointmentFunction by Date: Returns Appointments Done
 #SearchFunction ?
 
-#AllReadFuncitons Return output 
+#AllReadFuncitons Return output
 #updateRow('admin', 'password', 'password2', 'adminid', 2)
 #deleteRow('billing', 'billid',16)
 #readTableData("patient")

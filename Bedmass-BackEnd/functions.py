@@ -42,9 +42,49 @@ def addDataAdmin(data: dict):
     supabase.table("admin").insert(data).execute()
     print("Data added to table")
 
-def deleteDataPatient(patientid: int):
-    supabase.table("patient").delete().eq("patientid", patientid).execute()
-    print("Data deleted from table")
+#
+#     UPDATE FUNCTIONS:
+#
+
+def updateDataAppointment(appointmentid: int, updates: dict):
+    # Filter out any keys where the value is None (null)
+    filtered_updates = {k: v for k, v in updates.items() if v is not None}
+
+    # Execute the update operation with the filtered updates
+    response = supabase.table("appointment").update(filtered_updates).eq("appointmentid", appointmentid).execute()
+
+    # Print result
+    print("Data updated for table appointment")
+
+# updateDataAppointment(3, {'time': '12:40'})
+
+def updateDataBilling(billid: int, updates: dict):
+    filtered_updates = {k: v for k, v in updates.items() if v is not None}
+    response = supabase.table("billing").update(filtered_updates).eq("billid", billid).execute()
+    print("Billing data updated")
+
+#updateDataBilling(15,{'payconfirmed': True })
+
+def updateDataDoctor(doctorid: int, updates: dict):
+    filtered_updates = {k: v for k, v in updates.items() if v is not None}
+    response = supabase.table("doctor").update(filtered_updates).eq("doctorid", doctorid).execute()
+    print("Doctor data updated")
+
+# updateDataDoctor(2, {'role':'Staff Director'})
+
+def updateDataMedicalHistory(historyid: int, updates: dict):
+    filtered_updates = {k: v for k, v in updates.items() if v is not None}
+    response = supabase.table("medical_history").update(filtered_updates).eq("historyid", historyid).execute()
+    print("Medical history data updated")
+
+# updateDataMedicalHistory(2,{'treatment':'kimotheirpy'})
+
+def updateDataAdmin(adminid: int, updates: dict):
+    filtered_updates = {k: v for k, v in updates.items() if v is not None}
+    response = supabase.table("admin").update(filtered_updates).eq("adminid", adminid).execute()
+    print("Admin data updated")
+
+# updateDataAdmin(2,{'role': 'Skilled Awesome Person'})
 
 def updateDataPatient(patientid: int, updates: dict):
     # Filter out any keys where the value is None (null)
@@ -66,10 +106,15 @@ def updateDataPatient(patientid: int, updates: dict):
         # If the response structure is different, adjust this part accordingly
         print("Error updating data")
 
-updateDataPatient(12345, {"name": None})
+# updateDataPatient(2, {"name": "Ben Impostor Lupin"})
 
-
-
+#
+#     DELETE FUNCTIONS:
+#
+        
+def deleteDataPatient(patientid: int):
+    supabase.table("patient").delete().eq("patientid", patientid).execute()
+    print("Data deleted from table")
 
 def deleteDataAppointment(appointmentid: int):
     supabase.table("appointment").delete().eq("appointmentid", appointmentid).execute()
@@ -91,8 +136,10 @@ def deleteDataAdmin(adminid: int):
     supabase.table("admin").delete().eq("adminid", adminid).execute()
     print("Data deleted from table")
 
-
-
+#
+# OTHER FUNCTIONS
+#
+    
 def readTableData(tableName: str):
     # Assuming getConnection() establishes your database connection
     getConnection()  

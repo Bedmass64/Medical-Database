@@ -49,13 +49,13 @@
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
                     <input type="text" name="nameSearch">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                    <input type="submitName" class="btn btn-primary mx-5 my-3" value="Search">
                     <div id="IDresponses">
                         <!-- Results go here -->
                     </div>
                     <script>
                         $(document).ready(function(){
-                            $('input[type="submit"]').click(function(event){
+                            $('input[type="submitName"]').click(function(event){
                                 event.preventDefault(); // Prevent the form from submitting via the browser's default action
                                 $('#IDresponses').html('');
                                 // Get the last name from the input field
@@ -152,13 +152,13 @@
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
                     <input type="text" name="nameSearch">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                    <input type="submitName" class="btn btn-primary mx-5 my-3" value="Search">
                     <div id="IDresponses">
                         <!-- Results go here -->
                     </div>
                     <script>
                         $(document).ready(function(){
-                            $('input[type="submit"]').click(function(event){
+                            $('input[type="submitName"]').click(function(event){
                                 event.preventDefault(); // Prevent the form from submitting via the browser's default action
                                 $('#IDresponses').html('');
                                 // Get the last name from the input field

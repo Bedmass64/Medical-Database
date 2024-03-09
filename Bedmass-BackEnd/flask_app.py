@@ -140,6 +140,26 @@ def updateDeleteBillView():
 def newAppointment():
     return render_template("createAppointment.html")
 
+@app.route('/createAppointment', methods=["POST"])
+def createAppointment():
+    doctorid = request.form.get('DoctorId')
+    patientid = request.form.get('PatientId')
+    date = "1999-02-14"
+    time = request.form.get('Time')
+    purpose = request.form.get('Purpose')
+
+    appointment_info = {
+        'doctorid': doctorid,
+        'patientid': patientid,
+        'date': date,
+        'time': time,
+        'purpose': purpose
+    }
+
+    result = addDataAppointment(appointment_info)
+    #return result
+    return render_template("admin.html", view="appointments", appointments=result)
+
 @app.route('/viewAppointments', methods=["GET", "POST"])
 def viewAppointments():
     if request.method == 'POST':
@@ -160,7 +180,7 @@ def newMedicalRecord():
 @app.route('/viewMedicalRecords', methods=["GET", "POST"])
 def viewMedicalRecords():
     if request.method == 'POST':
-        patient_id = int(request.form['patient_id'])
+        patient_id = int(request.form.get('patient_id'))
         #patient_last_name = request.form['last_name']
         search_data = filterTable('medical_history', 'patientid', patient_id)
         return render_template("admin.html", view='medical_records', data=search_data)

@@ -27,24 +27,30 @@ def addDataPatient(data: dict):
     return "Data added to table"
 
 def addDataAppointment(data: dict):
+    getConnection()
     supabase.table("appointment").insert(data).execute()
-    print("Data added to table")
+    return "Data added to table"
 
 def addDataBilling(data: dict):
+    getConnection()
     supabase.table("billing").insert(data).execute()
     print("Data added to table")
 
 def addDataDoctor(data: dict):
+    getConnection()
     supabase.table("doctor").insert(data).execute()
     print("Data added to table")
 
 def addDataMedicalHistory(data: dict):
+    getConnection()
     supabase.table("medical_history").insert(data).execute()
     print("Data added to table")
 
 def addDataAdmin(data: dict):
+    getConnection()
     supabase.table("admin").insert(data).execute()
-    print("Data added to table")
+    return "Data added to table"
+
 
 #
 #     UPDATE FUNCTIONS:

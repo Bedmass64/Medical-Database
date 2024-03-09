@@ -11,6 +11,9 @@ supabase: Client = create_client(url, key)
 # tableName: str = "patient"
 # data: dict = {"patientid": 3948, "name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}
 
+
+table_format = "<table class='table table-hover table-primary table-bordered table-striped'>"
+
 #
 #     WRITING FUNCTIONS:
 #
@@ -19,8 +22,9 @@ def getConnection():
 
 
 def addDataPatient(data: dict):
+    getConnection()
     supabase.table("patient").insert(data).execute()
-    print("Data added to table")
+    return "Data added to table"
 
 def addDataAppointment(data: dict):
     supabase.table("appointment").insert(data).execute()
@@ -142,7 +146,7 @@ def deleteDataAdmin(adminid: int):
     
 def readTableData(tableName: str):
     # Assuming getConnection() establishes your database connection
-    getConnection()  
+    getConnection()
     # Perform the database query
     response = supabase.table(tableName).select("*").execute()
 
@@ -152,11 +156,11 @@ def readTableData(tableName: str):
         return None
 
     # Construct HTML table from response data
-    html_output = "<table border='1'>"  # Start the table and add headers
+    html_output = table_format  # Start the table and add headers
 
     # Add column headers based on the first item keys if there's data
     if response.data:
-        html_output += '<tr>' + ''.join([f'<th>{col}</th>' for col in response.data[0].keys()]) + '</tr>'
+        html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
 
         # Fill the table rows with the data
         for item in response.data:
@@ -190,11 +194,11 @@ def filterTable(tableName: str, row: str, rowValue):
         return None
 
     # Construct HTML table from response data
-    html_output = "<table border='1'>"  # Start the table and add headers
+    html_output = table_format  # Start the table and add headers
 
     # Add column headers based on the first item keys if there's data
     if response.data:
-        html_output += '<tr>' + ''.join([f'<th>{col}</th>' for col in response.data[0].keys()]) + '</tr>'
+        html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
 
         # Fill the table rows with the data
         for item in response.data:
@@ -250,7 +254,7 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
 
     # Construct HTML table
     if appointments_on_date:
-        html_output = "<table border='1'>"
+        html_output = table_format
         html_output += "<tr><th>Appointment ID</th><th>Doctor ID</th><th>Patient ID</th><th>Date</th><th>Time</th><th>Purpose</th></tr>"
 
         for appointment in appointments_on_date:
@@ -263,14 +267,14 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
         print("No appointments found on the specified date")
         return None
 
-#Create update functions for each table 
+#Create update functions for each table
 # Test the function
 # getAppointmentsByDate('2024-02-24')
 
 
-#Some functions for processing the data we get from supabase into a string that's formatted into an HTML table Done 
+#Some functions for processing the data we get from supabase into a string that's formatted into an HTML table Done
 #Add functions for update (Delete functions)
-#When a row is updated, check to see which attributes are actually being updated and just update those attributes  
+#When a row is updated, check to see which attributes are actually being updated and just update those attributes
 
 #searchByUsernameDoctor("IAmDoingWork0_0")
 #searchByUsernameAdmin("login1")

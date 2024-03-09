@@ -208,6 +208,32 @@ def filterTable(tableName: str, row: str, rowValue):
     print(html_output)  # Print the HTML table
     return html_output
 
+def searchByPatientName(rowValue):
+    tableName = 'patient'
+    row = 'name'
+    getConnection()
+    response = supabase.table(tableName).select("name, patientid").eq(row, rowValue).execute()
+
+    # Check if data is present in the response
+    if not response.data:  # Simplified error handling
+        print("No data found or error in fetching data")
+        return None
+
+    # Construct HTML table from response data
+    html_output = table_format  # Start the table and add headers
+
+    # Add column headers based on the first item keys if there's data
+    if response.data:
+        html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
+
+        # Fill the table rows with the data
+        for item in response.data:
+            html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
+
+    html_output += "</table>"  # Close the table
+    #print(html_output)  # Print the HTML table
+    return html_output
+
 # # Test the function
 # filterTable('billing', 'billid', 15)
 
@@ -249,7 +275,7 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
     # Filter appointments by date on the client side
     appointments_on_date = [
         appointment for appointment in response.data
-        if 'date' in appointment and datetime.strptime(appointment['date'], '%Y-%m-%dT%H:%M:%S+00:00').date() == desired_date
+        if 'date' in appointment and datetime.strptime(appointment['date'], '%Y-%m-%d').date() == desired_date
     ]
 
     # Construct HTML table

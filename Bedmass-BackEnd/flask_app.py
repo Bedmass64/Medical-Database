@@ -111,7 +111,7 @@ def updateDeletePatientView():
 @app.route('/searchPatients', methods=["GET"])
 def searchPatients():
     name = request.args.get('name')
-    search_data = filterTable('patient', 'name', name)
+    search_data = searchByPatientName(name)
     return search_data
 
 
@@ -129,13 +129,6 @@ def viewBilling():
 
     return render_template("admin.html", view='billing')
 
-@app.route('/viewBillingLastName', methods=["GET", "POST"])
-def viewBillingLastName():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        search_data = filterTable('patient', 'name', name)
-        return render_template("admin.html", view='billing', names=search_data)
-    return render_template("admin.html", view='billing')
 
 @app.route('/updateDeleteBill', methods=["GET", "POST"])
 def updateDeleteBillView():
@@ -173,13 +166,6 @@ def viewMedicalRecords():
         return render_template("admin.html", view='medical_records', data=search_data)
     return render_template("admin.html", view='medical_records')
 
-@app.route('/viewRecordsLastName', methods=["GET", "POST"])
-def viewRecordsLastName():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        search_data = filterTable('patient', 'name', name)
-        return render_template("admin.html", view='medical_records', names=search_data)
-    return render_template("admin.html", view='medical_records')
 
 @app.route('/updateDeleteRecord', methods=["GET", "POST"])
 def updateDeleteRecordView():

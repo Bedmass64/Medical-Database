@@ -108,6 +108,12 @@ def viewPatients():
 def updateDeletePatientView():
     return render_template("updateDeletePatient.html")
 
+@app.route('/searchPatients', methods=["GET"])
+def searchPatients():
+    name = request.args.get('name')
+    search_data = filterTable('patient', 'name', name)
+    return search_data
+
 
 @app.route('/newBill', methods=["GET", "POST"])
 def newBill():

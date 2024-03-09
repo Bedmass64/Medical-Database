@@ -143,6 +143,10 @@ def newAppointment():
 
 @app.route('/viewAppointments', methods=["GET", "POST"])
 def viewAppointments():
+    if request.method == 'POST':
+        date = request.form.get('date')
+        search_data = getAppointmentsByDate(date)
+        return render_template("admin.html", view='appointments', appointments=search_data)
     return render_template("admin.html", view='appointments')
 
 @app.route('/updateDeleteAppointment', methods=["GET", "POST"])
@@ -156,6 +160,19 @@ def newMedicalRecord():
 
 @app.route('/viewMedicalRecords', methods=["GET", "POST"])
 def viewMedicalRecords():
+    if request.method == 'POST':
+        patient_id = int(request.form['patient_id'])
+        #patient_last_name = request.form['last_name']
+        search_data = filterTable('medical_history', 'patientid', patient_id)
+        return render_template("admin.html", view='medical_records', data=search_data)
+    return render_template("admin.html", view='medical_records')
+
+@app.route('/viewRecordsLastName', methods=["GET", "POST"])
+def viewRecordsLastName():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        search_data = filterTable('patient', 'name', name)
+        return render_template("admin.html", view='medical_records', names=search_data)
     return render_template("admin.html", view='medical_records')
 
 @app.route('/updateDeleteRecord', methods=["GET", "POST"])

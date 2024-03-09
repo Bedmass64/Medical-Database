@@ -115,7 +115,7 @@ def updateDataPatient(patientid: int, updates: dict):
 #
 #     DELETE FUNCTIONS:
 #
-        
+
 def deleteDataPatient(patientid: int):
     supabase.table("patient").delete().eq("patientid", patientid).execute()
     print("Data deleted from table")
@@ -143,7 +143,7 @@ def deleteDataAdmin(adminid: int):
 #
 # OTHER FUNCTIONS
 #
-    
+
 def readTableData(tableName: str):
     # Assuming getConnection() establishes your database connection
     getConnection()

@@ -34,7 +34,7 @@
         </div>
         <hr>
         <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->
-            <div class="col ms-2">
+            <div class="col mx-2">
                 <form action="viewBilling" method="post">
                     <h5>Search By Patient Id:</h5>
                     <input type="text" name="patient_id">
@@ -57,6 +57,9 @@
                         <th>ID:</th>
                     </tr>
                 </table>
+                {% if names %}
+                {{ names|safe }}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -69,15 +72,20 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col my-1 font-tnr">
-                <h6>Search by:</h6>
+            <form action="viewPatients" method="post">
+                <div class="col my-1 font-tnr">
 
-                <input type="text" class="w-">
-            </div>
-            <div class="col my-2"><button class="btn btn-primary">Search</button> </div>
+                    <h6>Search by Name:</h6>
+
+                    <input type="text" class="w-" name="name">
+                </div>
+                <div class="col my-2"><button class="btn btn-primary">Search</button> </div>
+            </form>
         </div>
         <div class="row" id="patientcontent">
-
+            {% if names %}
+            {{ names|safe }}
+            {% endif %}
         </div>
     </div>
 

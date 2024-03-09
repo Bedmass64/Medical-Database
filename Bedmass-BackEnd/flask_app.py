@@ -92,14 +92,21 @@ def createPatient():
 
     result = addDataPatient(patient_info)
 
-    return result
+    return render_template("admin.html", view='patients', names=result)
 
 
 @app.route('/viewPatients', methods=["GET", "POST"])
 def viewPatients():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        search_data = filterTable('patient', 'name', name)
+        return render_template("admin.html", view='patients', names=search_data)
     return render_template("admin.html", view='patients')
 
 
+@app.route('/updateDeletePatient', methods=["GET", "POST"])
+def updateDeletePatientView():
+    return render_template("updateDeletePatient.html")
 
 
 @app.route('/newBill', methods=["GET", "POST"])
@@ -113,10 +120,7 @@ def viewBilling():
         #patient_last_name = request.form['last_name']
         search_data = filterTable('billing', 'patientid', patient_id)
         return render_template("admin.html", view='billing', data=search_data)
-    if request.method == 'GET':
-        name = request.form.get('name')
-        search_data = filterTable('patient', 'name', name)
-        return render_template("admin.html", view='billing', data=search_data)
+
     return render_template("admin.html", view='billing')
 
 @app.route('/viewBillingLastName', methods=["GET", "POST"])
@@ -124,8 +128,12 @@ def viewBillingLastName():
     if request.method == 'POST':
         name = request.form.get('name')
         search_data = filterTable('patient', 'name', name)
-        return render_template("admin.html", view='billing', data=search_data)
+        return render_template("admin.html", view='billing', names=search_data)
     return render_template("admin.html", view='billing')
+
+@app.route('/updateDeleteBill', methods=["GET", "POST"])
+def updateDeleteBillView():
+    return render_template("updateDeleteBill.html")
 
 
 
@@ -137,6 +145,9 @@ def newAppointment():
 def viewAppointments():
     return render_template("admin.html", view='appointments')
 
+@app.route('/updateDeleteAppointment', methods=["GET", "POST"])
+def updateDeleteAppointmentView():
+    return render_template("updateDeleteAppointment.html")
 
 
 @app.route('/newMedicalRecord', methods=["GET", "POST"])
@@ -147,7 +158,9 @@ def newMedicalRecord():
 def viewMedicalRecords():
     return render_template("admin.html", view='medical_records')
 
-
+@app.route('/updateDeleteRecord', methods=["GET", "POST"])
+def updateDeleteRecordView():
+    return render_template("updateDeleteRecord.html")
 
 
 

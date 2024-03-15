@@ -134,8 +134,6 @@ def viewBilling():
 def updateDeleteBillView():
     return render_template("updateDeleteBill.html")
 
-
-
 @app.route('/newAppointment', methods=["GET", "POST"])
 def newAppointment():
     return render_template("createAppointment.html")
@@ -190,9 +188,6 @@ def viewMedicalRecords():
 @app.route('/updateDeleteRecord', methods=["GET", "POST"])
 def updateDeleteRecordView():
     return render_template("updateDeleteRecord.html")
-
-
-
 
 
 

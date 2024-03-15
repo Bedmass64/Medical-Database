@@ -1,0 +1,131 @@
+
+
+app.secret_key = 'your_secret_key'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+
+
+
+@app.route('/viewPatients', methods=["GET", "POST"])
+def viewPatients():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        if name == "":
+            search_data = filterTable('patient', 'name', name)
+            return search_data
+        search_data = filterTable('patient', 'name', name)
+        return #patientdata
+    return render_template("admin.html", view='patients')
+
+
+
+
+
+
+
+
+
+
+class User(UserMixin):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+users = {1: User(1, 'user1', 'password')}
+
+#Login Functionality
+@login_manager.user_loader
+def load_user(user_id):
+    return users.get(int(user_id))
+
+
+
+
+@app.route('/submit', methods=["GET", "POST"])
+def submit():
+    try:
+        data = {
+            'patientid': request.form['patientid'],
+            'name': request.form['name'],
+            'address': request.form['address'],
+            'dob': request.form['dob'],
+            'contact': request.form['contact']
+        }
+        addDataPatient("patient", data)
+    except Exception as e:
+        return f'Error: {str(e)}'
+
+#These all have temp route names and will be changed later
+@app.route('/submit2', methods=["GET", "POST"])
+def submit2():
+    try:
+        data = {
+            'appointmentid': request.form['appointmentid'],
+            'doctorid': request.form['doctorid'],
+            'patientid': request.form['patientid'],
+            'date': request.form['date'],
+            'time': request.form['time'],
+            'purpose': request.form['purpose']
+        }
+        addDataAppointment("appointment", data)
+    except Exception as e:
+        return f'Error: {str(e)}'
+
+@app.route('/submit3', methods=["GET", "POST"])
+def submit3():
+    try:
+        data = {
+            'billid': request.form['billid'],
+            'patientid': request.form['patientid'],
+            'date': request.form['date'],
+            'amount': request.form['amount'],
+            'paymethod': request.form['paymethod'],
+            'appointmentid': request.form['appointmentid']
+        }
+        addDataBilling("billing", data)
+    except Exception as e:
+        return f'Error: {str(e)}'
+
+@app.route('/submit4', methods=["GET", "POST"])
+def submit4():
+    try:
+        data = {
+            'doctorid': request.form['doctorid'],
+            'name': request.form['name'],
+            'specialize': request.form['specialize'],
+            'contact': request.form['contact'],
+            'role': request.form['role']
+        }
+        addDataDoctor("doctor", data)
+    except Exception as e:
+        return f'Error: {str(e)}'
+
+@app.route('/submit5', methods=["GET", "POST"])
+def submit5():
+    try:
+        data = {
+            'historyid': request.form['historyid'],
+            'patientid': request.form['patientid'],
+            'diagnosis': request.form['diagnosis'],
+            'treatment': request.form['treatment'],
+            'date': request.form['date']
+        }
+        addDataMedicalHistory("medical_history", data)
+    except Exception as e:
+        return f'Error: {str(e)}'
+
+@app.route('/submit6', methods=["GET", "POST"])
+def submit6():
+    try:
+        data = {
+            'adminid': request.form['adminid'],
+            'name': request.form['name'],
+            'role': request.form['role'],
+            'contact': request.form['contact']
+        }
+        addDataAdmin("admin", data)
+    except Exception as e:
+        return f'Error: {str(e)}'

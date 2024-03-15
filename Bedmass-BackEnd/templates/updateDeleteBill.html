@@ -14,77 +14,73 @@
             <div class="row w-100">
                 <ul class="navbar-nav flex-row text-white">
                     <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('viewPatients') }}">Workbench</a></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Document Generator</a></li>
-                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('login') }}">Logout</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main') }}">Workbench</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main') }}">Document Generator</a></li>
+                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('login') }}" id="logout">Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!--The following div will differ based on what functionality is selected-->
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
-            <div class="col mt-4"><h1 id="heading">Patient:</h1></div>
+            <div class="col mt-4"><h1 id="heading">Billing:</h1></div>
         </div>
         <hr>
         <div class="row my-1 font-cambria py-2"> 
             <div class="col ms-2">
-                <form action="viewData" method="post">
-                    <h5>Search By Patient Id:</h5>
-                    <input type="text" name="patient_id">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
-                </form>
+                <h5>Search By Bill Id:</h5>
+                <input type="text" name="patient_id">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
             </div>
             <div class="col bg-lightblue rounded mx-2">
-                <h6 class="mb-2 ms-1">Search by Last Name:</h6>
-                <form action="idSearch">
-                    <input type="text" name="LastName">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
-                </form>
+                <h6 class="mb-2 ms-1">Search by Name:</h6>
+                <input type="text" name="LastName" id="patientsearch">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
                 <table id="IDresponses" class="table">
                     <tr>
                         <th>Name:</th>
-                        <th>Patient ID:</th>
+                        <th>Bill ID:</th>
+                        <th>Amount</th>
                     </tr>
                 </table>
             </div>
         </div>
     </div>
     <div class="container rounded bg-blue font-cambria">
-        <h1>Patient Info:</h1>
+        <h1>Bill Info:</h1>
         <form action="patientInfo">
             <div class="row my-1">
                 <div class="col ms-2"><h3>Date of Creation:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Time:</h6>
-                    <input type="text" name="Time">
+                    <input type="text" name="Time" id="time">
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Day:</h6>
-                    <input type="number" name="Day">
+                    <input type="number" name="Day" id="dat">
                 </div>
             <div class="row my-1 ms-1">
                 <div class="col"></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown">
-                        <option value="jan">January</option>
-                        <option value="feb">February</option>
-                        <option value="mar">March</option>
-                        <option value="apl">April</option>
-                        <option value="may">May</option>
-                        <option value="jun">June</option>
-                        <option value="jul">July</option>
-                        <option value="aug">August</option>
-                        <option value="sep">September</option>
-                        <option value="oct">October</option>
-                        <option value="nov">November</option>
-                        <option value="dec">December</option>
+                    <select id="month" name="MonthDropdown" id="month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                       </select>
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Year:</h6>
-                    <input type="number" name="Year">
+                    <input type="number" name="Year" id="year">
                 </div>
             </div>
             </div>
@@ -93,30 +89,115 @@
                 <div class="col ms-2"><h3>Cost:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Cost:</h6>
-                    <input type="number" name="cost">
+                    <input type="number" name="cost" id="cost">
                 </div>
             </div>
             <hr>
             <div class="row my-1">
-                <div class="col ms-2"><h3>Reason for Billing:</h3></div>
+                <div class="col ms-2"><h3>Patient ID:</h3></div>
             </div>
             <div class="row my-1 px-4">
-                <input type="text" name="reason">
-            </div>
-            <hr>
-            <div class="row my-1">
-                <div class="col ms-2"><h3>Contact Info:</h3></div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Phone Number:</h6>
-                    <input type="number" name="FirstName">
-                </div>
+                <input type="text" name="reason" id="patientid">
             </div>
             <hr>
             <div class="row">
-                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update"></form></div>
-               <div class=col><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete/ Pay Bill"></form></div>
+                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update" id="update"></div>
+               <div class=col><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete/Pay Bill" id="delete"></div>
             </div>
         </form>
     </div>
+    <script>
+        var currentBill = undefined;
+        $(document).ready(function(){
+            /*For Patient ID search*/
+            $('#namesearch').click(function(event){
+                $.ajax({
+                    url: '/searchBills', 
+                    type: 'POST',
+                    data: {
+                        name: document.getElementById("patientsearch").value
+                    },
+                    success: function(response) {
+                        $('#IDresponses').html(response)
+                    },
+                    error: function(xhr, status, error) {
+                        $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                    }
+                });
+            });
+
+            /*Bill Search by ID*/
+            $('#submit').click(function() {
+                $.ajax({
+                    url: '/adminPatients', 
+                    type: 'POST',
+                    data: {
+                        appointmentid: document.getElementById("appointmentid").value
+                    },
+                    success: function(response) {
+                        currentBill = response;
+                        document.getElementById('time').value = response.time;
+                        document.getElementById('patientid').value = response.patientid;
+                        document.getElementById('day').value = response.date.substr(5,2);
+                        document.getElementById('year').value = response.date.substr(0,4);
+                        document.getElementById('month').value = response.date.substr(8,2);
+                    }
+                });
+            });
+
+            /*Update*/
+            $('#update').click(function(){
+                if (currentBill != undefined){
+                    let toUpdate = {};
+                    if (document.getElementById('amount').value !=  currentAppointment.patientid){
+                        toUpdate.patientid = currentAppointment.patientid;
+                    }
+                    let date = document.getElementById('year').value + "-" + document.getElementById('month').value;
+                    date += "-" + document.getElementById("day").value;
+                    if (date !=  currentAppointment.date.substr(0,10)){
+                        toUpdate.date = date;
+                    }
+                    if (document.getElementById('reason').value != currentAppointment.purpose){
+                        currentAppointment.purpose = document.getElementById('reason').value;
+                    }
+                    if (toUpdate != {}){
+                        $.ajax({
+                            url: '/makeRecordUpdate',
+                            type: 'POST',
+                            data: toUpdate,
+                            error: function(xhr, status, error) {
+                                console.log("error");
+                            }
+                        })
+                    }
+                }
+            });
+
+
+            /*Delete*/
+            $('#delete').click(function(){
+                if (currentAppointment != undefined){
+                    $.ajax({
+                        url: '/deleteRecord',
+                        type: 'POST',
+                        data: {
+                            appointmentid: currentAppointment.appointmentid
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("error");
+                        }
+                    })
+                }
+            });
+
+            /*For Logout*/
+            $('#logout').click(function(){
+                $.ajax({
+                    url: '/logout',
+                    type: 'GET'
+                })
+            });
+        });
+    </script>
 </body>
 </html>

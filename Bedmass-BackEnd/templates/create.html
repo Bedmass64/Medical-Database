@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/mystyles.css">
     <title>Bedmass Medical Database Software</title>
 </head>
 <body class="bg-darker">
@@ -18,75 +19,91 @@
                 <h1 class="font-tnr">Welcome!</h1>
             </div>
         </div>
-        <form action="/createAccount" method="post">
-            <div class="row mb-2">
-                <div class="col mx-3 font-tnr w-25">
-                    <h5>First Name:</h5>
-                    <input type="text" name="first_name">
-                </div>
-                <div class="col mx-3 font-tnr w-25">
-                    <h5>Last Name:</h5>
-                    <input type="text" name="last_name">
-                </div>
+        <div class="row mb-2">
+            <div class="col mx-3 font-tnr w-25">
+                <h5>First Name:</h5>
+                <input type="text" name="first_name" id="firstname">
             </div>
-            <div class="row">
-                <div class="col mx-3">
-                    <h4 class="font-cambria"> Phone Number:</h4>
-                </div>
-                <div class="col mx-3">
-                    <input type="text" name="phone_number">
-                </div>
+            <div class="col mx-3 font-tnr w-25">
+                <h5>Last Name:</h5>
+                <input type="text" name="last_name" id="lastname">
             </div>
-            <hr>
-            <div class="row">
-                <div class="col mx-3">
-                    <h4 class="font-cambria"> Email:</h4>
-                </div>
-                <div class="col mx-3">
-                    <input type="text" name="email_address">
-                </div>
+        </div>
+        <div class="row">
+            <div class="col mx-3">
+                <h4 class="font-cambria"> Phone Number:</h4>
             </div>
-            <div class="row">
-                <div class="col mx-3">
-                    <h4 class="font-cambria">Password: </h4>
-                </div>
-                <div class="col mx-3">
-                    <input type="text" name="password">
-                </div>
+            <div class="col mx-3">
+                <input type="number" name="phone_number" id="number">
             </div>
-            <hr>
-            <div class="row">
-                <div class="col mx-3">
-                    <h4 class="font-cambria">Role:</h4>
-                </div>
-                <div class="col mx-3">
-                    <select id="role" name="roledropdown">
-                        <option value="staff">Medical Staff</option>
-                        <option value="admin">Administration</option>
-                    </select>
-                </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col mx-3">
+                <h4 class="font-cambria"> Email:</h4>
             </div>
-            <div class="row">
-                <div class="col mx-3">
-                    <h4 class="font-cambria">Specialty: </h4>
-                </div>
-                <div class="col mx-3">
-                    <input type="text" name="speciality">
-                </div>
+            <div class="col mx-3">
+                <input type="text" name="email_address" id="email">
             </div>
-            <div class="row">
-                <div class="col d-flex justify-content-end">
-                    <input type="submit" class="btn btn-primary mx-5 my-3">
-                </div>
+        </div>
+        <div class="row">
+            <div class="col mx-3">
+                <h4 class="font-cambria">Password: </h4>
             </div>
-        </form>
+            <div class="col mx-3">
+                <input type="text" name="password" id="password">
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col mx-3">
+                <h4 class="font-cambria">Role:</h4>
+            </div>
+            <div class="col mx-3">
+                <select id="role" name="roledropdown" id="role">
+                    <option value="staff">Medical Staff</option>
+                    <option value="admin">Administration</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mx-3">
+                <h4 class="font-cambria">Specialty: </h4>
+            </div>
+            <div class="col mx-3">
+                <input type="text" name="speciality" id="specialty">
+            </div>
+        </div>
         <div class="row">
             <div class="col">
-                {% if response %}
-                <p>{{ response  }}</p>
-                {% endif %}
+                <h4 id="error"></h4>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <input type="submit" class="btn btn-primary mx-5 my-3">
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            $('#submit').click(function() {
+                $.ajax({
+                    url: '/createAccount', 
+                    type: 'POST',
+                    data: {
+                        firstname: document.getElementById("firstname").value,
+                        lastname: document.getElementById("lastname").value,
+                        number: document.getElementById("number").value,
+                        email: document.getElementById("username").value,
+                        password: document.getElementById("password").value,
+                        specialty: document.getElementById("specialty").value
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        $('#error').html("Error, please try again");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

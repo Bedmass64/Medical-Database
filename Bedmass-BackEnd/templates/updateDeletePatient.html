@@ -21,7 +21,6 @@
             </div>
         </div>
     </nav>
-    <!--The following div will differ based on what functionality is selected-->
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1 id="heading">Patient:</h1></div>
@@ -89,19 +88,19 @@
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown">
-                        <option value="jan">January</option>
-                        <option value="feb">February</option>
-                        <option value="mar">March</option>
-                        <option value="apl">April</option>
-                        <option value="may">May</option>
-                        <option value="jun">June</option>
-                        <option value="jul">July</option>
-                        <option value="aug">August</option>
-                        <option value="sep">September</option>
-                        <option value="oct">October</option>
-                        <option value="nov">November</option>
-                        <option value="dec">December</option>
+                    <select id="month" name="MonthDropdown" id="month">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                       </select>
                 </div>
                 <div class="col">
@@ -124,5 +123,99 @@
             </div>
         </form>
     </div>
+    <script>
+        var currentAppointment = undefined;
+        $(document).ready(function(){
+            /*For Patient search by Last Name*/
+            $('#idsearch').click(function(event){
+                $.ajax({
+                    url: '/searchAppointments', 
+                    type: 'POST',
+                    data: {
+                        name: document.getElementById("appointmentidsearch").value
+                    },
+                    success: function(response) {
+                        $('#IDresponses').html(response)
+                    },
+                    error: function(xhr, status, error) {
+                        $('#IDresponses').html('<h1>Error: ' + error + "</h1>");
+                    }
+                });
+            });
+
+            /*Appointment Search by ID*/
+            $('#submit').click(function() {
+                $.ajax({
+                    url: '/adminPatients', 
+                    type: 'POST',
+                    data: {
+                        appointmentid: document.getElementById("appointmentid").value
+                    },
+                    success: function(response) {
+                        currentAppointment = response;
+                        document.getElementById('reason').value = response.purpose;
+                        document.getElementById('time').value = response.time;
+                        document.getElementById('patientid').value = response.patientid;
+                        document.getElementById('day').value = response.date.substr(5,2);
+                        document.getElementById('year').value = response.date.substr(0,4);
+                        document.getElementById('month').value = response.date.substr(8,2);
+                    }
+                });
+            });
+
+            /*Update*/
+            $('#update').click(function(){
+                if (currentAppointment != undefined){
+                    let toUpdate = {};
+                    if (document.getElementById('patientid').value !=  currentAppointment.patientid){
+                        toUpdate.patientid = currentAppointment.patientid;
+                    }
+                    let date = document.getElementById('year').value + "-" + document.getElementById('month').value;
+                    date += "-" + document.getElementById("day").value;
+                    if (date !=  currentAppointment.date){
+                        toUpdate.date = date;
+                    }
+                    if (document.getElementById('reason').value != currentAppointment.purpose){
+                        currentAppointment.purpose = document.getElementById('reason').value;
+                    }
+                    if (toUpdate != {}){
+                        $.ajax({
+                            url: '/makeRecordUpdate',
+                            type: 'POST',
+                            data: toUpdate,
+                            error: function(xhr, status, error) {
+                                console.log("error");
+                            }
+                        })
+                    }
+                }
+            });
+
+
+            /*Delete*/
+            $('#delete').click(function(){
+                if (currentAppointment != undefined){
+                    $.ajax({
+                        url: '/deleteRecord',
+                        type: 'POST',
+                        data: {
+                            appointmentid: currentAppointment.appointmentid
+                        },
+                        error: function(xhr, status, error) {
+                            console.log("error");
+                        }
+                    })
+                }
+            });
+
+            /*For Logout*/
+            $('#logout').click(function(){
+                $.ajax({
+                    url: '/logout',
+                    type: 'GET'
+                })
+            });
+        });
+    </script>
 </body>
 </html>

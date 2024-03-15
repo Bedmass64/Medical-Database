@@ -48,26 +48,17 @@
         </div>
     </div>
     <script>
+        /*To get appointment data by search in form (YYYY-MM-DD)*/
         $(document).ready(function() {
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminAppointment', 
+                    url: '/adminAppointments', 
                     type: 'POST',
                     data: {
                         date: document.getElementById("date").value
                     },
                     success: function(response) {
-                        let toInsert = `<table class="table"><tr><th>Appointment ID</th><th>Doctor ID</th><th>Appointment ID</th><th>Patient Id</th>`
-                        toInsert += `<th>Time</th><th>Purpose</th></tr>`
-                        response.forEach(function(item) {
-                            toInsert += `<tr>`;
-                            toInsert += `<td>${item.appointmentid}</td><td>${item.doctorid}</td>`;
-                            toInsert += `<td>${item.patientid}</td><td>${item.date}</td>`;
-                            toInsert += `<td>${item.time}</td><td>${item.purpose}</td>`;
-                            toInsert += `</tr>`;
-                        });
-                        toInsert += `</table>`
-                        $('#appointmentcontent').html(toInsert);
+                        $('#appointmentcontent').html(response);
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
@@ -76,6 +67,7 @@
                 });
             });
 
+            /*For logout*/
             $('#logout').click(function(){
                 $.ajax({
                     url: '/logout',
@@ -83,7 +75,6 @@
                 })
             });
         });
-
     </script>
 </body>
 </html>

@@ -9,6 +9,18 @@
         <title>Bedmass Medical Database Software</title>
     </head>
     <body class="bg-darkblue">
+        <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top">
+            <div class="container-fluid w-100">
+                <div class="row w-100">
+                    <ul class="navbar-nav flex-row text-white">
+                        <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
+                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('workbench')}}">Workbench</a></li>
+                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main')}}">Document Generator</a></li>
+                        <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('main') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container rounded bg-blue my-3 font-cambria w-750">
             <form action="createPatient" method="post">
                 <div class="row mt-3 pt-3">

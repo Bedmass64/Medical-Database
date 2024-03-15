@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/mystyles.css">
+    <title>Bedmass Medical Database Software</title>
+</head>
+<body class="bg-lightblue">
+    <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top">
+        <div class="container-fluid w-100">
+            <div class="row w-100">
+                <ul class="navbar-nav flex-row text-white">
+                    <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('staffPatients') }}">Patients</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('staffRecords') }}">Medical History</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('staffAppointments') }}">Appointments</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main') }}">Document Generator</a></li>
+                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('main') }}" id="logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container bg-blue my-3 rounded">
+        <div class="row font-tnr">
+            <div class="col mt-4"><h1>Appointments:</h1></div>
+            <div class="col d-flex justify-content-end my-0">
+                <a href="{{ url_for('createAppointment') }}" class="btn btn-primary mx-5 my-3">Create New Appointment</a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col my-1 font-tnr">
+                <h6>Search by date (YYYY-MM-DD):</h6>
+                <input type="text" name="date" id="date">
+            </div>
+            <div class="col my-2">
+                <input type="submit" id="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 px-3" id="appointmentcontent">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#submit').click(function() {
+                $.ajax({
+                    url: '/adminAppointment', 
+                    type: 'POST',
+                    data: {
+                        date: document.getElementById("date").value
+                    },
+                    success: function(response) {
+                        let toInsert = `<table class="table"><tr><th>Appointment ID</th><th>Doctor ID</th><th>Appointment ID</th><th>Patient Id</th>`
+                        toInsert += `<th>Time</th><th>Purpose</th></tr>`
+                        response.forEach(function(item) {
+                            toInsert += `<tr>`;
+                            toInsert += `<td>${item.appointmentid}</td><td>${item.doctorid}</td>`;
+                            toInsert += `<td>${item.patientid}</td><td>${item.date}</td>`;
+                            toInsert += `<td>${item.time}</td><td>${item.purpose}</td>`;
+                            toInsert += `</tr>`;
+                        });
+                        toInsert += `</table>`
+                        $('#appointmentcontent').html(toInsert);
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        $('#appointmentcontent').html('<h1> Error: ' + error + "</h1>");
+                    }
+                });
+            });
+
+            $('#logout').click(function(){
+                $.ajax({
+                    url: '/logout',
+                    type: 'GET'
+                })
+            });
+        });
+
+    </script>
+</body>
+</html>

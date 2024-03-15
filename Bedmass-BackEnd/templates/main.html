@@ -9,17 +9,14 @@
     <title>Bedmass Medical Database Software</title>
 </head>
 <body class="bg-lightblue">
-    <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top"> <!--Sticky top is not working?-->
+    <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top">
         <div class="container-fluid w-100">
             <div class="row w-100">
                 <ul class="navbar-nav flex-row text-white">
                     <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
                     <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Workbench</a></li>
-                    <!--If not logged in this button goes to login page, if staff it goes to staff, else it goes to admin hmtl page-->
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Document Generator</a></li>
-                    <!--If not logged in this goes to login page, else it goes to pdf generator page-->
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main')}}">Document Generator</a></li>
                     <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('login') }}">Login</a></li>
-                    <!--If logged it this goes is logout and we add functionality yo the button-->
                 </ul>
             </div>
         </div>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/mystyles.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <title>Bedmass Medical Database Software</title>
+</head>
+<body class="bg-lightblue">
+    <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top">
+        <div class="container-fluid w-100">
+            <div class="row w-100">
+                <ul class="navbar-nav flex-row text-white">
+                    <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminPatients') }}">Patients</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminBilling') }}">Billing</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminAppointments') }}">Appointments</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminRecords') }}">Medical Records</a></li>
+                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" id = "logout" href="{{ url_for('main') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container bg-blue my-3 rounded" id="content">
+        <div class="row font-tnr">
+            <div class="col mt-4"><h1>Patients:</h1></div>
+            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('createPatient') }}" class="btn btn-primary mx-5 my-3">Create New Patient</a></div>
+        </div>
+        <hr>
+        <div class="row">
+            <form action="viewPatients" method="post">
+                <div class="col my-1 font-tnr">
+                    <h6>Search by Name:</h6>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div class="col my-2">
+                    <button class="btn btn-primary" id="submit">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 px-3" id="patientcontent">
+            
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            /*For Patient search*/
+            $('#submit').click(function() {
+                $.ajax({
+                    url: '/adminPatients', 
+                    type: 'POST',
+                    data: {
+                        patient: document.getElementById("name").value
+                    },
+                    success: function(response) {
+                        let toInsert = `<table class="table"><tr><th>Patient ID</th><th>Name</th><th>Address</th>`;
+                        toInsert += `<th>Date of Birth</th><th>Contact Info</th>`;
+                        response.forEach(function(item) {
+                            toInsert += `<tr>`;
+                            toInsert += `<td>${item.patientid}</td><td>${item.name}</td>`;
+                            toInsert += `<td>${item.address}</td><td>${item.dob}</td>`;
+                            toInsert += `<td>${item.contact}</td>`;
+                            toInsert += `</tr>`;
+                        });
+                        toInsert += `</table>`
+                        $('#patientcontent').html(toInsert);
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        $('#patientcontent').html('<h1> Error: ' + error + "</h1>");
+                    }
+                });
+            });
+
+            /*For Logout*/
+            $('#logout').click(function(){
+                $.ajax({
+                    url: '/logout',
+                    type: 'GET'
+                })
+            });
+        });
+    </script>
+</body>
+</html>

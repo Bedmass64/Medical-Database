@@ -14,8 +14,8 @@
             <div class="row w-100">
                 <ul class="navbar-nav flex-row text-white">
                     <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main') }}">Workbench</a></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main') }}">Document Generator</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('workbench') }}">Workbench</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('#') }}">Document Generator</a></li>
                     <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('login') }}" id="logout">Logout</a></li>
                 </ul>
             </div>
@@ -26,7 +26,7 @@
             <div class="col mt-4"><h1 id="heading">Billing:</h1></div>
         </div>
         <hr>
-        <div class="row my-1 font-cambria py-2"> 
+        <div class="row my-1 font-cambria py-2">
             <div class="col ms-2">
                 <h5>Search By Bill Id:</h5>
                 <input type="text" name="patient_id">
@@ -112,7 +112,7 @@
             /*For Patient ID search*/
             $('#namesearch').click(function(event){
                 $.ajax({
-                    url: '/searchBills', 
+                    url: '/searchBills',
                     type: 'POST',
                     data: {
                         name: document.getElementById("patientsearch").value
@@ -129,7 +129,7 @@
             /*Bill Search by ID*/
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminPatients', 
+                    url: '/adminPatients',
                     type: 'POST',
                     data: {
                         appointmentid: document.getElementById("appointmentid").value

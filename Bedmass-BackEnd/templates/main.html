@@ -14,7 +14,7 @@
             <div class="row w-100">
                 <ul class="navbar-nav flex-row text-white">
                     <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
-                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="#">Workbench</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('workbench') }}">Workbench</a></li>
                     <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main')}}">Document Generator</a></li>
                     <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('login') }}">Login</a></li>
                 </ul>
@@ -24,17 +24,17 @@
     <div class="contiainer bg-blue my-2 mx-3 rounded">
         <div class="row px-2">
             <h1 class="font-tnr my-1">About Bedmass MD:</h1>
-            <p class="font-cambria">Bedmass MD is designed as a user-friendly database for medical staff 
-                and administrators, enabling them to efficiently access and manage information without 
-                sacrificing functionality. We prioritize high-level security to ensure the confidentiality 
+            <p class="font-cambria">Bedmass MD is designed as a user-friendly database for medical staff
+                and administrators, enabling them to efficiently access and manage information without
+                sacrificing functionality. We prioritize high-level security to ensure the confidentiality
                 and privacy of hospital data and records.
             </p>
-            <h3 class="mx-2 my-2 text-center font-tnr">A Message From our Founders:</h3>   
+            <h3 class="mx-2 my-2 text-center font-tnr">A Message From our Founders:</h3>
             <pre class="text-center font-cambria">
-Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem 
-Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem 
-Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem 
-Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem 
+Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
+Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
+Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
+Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
             </pre>
         </div>
     </div>

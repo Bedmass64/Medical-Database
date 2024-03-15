@@ -79,7 +79,7 @@
                 <h4 id="error"></h4>
             </div>
             <div class="col d-flex justify-content-end">
-                <input type="submit" class="btn btn-primary mx-5 my-3">
+                <input id="submit" type="submit" class="btn btn-primary mx-5 my-3">
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
         $(document).ready(function(){
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/createAccount', 
+                    url: '/createAccount',
                     type: 'POST',
                     data: {
                         firstname: document.getElementById("firstname").value,

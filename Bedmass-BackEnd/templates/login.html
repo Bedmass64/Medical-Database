@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col m-3">
-                <h6 class="font-tnr">New user? <a href="{{ url_for('create') }}">Create Account</a></h6>
+                <h6 class="font-tnr">New user? <a href="{{ url_for('create_account') }}">Create Account</a></h6>
             </div>
             <div class="col d-flex justify-content-end">
                 <input type="submit" class="btn btn-primary mx-5 my-3" value="Log In" id="submit">
@@ -58,7 +58,7 @@
         $(document).ready(function(){
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/login', 
+                    url: '/login',
                     type: 'POST',
                     data: {
                         username: document.getElementById("username").value,

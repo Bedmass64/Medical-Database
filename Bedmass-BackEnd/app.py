@@ -43,7 +43,7 @@ def login():
         user = User(1, 'user1', 'password') # Example user, replace with database lookup
         if username == user.username and password == user.password:
             login_user(user)
-            return redirect(url_for('adminPatients')) 
+            return redirect(url_for('adminPatients'))
     else:
         return render_template("login.html")
 
@@ -57,7 +57,7 @@ def logout():
 
 #Create Account-----------------------------------------------------
 
-#For POST, login with fields stated below. If success, log user in and create an account and 
+#For POST, login with fields stated below. If success, log user in and create an account and
 #redirect to main page. If not, throw an error
 #For GET, render the create html page
 @app.route('/createAccount', methods=["GET", "POST"])
@@ -84,11 +84,11 @@ def create_account():
 def admin_patients():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-
+        return render_template('adminPatients.html')
 
     else:
         return render_template('adminPatients.html')
-    
+
 #If POST, return JSON data of the billing corresponding the patientid sent with
 #response.json.patientid
 #if GET, render template to corresponding html file
@@ -96,10 +96,10 @@ def admin_patients():
 def admin_billing():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-
+        render_template('adminBilling.html')
     else:
         return render_template('adminBilling.html')
-    
+
 #If POST, return JSON data of the records corresponding the patientid sent with
 #response.json.patientid
 #if GET, render template to corresponding html file
@@ -107,11 +107,11 @@ def admin_billing():
 def admin_records():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-
+        render_template('adminRecords.html')
 
     else:
         return render_template('adminRecords.html')
-    
+
 #If POST, return JSON data of the appointemnts corresponding the date sent with
 #response.json.date in (YYYY-MM-DD) format
 #if GET, render template to corresponding html file
@@ -120,11 +120,11 @@ def admin_appointments():
     if request.method == 'POST':
         #search supabase for data and return, using request data
         #Search by DATE
-
+        return render_template('adminAppointments.html')
 
     else:
         return render_template('adminAppointments.html')
-    
+
 #Staff Pages--------------------------------------------------------
 
 #If POST, return JSON data of the patients corresponding the the last name sent with
@@ -134,7 +134,7 @@ def admin_appointments():
 def staff_patients():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-
+        return render_template('staffPatients.html')
 
     else:
         return render_template('staffPatients.html')
@@ -147,11 +147,11 @@ def staff_appointments():
     if request.method == 'POST':
         #search supabase for data and return, using request data
         #Search by DATE
-
+        return render_template('staffAppointments.html')+
 
     else:
         return render_template('staffAppointments.html')
-    
+
 
 #If POST, return JSON data of the records corresponding the patientid sent with
 #response.json.patientid
@@ -160,13 +160,13 @@ def staff_appointments():
 def staff_records():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-
+        return render_template('staffRecords.html')
 
     else:
         return render_template('staffRecords.html')
-    
 
-#Update Pages Note that the POST is to get info, the following makeupdate 
+
+#Update Pages Note that the POST is to get info, the following makeupdate
 #route actually makes the update-----------------------------------------
 
 #If POST, return JSON data of the appoinment corresponding the appointmentid sent with
@@ -176,15 +176,17 @@ def staff_records():
 def update_appointments():
     if request.method == 'POST':
         #search supabase for data and return, using request data
+        return render_template('updateDeleteAppointment.html')
     else:
         return render_template('updateDeleteAppointment.html')
 
-#Update all fields in the request.json object    
+#Update all fields in the request.json object
 @app.route('/makeAppointmentUpdate', methods=["POST"])
 def updateAppointment():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-    
+        print("test")
+
 
 #If POST, return JSON data of the bill corresponding the billid sent with
 #response.json.billid
@@ -195,14 +197,14 @@ def update_billing():
         #search supabase for data and return, using request data
     else:
         return render_template('updateDeleteBill.html')
-    
-#Update all fields in the request.json object 
+
+#Update all fields in the request.json object
 @app.route('/makeBillingUpdate', methods=["POST"])
 def updateBill():
     if request.method == 'POST':
         #search supabase for data and return, using request data
 
-    
+
 #If POST, return JSON data of the appoinment corresponding the appointmentid sent with
 #response.json.appointmentid
 #if GET, render template to corresponding html file
@@ -213,12 +215,12 @@ def update_patients():
     else:
         return render_template('updateDeletePatient.html')
 
-#Update all fields in the request.json object 
+#Update all fields in the request.json object
 @app.route('/makePatientUpdate', methods=["POST"])
 def updatePatient():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-    
+
 
 
 #If POST, return JSON data of the record corresponding the recordid sent with
@@ -230,8 +232,8 @@ def update_billing():
         #search supabase for data and return, using request data
     else:
         return render_template('updateDeleteRecord.html')
-    
-#Update all fields in the request.json object 
+
+#Update all fields in the request.json object
 @app.route('/makeRecordUpdate', methods=["POST"])
 def updateRecord():
     if request.method == 'POST':
@@ -251,17 +253,17 @@ def searchPatients():
 @app.route('/searchAppointments', methods=["GET", "POST"])
 def viewAppointments():
     if request.method == 'POST':
-        #send 
+        #send
         name = request.json.name
         # return name, date and appointment id
         search_data = getAppointmentsByDate()
-        return 
+        return
     return render_template('main')
 
 #Navigates to staffPatients if logged in as a staff, else navigates to AdminPatients
 @app.route('/workbench', methods=["GET"])
 def workbench():
-    
+
 #searches Bills by patient name, request.json.name is the name needed. Return a Json object with
 #only name and billid and amount fields
 @app.route('/searchBills', methods=["GET", "POST"])
@@ -291,7 +293,7 @@ def createPatient():
         return render_template("adminPatients.html")
     else:
         return render_template('createPatient.html')
-    
+
 #If post, create the appointment, else render the page
 @app.route('/createAppointment', methods=["GET", "POST"])
 def createAppointment():
@@ -338,31 +340,31 @@ def deleteRecord():
     #delete the record that corresponds to record.json.recordid field
 
     if success:
-        return 
-    return 
+        return
+    return
 
 @app.route('/deleteBill', methods=['POST'])
 def deleteBill():
     #delete the bill that corresponds to record.json.billid field
 
     if success:
-        return 
-    return 
+        return
+    return
 
 @app.route('/deleteAppointment', methods=['POST'])
 def deleteAppointment():
     #delete the appointment that corresponds to record.json.appointmentid field
 
     if success:
-        return 
-    return 
+        return
+    return
 
 @app.route('/deletePatient', methods=['POST'])
 def deletePatient():
     #delete the record that corresponds to record.json.patientid field
 
     if success:
-        return 
-    return 
+        return
+    return
 
 #Todo: We must enforce permissions for roles, if it is not correct, we just redirect home

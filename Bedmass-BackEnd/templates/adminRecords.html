@@ -28,25 +28,23 @@
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Medical Records:</h1></div>
-            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('newMedicalRecord') }}" class="btn btn-primary mx-5 my-3">Create New Medical Record</a></div>
+            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('createRecord') }}" class="btn btn-primary mx-5 my-3">Create New Medical Record</a></div>
         </div>
         <hr>
-        <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->
+        <div class="row my-1 font-cambria py-2">
             <div class="col ms-2">
                 <h5>Search By Patient Id:</h5>
                 <input type="text" name="patientid" id="patientid">
                 <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="submit">
             </div>
-            <!-- Start of Patient Search Module -->
             <div class="col bg-lightblue rounded mx-2">
                 <h6 class="mt-1 ms-1">Search by Name:</h6>
-                <input type="text" name="nameSearch">
-                <input type="submitName" class="btn btn-primary mx-5 my-3" value="Search">
+                <input type="text" name="patientSearch" id="patientSearch">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="nameSearch">
                 <div id="IDresponses">
                     <!-- Results go here -->
                 </div>
             </div>
-            <!-- End of Patient Search Module -->
         </div>
         <div class="row">
             <div class="col-sm-12 px-3" id="recordcontent">
@@ -81,17 +79,7 @@
                         patientid: document.getElementById("patientid").value
                     },
                     success: function(response) {
-                        let toInsert = `<table class="table"><tr><th>Record ID</th><th>Patient ID</th><th>Diagnosis</th><th>treatment</th>`
-                        toInsert += `<th>Date</th><th>Appointment ID</th><th>Payment Recieved</th></tr>`
-                        response.forEach(function(item) {
-                            toInsert += `<tr>`;
-                            toInsert += `<td>${item.historyid}</td><td>${item.patientid}</td>`;
-                            toInsert += `<td>${item.diagnosis}</td><td>${item.treatment}</td>`;
-                            toInsert += `<td>${item.date}</td>`;
-                            toInsert += `</tr>`;
-                        });
-                        toInsert += `</table>`
-                        $('#recordcontent').html(toInsert);
+                        $('#recordcontent').html(response);
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails

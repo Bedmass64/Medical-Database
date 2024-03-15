@@ -40,7 +40,7 @@
             <div class="col bg-lightblue rounded mx-2">
                 <h6 class="mt-1 ms-1">Search by Name:</h6>
                 <input type="text" name="nameSearch" id="patientname">
-                <input type="submitName" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
                 <div id="IDresponses">
                     <!-- Results go here -->
                 </div>
@@ -79,18 +79,7 @@
                         patientid: document.getElementById("patientid").value
                     },
                     success: function(response) {
-                        let toInsert = `<table class="table"><tr><th>Billing ID</th><th>Patient ID</th><th>Date</th><th>Amount</th>`
-                        toInsert += `<th>Payment Method</th><th>Appointment ID</th><th>Payment Recieved</th></tr>`
-                        response.forEach(function(item) {
-                            toInsert += `<tr>`;
-                            toInsert += `<td>${item.billid}</td><td>${item.patientid}</td>`;
-                            toInsert += `<td>${item.date}</td><td>${item.amount}</td>`;
-                            toInsert += `<td>${item.paymethod}</td><td>${item.appointmentid}</td>`;
-                            toInsert += `<td>${item.payconfirmed}</td>`;
-                            toInsert += `</tr>`;
-                        });
-                        toInsert += `</table>`
-                        $('#billingcontent').html(toInsert);
+                        $('#billingcontent').html(response);
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails

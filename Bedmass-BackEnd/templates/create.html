@@ -90,11 +90,11 @@
                     url: '/createAccount',
                     type: 'POST',
                     data: {
-                        firstname: document.getElementById("firstname").value,
-                        lastname: document.getElementById("lastname").value,
+                        name: document.getElementById("firstname").value + " " document.getElementById("lastname").value,
                         number: document.getElementById("number").value,
                         email: document.getElementById("username").value,
                         password: document.getElementById("password").value,
+                        role: document.getElementById('role').value,
                         specialty: document.getElementById("specialty").value
                     },
                     error: function(xhr, status, error) {

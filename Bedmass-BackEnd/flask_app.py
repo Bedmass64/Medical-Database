@@ -145,18 +145,19 @@ def get_record_by_patient_id():
 
 
 #Table Formats: JSON
-#Patient:
+#patient:
 # {
-#   "patientId": "int",
+#   "patientid": "int",
 #   "name": "string",
 #   "address": "string",
 #   "dob": "date",
 #   "contact": "string"
 # }
+    
 
-#Appointment: 
+#appointment: 
 #{
-#   "appointmentId": "int",
+#   "appointmentid": "int",
 #   "doctorId": "int",
 #   "patientId": "int",
 #   "date": "date",
@@ -164,21 +165,21 @@ def get_record_by_patient_id():
 #   "purpose": "string"
 #}
     
-#Bills:
+#billing:
 # {
-#   "billId": "int",
-#   "patientId": "int",
+#   "billid": "int",
+#   "patientid": "int",
 #   "date": "timestamp with time zone",
 #   "amount": "int",
-#   "payMethod": "string",
-#   "appointmentId": "int",
-#   "payConfirmed": "bool"
+#   "paymethod": "string",
+#   "appointmentid": "int",
+#   "payconfirmed": "bool"
 # }
 
-#Records:
+#medical_history:
 # {
-#   "historyId": "int",
-#   "patientId": "int",
+#   "historyid": "int",
+#   "patientid": "int",
 #   "diagnosis": "string",
 #   "treatment": "string",
 #   "date": "timestamp with time zone"

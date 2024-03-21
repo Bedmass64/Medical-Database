@@ -69,7 +69,7 @@ def get_all_patients():
 
 @app.route('/api/patients/<id>', methods=["GET"])
 def get_patient_by_id(id):
-    return filterTable("patient", "id", id)
+    return filterTable("patient", "patientid", id)
 
 @app.route('/api/patients/<name>', methods=["GET"])
 def get_patient_by_name(name):
@@ -81,7 +81,7 @@ def get_all_appointments():
 
 @app.route('/api/appointments/<id>', methods=["GET"])
 def get_appointment_by_id(id):
-    return filterTable("appointment", "id", id)
+    return filterTable("appointment", "appointmentid", id)
 
 @app.route('/api/appointments/<date>', methods=["GET"])
 def get_appointment_by_date(date):
@@ -93,7 +93,7 @@ def get_all_bills():
 
 @app.route('/api/bills/<id>', methods=["GET"])
 def get_bill_by_id(id):
-    return filterTable("billing", "id", id)
+    return filterTable("billing", "billid", id)
 
 @app.route('/api/bills/<name>', methods=["GET"])
 def get_bill_by_name(name):
@@ -105,7 +105,7 @@ def get_all_records():
 
 @app.route('/api/records/<id>', methods=["GET"])
 def get_record_by_id(id):
-    return filterTable("medical_history", "id", id)
+    return filterTable("medical_history", "historyid", id)
 
 @app.route('/api/records/<name>', methods=["GET"])
 def get_record_by_name(name):

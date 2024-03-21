@@ -115,11 +115,11 @@ def get_bill_by_id():
     else:
         return "Id parameter is missing", 400
 
-@app.route('/api/bills/name', methods=["GET"])
-def get_bill_by_name():
-    name = request.args.get('name')
-    if name:
-        return filterTable("billing", "name", name)
+@app.route('/api/bills/patientid', methods=["GET"])
+def get_bill_by_patient_id():
+    id = request.args.get('id')
+    if id:
+        return filterTable("billing", "patientid", id)
     else:
         return "Name parameter is missing", 400
 
@@ -135,11 +135,11 @@ def get_record_by_id():
     else:
         return "Id parameter is missing", 400
 
-@app.route('/api/records/name', methods=["GET"])
-def get_record_by_name():
-    name = request.args.get('name')
-    if name:
-        return filterTable("medical_history", "name", name)
+@app.route('/api/records/patientid', methods=["GET"])
+def get_record_by_patient_id():
+    id = request.args.get('id')
+    if id:
+        return filterTable("medical_history", "patientid", id)
     else:
         return "Name parameter is missing", 400
 

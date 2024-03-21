@@ -23,8 +23,11 @@ def getConnection():
 
 def addDataPatient(data: dict):
     getConnection()
-    supabase.table("patient").insert(data).execute()
-    return "Data added to table"
+    response = supabase.table("patient").insert(data).execute().data
+    print(response)
+    return response
+
+print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
 
 def addDataAppointment(data: dict):
     getConnection()

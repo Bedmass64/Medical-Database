@@ -144,6 +144,126 @@ def get_record_by_patient_id():
         return "Name parameter is missing", 400
 
 
+#Table Formats: JSON
+#Patient:
+# {
+#   "patientId": "int",
+#   "name": "string",
+#   "address": "string",
+#   "dob": "date",
+#   "contact": "string"
+# }
+
+#Appointment: 
+#{
+#   "appointmentId": "int",
+#   "doctorId": "int",
+#   "patientId": "int",
+#   "date": "date",
+#   "time": "string",
+#   "purpose": "string"
+#}
+    
+#Bills:
+# {
+#   "billId": "int",
+#   "patientId": "int",
+#   "date": "timestamp with time zone",
+#   "amount": "int",
+#   "payMethod": "string",
+#   "appointmentId": "int",
+#   "payConfirmed": "bool"
+# }
+
+#Records:
+# {
+#   "historyId": "int",
+#   "patientId": "int",
+#   "diagnosis": "string",
+#   "treatment": "string",
+#   "date": "timestamp with time zone"
+# }
+
+    
+#Create Endpoints
+@app.route('/api/patients', methods=["POST"])
+def create_patient():
+    data = request.json
+    result = addDataPatient(data)
+    return result
+
+@app.route('/api/appointments', methods=["POST"])
+def create_appointment():
+    data = request.json
+    result = addDataAppointment(data)
+    return result
+
+@app.route('/api/bills', methods=["POST"])
+def create_bill():
+    data = request.json
+    result = addDataBilling(data)
+    return result
+
+@app.route('/api/records', methods=["POST"])
+def create_record():
+    data = request.json
+    result = addDataMedicalHistory(data)
+    return result
+
+
+#Update Endpoints
+@app.route('/api/patients', methods=["PUT"])
+def update_patient():
+    data = request.json
+    result = updateDataPatient(data)
+    return result
+
+@app.route('/api/appointments', methods=["PUT"])
+def update_appointment():
+    data = request.json
+    result = updateDataAppointment(data)
+    return result
+
+@app.route('/api/bills', methods=["PUT"])
+def update_bill():
+    data = request.json
+    result = updateDataBilling(data)
+    return result
+
+@app.route('/api/records', methods=["PUT"])
+def update_record():
+    data = request.json
+    result = updateDataMedicalHistory(data)
+    return result
+
+
+
+#Delete Endpoints
+@app.route('/api/patients', methods=["DELETE"])
+def delete_patient():
+    id = request.args.get('id')
+    result = deleteDataPatient(id)
+    return result
+
+@app.route('/api/appointments', methods=["DELETE"])
+def delete_appointment():
+    id = request.args.get('id')
+    result = deleteDataAppointment(id)
+    return result
+
+@app.route('/api/bills', methods=["DELETE"])
+def delete_bill():
+    id = request.args.get('id')
+    result = deleteDataBilling(id)
+    return result
+
+@app.route('/api/records', methods=["DELETE"])
+def delete_record():
+    id = request.args.get('id')
+    result = deleteDataMedicalHistory(id)
+    return result
+
+
 #Create Account-----------------------------------------------------
 
 #For POST, login with fields stated below. If success, log user in and create an account and

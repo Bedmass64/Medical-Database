@@ -67,13 +67,21 @@ def logout():
 def get_all_patients():
     return readTableData("patient")
 
-@app.route('/api/patients/id/<id>', methods=["GET"])
-def get_patient_by_id(id):
-    return filterTable("patient", "patientid", id)
+@app.route('/api/patients/id', methods=["GET"])
+def get_patient_by_id():
+    id = request.args.get('id')
+    if id:
+        return filterTable("patient", "patientid", id)
+    else:
+        return "Id parameter is missing", 400
 
-@app.route('/api/patients/name/<name>', methods=["GET"])
-def get_patient_by_name(name):
-    return filterTable("patient", "name", name)
+@app.route('/api/patients/name', methods=["GET"])
+def get_patient_by_name():
+    name = request.args.get('name')
+    if name:
+        return filterTable("patient", "name", name)
+    else:
+        return "Name parameter is missing", 400
 
 @app.route('/api/appointments', methods=["GET"])
 def get_all_appointments():

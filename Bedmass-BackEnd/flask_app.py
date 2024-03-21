@@ -2,9 +2,10 @@
 # Continue this tutorial the next time you work on this
 # https://blog.pythonanywhere.com/121/
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from functions import *
+
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -153,9 +154,9 @@ def get_record_by_patient_id():
 #   "dob": "date",
 #   "contact": "string"
 # }
-    
 
-#appointment: 
+
+#appointment:
 #{
 #   "appointmentid": "int",
 #   "doctorId": "int",
@@ -164,7 +165,7 @@ def get_record_by_patient_id():
 #   "time": "string",
 #   "purpose": "string"
 #}
-    
+
 #billing:
 # {
 #   "billid": "int",
@@ -185,31 +186,31 @@ def get_record_by_patient_id():
 #   "date": "timestamp with time zone"
 # }
 
-    
+
 #Create Endpoints
 @app.route('/api/patients', methods=["POST"])
 def create_patient():
     data = request.json
     result = addDataPatient(data)
-    return result
+    return jsonify(result)
 
 @app.route('/api/appointments', methods=["POST"])
 def create_appointment():
     data = request.json
     result = addDataAppointment(data)
-    return result
+    return jsonify(result)
 
 @app.route('/api/bills', methods=["POST"])
 def create_bill():
     data = request.json
     result = addDataBilling(data)
-    return result
+    return jsonify(result)
 
 @app.route('/api/records', methods=["POST"])
 def create_record():
     data = request.json
     result = addDataMedicalHistory(data)
-    return result
+    return jsonify(result)
 
 
 #Update Endpoints

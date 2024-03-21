@@ -24,35 +24,34 @@ def getConnection():
 def addDataPatient(data: dict):
     getConnection()
     response = supabase.table("patient").insert(data).execute().data
-    print(response)
     return response
 
-print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
+#print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
 
 def addDataAppointment(data: dict):
     getConnection()
-    supabase.table("appointment").insert(data).execute()
-    return "Data added to table"
+    response = supabase.table("appointment").insert(data).execute().data
+    return response
 
 def addDataBilling(data: dict):
     getConnection()
-    supabase.table("billing").insert(data).execute()
-    return "Data added to table"
+    response = supabase.table("billing").insert(data).execute().data
+    return response
 
 def addDataDoctor(data: dict):
     getConnection()
-    supabase.table("doctor").insert(data).execute()
-    return "Data added to table"
+    response = supabase.table("doctor").insert(data).execute().data
+    return response
 
 def addDataMedicalHistory(data: dict):
     getConnection()
-    supabase.table("medical_history").insert(data).execute()
-    return "Data added to table"
+    response = supabase.table("medical_history").insert(data).execute().data
+    return response
 
 def addDataAdmin(data: dict):
     getConnection()
-    supabase.table("admin").insert(data).execute()
-    return "Data added to table"
+    response = supabase.table("admin").insert(data).execute().data
+    return response
 
 
 #

@@ -226,19 +226,28 @@ def update_patient():
 @app.route('/api/appointments', methods=["PUT"])
 def update_appointment():
     data = request.json
-    result = updateDataAppointment(data)
+    appointmentid = data.pop('appointmentid', None)
+    if appointmentid is None:
+        return jsonify({'error': 'appointmentid is required'}), 400
+    result = updateDataAppointment(appointmentid, data)
     return jsonify(result)
 
 @app.route('/api/bills', methods=["PUT"])
 def update_bill():
     data = request.json
-    result = updateDataBilling(data)
+    billid = data.pop('billid', None)
+    if billid is None:
+        return jsonify({'error': 'billid is required'}), 400
+    result = updateDataBilling(billid, data)
     return jsonify(result)
 
 @app.route('/api/records', methods=["PUT"])
 def update_record():
     data = request.json
-    result = updateDataMedicalHistory(data)
+    historyid = data.pop('historyid', None)
+    if historyid is None:
+        return jsonify({'error': 'historyid is required'}), 400
+    result = updateDataMedicalHistory(historyid, data)
     return jsonify(result)
 
 

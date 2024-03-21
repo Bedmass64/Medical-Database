@@ -60,6 +60,59 @@ def logout():
     return redirect(url_for('main'))
 
 
+#RESTFUL API Endoints------------------------------------------------
+
+#READ ENDPOINTS
+@app.route('/api/patients', methods=["GET"])
+def get_all_patients():
+    return readTableData("patient")
+
+@app.route('/api/patients/<id>', methods=["GET"])
+def get_patient_by_id(id):
+    return filterTable("patient", "id", id)
+
+@app.route('/api/patients/<name>', methods=["GET"])
+def get_patient_by_name(name):
+    return filterTable("patient", "name", name)
+
+@app.route('/api/appointments', methods=["GET"])
+def get_all_appointments():
+    return readTableData("appointment")
+
+@app.route('/api/appointments/<id>', methods=["GET"])
+def get_appointment_by_id(id):
+    return filterTable("appointment", "id", id)
+
+@app.route('/api/appointments/<date>', methods=["GET"])
+def get_appointment_by_date(date):
+    return getAppointmentsByDate(date)
+
+@app.route('/api/bills', methods=["GET"])
+def get_all_bills():
+    return readTableData("billing")
+
+@app.route('/api/bills/<id>', methods=["GET"])
+def get_bill_by_id(id):
+    return filterTable("billing", "id", id)
+
+@app.route('/api/bills/<name>', methods=["GET"])
+def get_bill_by_name(name):
+    return filterTable("billing", "name", name)
+
+@app.route('/api/records', methods=["GET"])
+def get_all_records():
+    return readTableData("medical_history")
+
+@app.route('/api/records/<id>', methods=["GET"])
+def get_record_by_id(id):
+    return filterTable("medical_history", "id", id)
+
+@app.route('/api/records/<name>', methods=["GET"])
+def get_record_by_name(name):
+    return filterTable("medical_history", "name", name)
+
+
+
 #Create Account-----------------------------------------------------
 
 #For POST, login with fields stated below. If success, log user in and create an account and

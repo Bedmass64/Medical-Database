@@ -67,11 +67,11 @@ def logout():
 def get_all_patients():
     return readTableData("patient")
 
-@app.route('/api/patients/<id>', methods=["GET"])
+@app.route('/api/patients/id/<id>', methods=["GET"])
 def get_patient_by_id(id):
     return filterTable("patient", "patientid", id)
 
-@app.route('/api/patients/<name>', methods=["GET"])
+@app.route('/api/patients/name/<name>', methods=["GET"])
 def get_patient_by_name(name):
     return filterTable("patient", "name", name)
 
@@ -79,11 +79,11 @@ def get_patient_by_name(name):
 def get_all_appointments():
     return readTableData("appointment")
 
-@app.route('/api/appointments/<id>', methods=["GET"])
+@app.route('/api/appointments/id/<id>', methods=["GET"])
 def get_appointment_by_id(id):
     return filterTable("appointment", "appointmentid", id)
 
-@app.route('/api/appointments/<date>', methods=["GET"])
+@app.route('/api/appointments/date/<date>', methods=["GET"])
 def get_appointment_by_date(date):
     return getAppointmentsByDate(date)
 
@@ -91,11 +91,11 @@ def get_appointment_by_date(date):
 def get_all_bills():
     return readTableData("billing")
 
-@app.route('/api/bills/<id>', methods=["GET"])
+@app.route('/api/bills/id/<id>', methods=["GET"])
 def get_bill_by_id(id):
     return filterTable("billing", "billid", id)
 
-@app.route('/api/bills/<name>', methods=["GET"])
+@app.route('/api/bills/name/<name>', methods=["GET"])
 def get_bill_by_name(name):
     return filterTable("billing", "name", name)
 
@@ -103,11 +103,11 @@ def get_bill_by_name(name):
 def get_all_records():
     return readTableData("medical_history")
 
-@app.route('/api/records/<id>', methods=["GET"])
+@app.route('/api/records/id/<id>', methods=["GET"])
 def get_record_by_id(id):
     return filterTable("medical_history", "historyid", id)
 
-@app.route('/api/records/<name>', methods=["GET"])
+@app.route('/api/records/name/<name>', methods=["GET"])
 def get_record_by_name(name):
     return filterTable("medical_history", "name", name)
 

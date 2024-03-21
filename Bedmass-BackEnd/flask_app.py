@@ -89,7 +89,10 @@ def createAccount():
 def adminPatients():
     if request.method == 'POST':
         #search supabase for data and return, using request data
-        return render_template('adminPatients.html')
+        name = request.json['name']
+        if(name == ""):
+            return readTableData("patient")
+        return filterTableData("patient", "name", name)
 
     else:
         return render_template('adminPatients.html')
@@ -139,6 +142,7 @@ def adminAppointments():
 def staffPatients():
     if request.method == 'POST':
         #search supabase for data and return, using request data
+
         return render_template('staffPatients.html')
 
     else:
@@ -327,23 +331,23 @@ def createAppointment():
         result = addDataAppointment(appointment_info)
         return render_template("adminAppointments.html")
     else:
-        return render_template('createAppointment')
+        return render_template('createAppointment.html')
 
 #If post, create the bill, else render the page
 @app.route('/createBill', methods=["GET", "POST"])
 def createBill():
     if request.method == 'POST':
-        return render_template('createBill')
+        return render_template('createBill.html')
     else:
-        return render_template('createBill')
+        return render_template('createBill.html')
 
 #If post, create the record, else render the page
 @app.route('/createRecord', methods=["GET", "POST"])
 def createRecord():
     if request.method == 'POST':
-        return render_template('createRecord')
+        return render_template('createRecord.html')
     else:
-        return render_template('createRecord')
+        return render_template('createRecord.html')
 
 #Deleting functionality---------------------------------------------------
 

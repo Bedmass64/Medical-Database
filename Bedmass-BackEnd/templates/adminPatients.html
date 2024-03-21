@@ -32,7 +32,7 @@
         </div>
         <hr>
         <div class="row">
-            <form action="viewPatients" method="post">
+
                 <div class="col my-1 font-tnr">
                     <h6>Search by Name:</h6>
                     <input type="text" name="name" id="name">
@@ -40,11 +40,11 @@
                 <div class="col my-2">
                     <button class="btn btn-primary" id="submit">Search</button>
                 </div>
-            </form>
+
         </div>
         <div class="row">
             <div class="col-sm-12 px-3" id="patientcontent">
-            
+
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
             /*For Patient search*/
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminPatients', 
+                    url: '/adminPatients',
                     type: 'POST',
                     data: {
                         name: document.getElementById("name").value

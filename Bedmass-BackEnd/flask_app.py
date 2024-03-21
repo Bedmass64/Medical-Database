@@ -87,38 +87,61 @@ def get_patient_by_name():
 def get_all_appointments():
     return readTableData("appointment")
 
-@app.route('/api/appointments/id/<id>', methods=["GET"])
-def get_appointment_by_id(id):
-    return filterTable("appointment", "appointmentid", id)
+@app.route('/api/appointments/id', methods=["GET"])
+def get_appointment_by_id():
+    id = request.args.get('id')
+    if id:
+        return filterTable("appointment", "appointmentid", id)
+    else:
+        return "Id parameter is missing", 400
 
-@app.route('/api/appointments/date/<date>', methods=["GET"])
-def get_appointment_by_date(date):
-    return getAppointmentsByDate(date)
+@app.route('/api/appointments/date', methods=["GET"])
+def get_appointment_by_date():
+    date = request.args.get('date')
+    if date:
+        return getAppointmentsByDate(date)
+    else:
+        return "Date parameter is missing", 400
 
 @app.route('/api/bills', methods=["GET"])
 def get_all_bills():
     return readTableData("billing")
 
-@app.route('/api/bills/id/<id>', methods=["GET"])
-def get_bill_by_id(id):
-    return filterTable("billing", "billid", id)
+@app.route('/api/bills/id', methods=["GET"])
+def get_bill_by_id():
+    id = request.args.get('id')
+    if id:
+        return filterTable("billing", "billid", id)
+    else:
+        return "Id parameter is missing", 400
 
-@app.route('/api/bills/name/<name>', methods=["GET"])
-def get_bill_by_name(name):
-    return filterTable("billing", "name", name)
+@app.route('/api/bills/name', methods=["GET"])
+def get_bill_by_name():
+    name = request.args.get('name')
+    if name:
+        return filterTable("billing", "name", name)
+    else:
+        return "Name parameter is missing", 400
 
 @app.route('/api/records', methods=["GET"])
 def get_all_records():
     return readTableData("medical_history")
 
-@app.route('/api/records/id/<id>', methods=["GET"])
-def get_record_by_id(id):
-    return filterTable("medical_history", "historyid", id)
+@app.route('/api/records/id', methods=["GET"])
+def get_record_by_id():
+    id = request.args.get('id')
+    if id:
+        return filterTable("medical_history", "historyid", id)
+    else:
+        return "Id parameter is missing", 400
 
-@app.route('/api/records/name/<name>', methods=["GET"])
-def get_record_by_name(name):
-    return filterTable("medical_history", "name", name)
-
+@app.route('/api/records/name', methods=["GET"])
+def get_record_by_name():
+    name = request.args.get('name')
+    if name:
+        return filterTable("medical_history", "name", name)
+    else:
+        return "Name parameter is missing", 400
 
 
 #Create Account-----------------------------------------------------

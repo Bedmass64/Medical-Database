@@ -217,7 +217,10 @@ def create_record():
 @app.route('/api/patients', methods=["PUT"])
 def update_patient():
     data = request.json
-    result = updateDataPatient(data)
+    patientid = data.pop('patientid', None)
+    if patientid is None:
+        return jsonify({'error': 'patientid is required'}), 400
+    result = updateDataPatient(patientid, data)
     return jsonify(result)
 
 @app.route('/api/appointments', methods=["PUT"])

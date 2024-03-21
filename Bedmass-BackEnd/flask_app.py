@@ -218,25 +218,25 @@ def create_record():
 def update_patient():
     data = request.json
     result = updateDataPatient(data)
-    return result
+    return jsonify(result)
 
 @app.route('/api/appointments', methods=["PUT"])
 def update_appointment():
     data = request.json
     result = updateDataAppointment(data)
-    return result
+    return jsonify(result)
 
 @app.route('/api/bills', methods=["PUT"])
 def update_bill():
     data = request.json
     result = updateDataBilling(data)
-    return result
+    return jsonify(result)
 
 @app.route('/api/records', methods=["PUT"])
 def update_record():
     data = request.json
     result = updateDataMedicalHistory(data)
-    return result
+    return jsonify(result)
 
 
 
@@ -245,25 +245,25 @@ def update_record():
 def delete_patient():
     id = request.args.get('id')
     result = deleteDataPatient(id)
-    return result
+    return jsonify(result)
 
 @app.route('/api/appointments', methods=["DELETE"])
 def delete_appointment():
     id = request.args.get('id')
     result = deleteDataAppointment(id)
-    return result
+    return jsonify(result)
 
 @app.route('/api/bills', methods=["DELETE"])
 def delete_bill():
     id = request.args.get('id')
     result = deleteDataBilling(id)
-    return result
+    return jsonify(result)
 
 @app.route('/api/records', methods=["DELETE"])
 def delete_record():
     id = request.args.get('id')
     result = deleteDataMedicalHistory(id)
-    return result
+    return jsonify(result)
 
 
 #Create Account-----------------------------------------------------

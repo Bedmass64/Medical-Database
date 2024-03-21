@@ -23,35 +23,36 @@ def getConnection():
 
 def addDataPatient(data: dict):
     getConnection()
-    response = supabase.table("patient").insert(data).execute().data
-    return response
+    response = supabase.table("patient").insert(data).execute()
+    print(response)
+    return response.data
 
-#print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
+print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
 
 def addDataAppointment(data: dict):
     getConnection()
-    response = supabase.table("appointment").insert(data).execute().data
-    return response
+    response = supabase.table("appointment").insert(data).execute()
+    return response.data
 
 def addDataBilling(data: dict):
     getConnection()
-    response = supabase.table("billing").insert(data).execute().data
-    return response
+    response = supabase.table("billing").insert(data).execute()
+    return response.data
 
 def addDataDoctor(data: dict):
     getConnection()
-    response = supabase.table("doctor").insert(data).execute().data
-    return response
+    response = supabase.table("doctor").insert(data).execute()
+    return response.data
 
 def addDataMedicalHistory(data: dict):
     getConnection()
-    response = supabase.table("medical_history").insert(data).execute().data
-    return response
+    response = supabase.table("medical_history").insert(data).execute()
+    return response.data
 
 def addDataAdmin(data: dict):
     getConnection()
-    response = supabase.table("admin").insert(data).execute().data
-    return response
+    response = supabase.table("admin").insert(data).execute()
+    return response.data
 
 
 #
@@ -67,7 +68,7 @@ def updateDataAppointment(appointmentid: int, updates: dict):
 
     # Print result
     print("Data updated for table appointment")
-    return response
+    return response.data
 
 # updateDataAppointment(3, {'time': '12:40'})
 
@@ -75,7 +76,7 @@ def updateDataBilling(billid: int, updates: dict):
     filtered_updates = {k: v for k, v in updates.items() if v is not None}
     response = supabase.table("billing").update(filtered_updates).eq("billid", billid).execute()
     print("Billing data updated")
-    return response
+    return response.data
 
 #updateDataBilling(15,{'payconfirmed': True })
 
@@ -83,7 +84,7 @@ def updateDataDoctor(doctorid: int, updates: dict):
     filtered_updates = {k: v for k, v in updates.items() if v is not None}
     response = supabase.table("doctor").update(filtered_updates).eq("doctorid", doctorid).execute()
     print("Doctor data updated")
-    return response
+    return response.data
 
 # updateDataDoctor(2, {'role':'Staff Director'})
 
@@ -91,7 +92,7 @@ def updateDataMedicalHistory(historyid: int, updates: dict):
     filtered_updates = {k: v for k, v in updates.items() if v is not None}
     response = supabase.table("medical_history").update(filtered_updates).eq("historyid", historyid).execute()
     print("Medical history data updated")
-    return response
+    return response.data
 
 # updateDataMedicalHistory(2,{'treatment':'kimotheirpy'})
 
@@ -99,7 +100,7 @@ def updateDataAdmin(adminid: int, updates: dict):
     filtered_updates = {k: v for k, v in updates.items() if v is not None}
     response = supabase.table("admin").update(filtered_updates).eq("adminid", adminid).execute()
     print("Admin data updated")
-    return response
+    return response.data
 
 # updateDataAdmin(2,{'role': 'Skilled Awesome Person'})
 
@@ -116,15 +117,15 @@ def updateDataPatient(patientid: int, updates: dict):
     # Check if the update was successful based on the response structure
     if hasattr(response, 'status_code') and response.status_code == 200:
         print(f"Data updated for patientid {patientid}")
-        return response
+        return response.data
     elif hasattr(response, 'data') and response.data:
         # Assuming the update is successful if there's data (adjust based on actual response structure)
         print(f"Data updated for patientid {patientid}")
-        return response
+        return response.data
     else:
         # If the response structure is different, adjust this part accordingly
         print("Error updating data")
-        return response
+        return response.data
 
 # updateDataPatient(2, {"name": "Ben Impostor Lupin"})
 
@@ -133,34 +134,34 @@ def updateDataPatient(patientid: int, updates: dict):
 #
 
 def deleteDataPatient(patientid: int):
-    supabase.table("patient").delete().eq("patientid", patientid).execute()
+    response = supabase.table("patient").delete().eq("patientid", patientid).execute()
     print("Data deleted from table")
-    return "Data deleted from table"
+    return response.data
 
 def deleteDataAppointment(appointmentid: int):
-    supabase.table("appointment").delete().eq("appointmentid", appointmentid).execute()
+    response = supabase.table("appointment").delete().eq("appointmentid", appointmentid).execute()
     print("Data deleted from table")
-    return "Data deleted from table"
+    return response.data
 
 def deleteDataBilling(billid: int):
-    supabase.table("billing").delete().eq("billid", billid).execute()
+    response = supabase.table("billing").delete().eq("billid", billid).execute()
     print("Data deleted from table")
-    return "Data deleted from table"
+    return response.data
 
 def deleteDataDoctor(doctorid: int):
-    supabase.table("doctor").delete().eq("doctorid", doctorid).execute()
+    response = supabase.table("doctor").delete().eq("doctorid", doctorid).execute()
     print("Data deleted from table")
-    return "Data deleted from table"
+    return response.data
 
 def deleteDataMedicalHistory(historyid: int):
-    supabase.table("medical_history").delete().eq("historyid", historyid).execute()
+    response = supabase.table("medical_history").delete().eq("historyid", historyid).execute()
     print("Data deleted from table")
-    return "Data deleted from table"
+    return response.data
 
 def deleteDataAdmin(adminid: int):
-    supabase.table("admin").delete().eq("adminid", adminid).execute()
+    response = supabase.table("admin").delete().eq("adminid", adminid).execute()
     print("Data deleted from table")
-    return "Data deleted from table"
+    return response.data
 
 #
 # OTHER FUNCTIONS

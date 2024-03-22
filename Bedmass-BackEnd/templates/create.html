@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/mystyles.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/mystyles.css">
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -91,7 +92,7 @@
                     url: '/createAccount',
                     type: 'POST',
                     data: {
-                        name: document.getElementById("firstname").value + " " document.getElementById("lastname").value,
+                        name: document.getElementById("firstname").value + " " + document.getElementById("lastname").value,
                         number: document.getElementById("number").value,
                         email: document.getElementById("username").value,
                         password: document.getElementById("password").value,

@@ -28,7 +28,12 @@
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Patients:</h1></div>
-            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('createPatient') }}" class="btn btn-primary mx-5 my-3">Create New Patient</a></div>
+            <div class="col d-flex justify-content-end my-0">
+                <a href="{{ url_for('createPatient') }}" class="btn btn-primary mx-5 my-3">Create New Patient</a>
+            </div>
+            <div class="col d-flex justify-content-end my-0">
+                <a href="{{ url_for('updateDeletePatient') }}" class="btn btn-primary mx-5 my-3">Update Patient</a>
+            </div>
         </div>
         <hr>
         <div class="row">

@@ -28,7 +28,12 @@
     <div class="container bg-blue my-3 rounded" id="content">
         <div class="row font-tnr">
             <div class="col mt-4"><h1>Billing:</h1></div>
-            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('createBill') }}" class="btn btn-primary mx-5 my-3">Create New Bill</a></div>
+            <div class="col d-flex justify-content-end my-0">
+                <a href="{{ url_for('createBill') }}" class="btn btn-primary mx-5 my-3">Create New Bill</a>
+            </div>
+            <div class="col d-flex justify-content-end my-0">
+                <a href="{{ url_for('updateDeleteBill') }}" class="btn btn-primary mx-5 my-3">Update Bill</a>
+            </div>
         </div>
         <hr>
         <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->

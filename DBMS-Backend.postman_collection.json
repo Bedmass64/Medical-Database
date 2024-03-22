@@ -314,7 +314,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/patients/id?id={{patientid}}",
+							"raw": "{{base_url}}/patients/id?patientid={{patientid}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -324,7 +324,7 @@
 							],
 							"query": [
 								{
-									"key": "id",
+									"key": "patientid",
 									"value": "{{patientid}}"
 								}
 							]
@@ -383,7 +383,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/appointments/id?id={{appointmentid}}",
+							"raw": "{{base_url}}/appointments/id?appointmentid={{appointmentid}}",
 							"host": [
 								"{{base_url}}"
 							],
@@ -393,7 +393,7 @@
 							],
 							"query": [
 								{
-									"key": "id",
+									"key": "appointmentid",
 									"value": "{{appointmentid}}"
 								}
 							]
@@ -528,7 +528,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/bills/patientid?id=67890",
+							"raw": "{{base_url}}/bills/patientid?patientid=67890",
 							"host": [
 								"{{base_url}}"
 							],
@@ -538,7 +538,7 @@
 							],
 							"query": [
 								{
-									"key": "id",
+									"key": "patientid",
 									"value": "67890"
 								}
 							]
@@ -635,7 +635,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/records/patientid?id={{bill_patientid}}",
+							"raw": "{{base_url}}/records/patientid?patientid=109",
 							"host": [
 								"{{base_url}}"
 							],
@@ -645,8 +645,8 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "{{bill_patientid}}"
+									"key": "patientid",
+									"value": "109"
 								}
 							]
 						}

@@ -50,6 +50,19 @@
     </div>
     <script>
         $(document).ready(function(){
+            $.ajax({
+                url: '/api/patients',
+                type: 'GET',
+                success: function(response) {
+
+                    $('#patientcontent').html(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#patientcontent').html("Failed to load patients.");
+                }
+            });
+
+
             /*For Patient search*/
             $('#submit').click(function() {
                 $.ajax({

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <title>Bedmass Medical Database Software</title>
 </head>
 <body class="bg-darker">
@@ -47,7 +48,7 @@
         </div>
         <div class="row">
             <div class="col m-3">
-                <h6 class="font-tnr">New user? <a href="{{ url_for('create_account') }}">Create Account</a></h6>
+                <h6 class="font-tnr">New user? <a href="{{ url_for('createAccount') }}">Create Account</a></h6>
             </div>
             <div class="col d-flex justify-content-end">
                 <input type="submit" class="btn btn-primary mx-5 my-3" value="Log In" id="submit">
@@ -56,14 +57,20 @@
     </div>
     <script>
         $(document).ready(function(){
-            $('#submit').click(function() {
+            $('#submit').click(function(e) {
+                e.preventDefault(); // Prevent the default form action
                 $.ajax({
                     url: '/login',
                     type: 'POST',
-                    data: {
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         username: document.getElementById("username").value,
                         password: document.getElementById("password").value,
                         role: document.getElementById("role").value
+                    }),
+                    success: function(response) {
+                        // Redirect based on the response
+                        window.location.href = response.redirect;
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails

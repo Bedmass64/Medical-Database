@@ -32,6 +32,24 @@ def main():
 
 
 #Login Page-------------------------------------------------------
+app.secret_key = 'your_secret_key'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+class User(UserMixin):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+users = {1: User(1, 'user1', 'password')}
+
+#Login Functionality
+@login_manager.user_loader
+def load_user(user_id):
+    return users.get(int(user_id))
+
 
 #Login, if the method is POST, the patient is trying to login. They will send fields:
 #request.json.username, request.json.password, request.json.role
@@ -42,14 +60,20 @@ def login():
     if request.method == 'POST':
         #request.json.username, request.json.password, request.json.role are the fields
         #We must log in and redirect based on these fields
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
 
-        username = request.form['username']
-        password = request.form['password']
+        # username = request.form['username']
+        # password = request.form['password']
         # This is where you would validate the username and password.
         user = User(1, 'user1', 'password') # Example user, replace with database lookup
         if username == user.username and password == user.password:
             login_user(user)
-            return redirect(url_for('adminPatients'))
+            print(jsonify({"redirect": url_for('adminPatients')}))
+            return jsonify({"redirect": url_for('adminPatients')})
+        else:
+            return jsonify({"error": "Invalid credentials"}), 401
     else:
         return render_template("login.html")
 

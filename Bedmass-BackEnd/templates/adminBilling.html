@@ -53,10 +53,24 @@
     </div>
     <script>
         $(document).ready(function(){
+
+            $.ajax({
+                url: '/api/bills',
+                type: 'GET',
+                success: function(response) {
+
+                    $('#billingcontent').html(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#billingcontent').html("Failed to load bills.");
+                }
+            });
+
+
             /*For Patient ID search*/
             $('#namesearch').click(function(event){
                 $.ajax({
-                    url: '/searchPatients', 
+                    url: '/searchPatients',
                     type: 'POST',
                     data: {
                         name: document.getElementById("patientsearch").value
@@ -72,8 +86,10 @@
 
             /*For Bill search*/
             $('#submit').click(function() {
+
+
                 $.ajax({
-                    url: '/adminBilling', 
+                    url: '/adminBilling',
                     type: 'POST',
                     data: {
                         patientid: document.getElementById("patientid").value

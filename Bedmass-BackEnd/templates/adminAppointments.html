@@ -50,9 +50,22 @@
     <script>
         /*To get appointment data by search in form (YYYY-MM-DD)*/
         $(document).ready(function() {
+            $.ajax({
+                url: '/api/appointments',
+                type: 'GET',
+                success: function(response) {
+
+                    $('#appointmentcontent').html(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#appointmentcontent').html("Failed to load appointments.");
+                }
+            });
+
+
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminAppointments', 
+                    url: '/adminAppointments',
                     type: 'POST',
                     data: {
                         date: document.getElementById("date").value

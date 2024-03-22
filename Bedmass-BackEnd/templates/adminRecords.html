@@ -53,10 +53,23 @@
     </div>
     <script>
         $(document).ready(function(){
+            $.ajax({
+                url: '/api/records',
+                type: 'GET',
+                success: function(response) {
+
+                    $('#recordcontent').html(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#recordcontent').html("Failed to load records.");
+                }
+            });
+
+
             /*For Patient ID search*/
             $('#namesearch').click(function(event){
                 $.ajax({
-                    url: '/searchPatients', 
+                    url: '/searchPatients',
                     type: 'POST',
                     data: {
                         name: document.getElementById("patientsearch").value
@@ -73,7 +86,7 @@
             /*For Record search*/
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminRecords', 
+                    url: '/adminRecords',
                     type: 'POST',
                     data: {
                         patientid: document.getElementById("patientid").value

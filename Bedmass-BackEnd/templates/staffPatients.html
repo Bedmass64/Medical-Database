@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/mystyles.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <title>Bedmass Medical Database Software</title>
 </head>
 <body class="bg-lightblue">
@@ -43,16 +44,28 @@
         </div>
         <div class="row">
             <div class="col-sm-12 px-3" id="patientcontent">
-            
+
             </div>
         </div>
     </div>
     <script>
         $(document).ready(function(){
+            $.ajax({
+                url: '/api/patients',
+                type: 'GET',
+                success: function(response) {
+
+                    $('#patientcontent').html(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#patientcontent').html("Failed to load patients.");
+                }
+            });
+
             /*For Patient search*/
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminPatients', 
+                    url: '/adminPatients',
                     type: 'POST',
                     data: {
                         patient: document.getElementById("name").value

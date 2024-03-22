@@ -70,10 +70,10 @@
             /*For Patient ID search*/
             $('#namesearch').click(function(event){
                 $.ajax({
-                    url: '/searchPatients',
-                    type: 'POST',
+                    url: '/api/patients/name',
+                    type: 'GET',
                     data: {
-                        name: document.getElementById("patientsearch").value
+                        name: document.getElementById("patientname").value
                     },
                     success: function(response) {
                         $('#IDresponses').html(response)
@@ -89,8 +89,8 @@
 
 
                 $.ajax({
-                    url: '/adminBilling',
-                    type: 'POST',
+                    url: '/api/bills/patientid',
+                    type: 'GET',
                     data: {
                         patientid: document.getElementById("patientid").value
                     },

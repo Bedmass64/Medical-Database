@@ -94,7 +94,7 @@ def get_all_patients():
 
 @app.route('/api/patients/id', methods=["GET"])
 def get_patient_by_id():
-    id = request.args.get('id')
+    id = request.args.get('patientid')
     if id:
         return filterTable("patient", "patientid", id)
     else:
@@ -114,7 +114,7 @@ def get_all_appointments():
 
 @app.route('/api/appointments/id', methods=["GET"])
 def get_appointment_by_id():
-    id = request.args.get('id')
+    id = request.args.get('appointmentid')
     if id:
         return filterTable("appointment", "appointmentid", id)
     else:
@@ -142,11 +142,11 @@ def get_bill_by_id():
 
 @app.route('/api/bills/patientid', methods=["GET"])
 def get_bill_by_patient_id():
-    id = request.args.get('id')
+    id = request.args.get('patientid')
     if id:
         return filterTable("billing", "patientid", id)
     else:
-        return "Name parameter is missing", 400
+        return "Patient ID parameter is missing", 400
 
 @app.route('/api/records', methods=["GET"])
 def get_all_records():
@@ -162,11 +162,11 @@ def get_record_by_id():
 
 @app.route('/api/records/patientid', methods=["GET"])
 def get_record_by_patient_id():
-    id = request.args.get('id')
+    id = request.args.get('patientid')
     if id:
         return filterTable("medical_history", "patientid", id)
     else:
-        return "Name parameter is missing", 400
+        return "Patient ID parameter is missing", 400
 
 
 #Table Formats: JSON

@@ -66,8 +66,8 @@
             /*For Patient search*/
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminPatients',
-                    type: 'POST',
+                    url: '/api/patients/name',
+                    type: 'GET',
                     data: {
                         name: document.getElementById("name").value
                     },

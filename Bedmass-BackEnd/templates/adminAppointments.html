@@ -65,8 +65,8 @@
 
             $('#submit').click(function() {
                 $.ajax({
-                    url: '/adminAppointments',
-                    type: 'POST',
+                    url: '/api/appointments/date',
+                    type: 'GET',
                     data: {
                         date: document.getElementById("date").value
                     },

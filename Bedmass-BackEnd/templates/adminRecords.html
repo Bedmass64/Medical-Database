@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/mystyles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/mystyles.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <title>Bedmass Medical Database Software</title>
+</head>
+<body class="bg-lightblue">
+    <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top">
+        <div class="container-fluid w-100">
+            <div class="row w-100">
+                <ul class="navbar-nav flex-row text-white">
+                    <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminPatients') }}">Patients</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminBilling') }}">Billing</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminAppointments') }}">Appointments</a></li>
+                    <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('adminRecords') }}">Medical Records</a></li>
+                    <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" id = "logout" href="{{ url_for('main') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container bg-blue my-3 rounded" id="content">
+        <div class="row font-tnr">
+            <div class="col mt-4"><h1>Medical Records:</h1></div>
+            <div class="col d-flex justify-content-end my-0"><a href="{{ url_for('createRecord') }}" class="btn btn-primary mx-5 my-3">Create New Medical Record</a></div>
+        </div>
+        <hr>
+        <div class="row my-1 font-cambria py-2">
+            <div class="col ms-2">
+                <h5>Search By Patient Id:</h5>
+                <input type="text" name="patientid" id="patientid">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="submit">
+            </div>
+
+            <!-- Start of Patient Search Module -->
+            <div class="col bg-lightblue rounded mx-2">
+                <h6 class="mt-1 ms-1">Search by Name:</h6>
+                <input type="text" name="nameSearch" id="patientname">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
+                <div id="IDresponses">
+                    <!-- Results go here -->
+                </div>
+            </div>
+            <script>
+                /*For Patient name search*/
+                $('#namesearch').click(function(event){
+                    $.ajax({
+                        url: '/api/patients/name',
+                        type: 'GET',
+                        data: {
+                            name: document.getElementById("patientname").value
+                        },
+                        success: function(response) {
+                            $('#IDresponses').html(response)
+                        },
+                        error: function(xhr, status, error) {
+                            $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                        }
+                    });
+                });
+            </script>
+            <!-- End of Patient Search Module -->
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12 px-3" id="recordcontent">
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: '/api/records',
+                type: 'GET',
+                success: function(response) {
+
+                    $('#recordcontent').html(response);
+                },
+                error: function(xhr, status, error) {
+                    $('#recordcontent').html("Failed to load records.");
+                }
+            });
+
+
+
+
+            /*For Record search*/
+            $('#submit').click(function() {
+                $.ajax({
+                    url: '/api/records/patientid',
+                    type: 'GET',
+                    data: {
+                        patientid: document.getElementById("patientid").value
+                    },
+                    success: function(response) {
+                        $('#recordcontent').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        $('#recordcontent').html('<h1> Error: ' + error + "</h1>");
+                    }
+                });
+            });
+
+            /*For Logout*/
+            $('#logout').click(function(){
+                $.ajax({
+                    url: '/logout',
+                    type: 'GET'
+                })
+            });
+        });
+    </script>
+</body>
+</html>

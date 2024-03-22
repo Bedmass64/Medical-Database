@@ -1,0 +1,1055 @@
+{
+	"info": {
+		"_postman_id": "22c73cf6-47d0-4144-a53a-7540fc83640e",
+		"name": "DBMS-Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33728631"
+	},
+	"item": [
+		{
+			"name": "POST Requests",
+			"item": [
+				{
+					"name": "Create Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"    // Assuming you want the patientid from the first object in the array\r",
+									"    var patientid = Array.isArray(responseData) && responseData.length > 0 ? responseData[0].patientid : null;\r",
+									"\r",
+									"    if (patientid) {\r",
+									"        pm.collectionVariables.set(\"patientid\", patientid);\r",
+									"        console.log(\"patientid set to:\", patientid);\r",
+									"    } else {\r",
+									"        console.error(\"patientid not found in response\");\r",
+									"        pm.expect.fail(\"patientid not found in response\");\r",
+									"    }\r",
+									"\r",
+									"//For some reason the patientid variable is not getting updated with the value from the json"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{name}}\",\r\n  \"address\": \"123 Maple Street, Anytown, AN\",\r\n  \"dob\": \"1980-04-23\",\r\n  \"contact\": \"555-0101\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"// Assuming you want the patientid from the first object in the array\r",
+									"var appointmentid = Array.isArray(responseData) && responseData.length > 0 ? responseData[0].appointmentid : null;\r",
+									"\r",
+									"if (appointmentid) {\r",
+									"    pm.collectionVariables.set(\"appointmentid\", appointmentid);\r",
+									"    console.log(\"appointmentid set to:\", appointmentid);\r",
+									"} else {\r",
+									"    console.error(\"appointmentid not found in response\");\r",
+									"    pm.expect.fail(\"appointmentid not found in response\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"doctorid\": 2,\r\n  \"patientid\": 1,\r\n  \"date\": \"2024-03-21\",\r\n  \"time\": \"10:30\",\r\n  \"purpose\": \"Routine dental check-up\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Bill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"// Assuming you want the patientid from the first object in the array\r",
+									"var billid = Array.isArray(responseData) && responseData.length > 0 ? responseData[0].billid : null;\r",
+									"\r",
+									"if (billid) {\r",
+									"    pm.collectionVariables.set(\"billid\", billid);\r",
+									"    console.log(\"billid set to:\", billid);\r",
+									"} else {\r",
+									"    console.error(\"billid not found in response\");\r",
+									"    pm.expect.fail(\"billid not found in response\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"patientid\": 1,\r\n  \"date\": \"2024-03-21T14:00:00-05:00\",\r\n  \"amount\": 150,\r\n  \"paymethod\": \"Credit Card\",\r\n  \"appointmentid\": 4,\r\n  \"payconfirmed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bills",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bills"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var responseData = pm.response.json();\r",
+									"// Assuming you want the patientid from the first object in the array\r",
+									"var historyid = Array.isArray(responseData) && responseData.length > 0 ? responseData[0].historyid : null;\r",
+									"\r",
+									"if (historyid) {\r",
+									"    pm.collectionVariables.set(\"historyid\", historyid);\r",
+									"    console.log(\"historyid set to:\", historyid);\r",
+									"} else {\r",
+									"    console.error(\"historyid not found in response\");\r",
+									"    pm.expect.fail(\"historyid not found in response\");\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"patientid\": 1,\r\n  \"diagnosis\": \"Acute bronchitis\",\r\n  \"treatment\": \"Prescription for antibiotics\",\r\n  \"date\": \"2024-03-20T09:00:00-05:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/records",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"records"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET Requests",
+			"item": [
+				{
+					"name": "All Patients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patient by Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/patients/name?name={{name}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"",
+								"patients",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patient by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/patients/id?patientid={{patientid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients",
+								"id"
+							],
+							"query": [
+								{
+									"key": "patientid",
+									"value": "{{patientid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Appointments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Appintment by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/id?appointmentid={{appointmentid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"id"
+							],
+							"query": [
+								{
+									"key": "appointmentid",
+									"value": "{{appointmentid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Appointment by Date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments/date?date={{date}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments",
+								"date"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "{{date}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Bills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bills",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bills"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bill by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bills/id?id={{billid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bills",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{billid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bill by Patient Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bills/patientid?patientid=67890",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bills",
+								"patientid"
+							],
+							"query": [
+								{
+									"key": "patientid",
+									"value": "67890"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Records",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/records",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"records"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Record by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/records/id?id={{historyid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"records",
+								"id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{historyid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Record by Patient Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/records/patientid?patientid=109",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"records",
+								"patientid"
+							],
+							"query": [
+								{
+									"key": "patientid",
+									"value": "109"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT Requests",
+			"item": [
+				{
+					"name": "Update Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"patientid\": {{patientid}},\r\n  \"address\": \"Updated!sdfsdf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/patients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"appointmentid\": {{appointmentid}},\r\n        \"purpose\": \"Updated!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"billid\": {{billid}},\r\n        \"paymethod\": \"Updated!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bills",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bills"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"diagnosis\": \"Updated!\",\r\n        \"historyid\": {{historyid}}\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/records",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"records"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE Requests",
+			"item": [
+				{
+					"name": "Delete Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/patients?id={{patientid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"patients"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{patientid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Appointment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/appointments?id={{appointmentid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{appointmentid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bills?id={{billid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bills"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{billid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Record",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/records?id={{historyid}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"records"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "{{historyid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://skyjam99.pythonanywhere.com/api",
+			"type": "string"
+		},
+		{
+			"key": "id",
+			"value": "1002",
+			"type": "string"
+		},
+		{
+			"key": "patientid",
+			"value": "1001",
+			"type": "string"
+		},
+		{
+			"key": "appointmentid",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "billid",
+			"value": "17",
+			"type": "string"
+		},
+		{
+			"key": "bill_patientid",
+			"value": "67890",
+			"type": "string"
+		},
+		{
+			"key": "historyid",
+			"value": "5",
+			"type": "string"
+		},
+		{
+			"key": "name",
+			"value": "John Doe",
+			"type": "string"
+		},
+		{
+			"key": "date",
+			"value": "2024-02-24",
+			"type": "string"
+		}
+	]
+}

@@ -11,6 +11,18 @@
         <title>Bedmass Medical Database Software</title>
     </head>
     <body class="bg-darkblue">
+        <nav class="navbar sticky-top bg-darker rounded-bottom fixed-top">
+            <div class="container-fluid w-100">
+                <div class="row w-100">
+                    <ul class="navbar-nav flex-row text-white">
+                        <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
+                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('workbench')}}">Workbench</a></li>
+                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main')}}">Document Generator</a></li>
+                        <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('main') }}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="container rounded bg-blue my-3 font-cambria w-750">
             <div class="row mt-3 pt-3">
                 <h1>New Bill</h1>
@@ -21,32 +33,38 @@
                     <h3>Patient Id:</h3>
                     <input type="text" name="PatientId">
                 </div>
+
+
                 <!-- Start of Patient Search Module -->
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
-                    <input type="text" name="name">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                    <input type="text" name="nameSearch" id="patientname">
+                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
                     <div id="IDresponses">
                         <!-- Results go here -->
                     </div>
-                    <script>
-                        $(document).ready(function(){
-                            $('input[type="submit"]').click(function(event){
-                                event.preventDefault(); // Prevent the form from submitting via the browser's default action
-                                $('#IDresponses').html('');
-                                // Get the last name from the input field
-                                var name = $('input[name="name"]').val();
-
-                                // Send a GET request to your Flask app's searchPatients route
-                                $.get('/searchPatients', { name: name }, function(data){
-
-                                    $('#IDresponses').append(data)
-                                });
-                            });
-                        });
-                    </script>
                 </div>
+                <script>
+                    /*For Patient name search*/
+                    $('#namesearch').click(function(event){
+                        $.ajax({
+                            url: '/api/patients/name',
+                            type: 'GET',
+                            data: {
+                                name: document.getElementById("patientname").value
+                            },
+                            success: function(response) {
+                                $('#IDresponses').html(response)
+                            },
+                            error: function(xhr, status, error) {
+                                $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                            }
+                        });
+                    });
+                </script>
                 <!-- End of Patient Search Module -->
+
+
             </div>
             <hr>
             <div class="row my-1"> <!--User Query for Appointment ID-->

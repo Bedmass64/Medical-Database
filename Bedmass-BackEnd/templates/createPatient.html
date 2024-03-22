@@ -24,7 +24,7 @@
             </div>
         </nav>
         <div class="container rounded bg-blue my-3 font-cambria w-750">
-            <form action="createPatient" method="post">
+
                 <div class="row mt-3 pt-3">
                     <h1 id="operationHeader">New Patient</h1>
                 </div>
@@ -99,11 +99,43 @@
                             <div class="col">
                                 <h2 id="submissionError"></h2><!--Container to show error if error should occur-->
                             </div>
-                            <input type="submit" class="btn btn-primary mx-5 my-3" value="Create User">
+                            <input type="submit" class="btn btn-primary mx-5 my-3" value="Create User" id="createUser">
+
+
+                            <script>
+                                $(document).ready(function(){
+                                    $('#createUser').click(function(e) {
+
+                                        // Construct the patient data from the form inputs
+                                        var patientData = {
+                                            name: $('input[name="FirstName"]').val() + ' ' + $('input[name="LastName"]').val(),
+                                            address: $('input[name="Address"]').val() + ', ' + $('input[name="Province"]').val() + ', ' + $('input[name="Country"]').val(),
+                                            dob: $('input[name="year"]').val() + '-' + $('#month').val() + '-' + $('input[name="Day"]').val(),
+                                            contact: $('input[name="Number"]').val()
+                                        };
+
+                                        // AJAX call to the Flask route
+                                        $.ajax({
+                                            url: '/api/patients',
+                                            type: 'POST',
+                                            contentType: 'application/json',
+                                            data: JSON.stringify(patientData),
+                                            success: function(response) {
+                                                console.log(response); // Handle success response
+                                                alert('Patient created successfully.');
+                                            },
+                                            error: function(xhr, status, error) {
+                                                console.error(error); // Handle errors
+                                                $('#submissionError').text("Failed to create patient.");
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
-            </form>
+
         </div>
     </body>
 </html>

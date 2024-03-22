@@ -37,6 +37,8 @@
                 <input type="text" name="patientid" id="patientid">
                 <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="submit">
             </div>
+
+            <!-- Start of Patient Search Module -->
             <div class="col bg-lightblue rounded mx-2">
                 <h6 class="mt-1 ms-1">Search by Name:</h6>
                 <input type="text" name="nameSearch" id="patientname">
@@ -45,6 +47,26 @@
                     <!-- Results go here -->
                 </div>
             </div>
+            <script>
+                /*For Patient name search*/
+                $('#namesearch').click(function(event){
+                    $.ajax({
+                        url: '/api/patients/name',
+                        type: 'GET',
+                        data: {
+                            name: document.getElementById("patientname").value
+                        },
+                        success: function(response) {
+                            $('#IDresponses').html(response)
+                        },
+                        error: function(xhr, status, error) {
+                            $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                        }
+                    });
+                });
+            </script>
+            <!-- End of Patient Search Module -->
+
         </div>
         <div class="row">
             <div class="col-sm-12 px-3" id="recordcontent">
@@ -66,22 +88,7 @@
             });
 
 
-            /*For Patient ID search*/
-            $('#namesearch').click(function(event){
-                $.ajax({
-                    url: '/api/patients/name',
-                    type: 'GET',
-                    data: {
-                        name: document.getElementById("patientname").value
-                    },
-                    success: function(response) {
-                        $('#IDresponses').html(response)
-                    },
-                    error: function(xhr, status, error) {
-                        $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
-                    }
-                });
-            });
+
 
             /*For Record search*/
             $('#submit').click(function() {

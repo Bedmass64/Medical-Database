@@ -36,7 +36,7 @@ def addDataAppointment(data: dict):
 
 def addDataBilling(data: dict):
     getConnection()
-    response = supabase.table("medical_history").insert(data).execute()
+    response = supabase.table("billing").insert(data).execute()
     return response.data
 
 def addDataDoctor(data: dict):

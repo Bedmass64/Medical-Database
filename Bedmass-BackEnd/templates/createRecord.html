@@ -113,9 +113,8 @@
                     var patientName = $('input[name="name"]').val();
                     // Send a GET request to your Flask app's searchPatients route
                     $.get('/searchPatients', { name: patientName }, function(data){
-                        console.log(data)
-                        alert(data)
-                        $('#IDresponses').html(data)
+                        console.log(data);
+                        $('#IDresponses').html(data);
                     });
                 });
 

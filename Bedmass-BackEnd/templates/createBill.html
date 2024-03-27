@@ -145,7 +145,7 @@
                     // Get the last name from the input field
                     var patientId = $('input[name="PatientIdForAppointment"]').val();
                     // Send a GET request to your Flask app's searchPatients route
-                    $.get('/searchPatients', { id: patientId }, function(data){
+                    $.get('/api/appointments/patientid', { id: patientId }, function(data){
                         console.log(data)
                         $('#appointmentID').html(data)
                     });

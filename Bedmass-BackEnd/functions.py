@@ -368,6 +368,14 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
     else:
         print("No appointments found on the specified date")
         return None
+    
+
+def validLogin(login):
+    responseOne = supabase.table('admin').select("login").eq('login', login).execute()
+    responseTwo = supabase.table('doctor').select("login").eq('login', login).execute()
+    if len(responseOne.data) == 0 and len(responseTwo.data) == 0:
+        return True
+    return False
 
 #Create update functions for each table
 # Test the function

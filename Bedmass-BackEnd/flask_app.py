@@ -130,7 +130,7 @@ def get_appointment_by_date():
     
 @app.route('/api/appointments/patientid', methods=["GET"])
 def get_appointment_by_patient_id():
-    id = request.args.get('patientid')
+    id = request.args.get('id')
     if id:
         return searchAppointmentsByPatientId(id)
     else:

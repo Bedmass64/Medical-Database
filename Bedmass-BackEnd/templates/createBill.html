@@ -116,7 +116,7 @@
                         <div class="col">
                             <h2 id="submissionError"></h2><!--Container to show error if error should occur-->
                         </div>
-                        <input type="submit" class="btn btn-primary mx-5 my-3" value="Create Appointment">
+                        <input type="submit" class="btn btn-primary mx-5 my-3" value="Create Appointment" id="CreateBill">
                     </div>
                 </div>
             </div>
@@ -151,10 +151,10 @@
                     });
                 });
 
-                //Appointment Create Button
-                $('#createAppointment').click(function(event){
+                //Bill Create Button
+                $('#CreateBill').click(function(event){
                     $.ajax({
-                        url: '/api/appointments',
+                        url: '/api/records',
                         type: 'POST',
                         data: {
                             patientid: $('input[name="PatientId"]').val(),

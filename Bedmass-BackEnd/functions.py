@@ -283,7 +283,7 @@ def searchByDoctorName(name):
     #print(html_output)  # Print the HTML table
     return html_output
 
-def searchByPatientId(id):
+def searchAppointmentsByPatientId(id):
     tableName = 'appointment'
     row = 'patientid'
     getConnection()

@@ -35,7 +35,7 @@
                 </div>
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
-                    <input type="text" name="nameSearch">
+                    <input type="text" name="name">
                     <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="nameSearch">
                     <div id="IDresponses">
                         <!-- Results go here -->
@@ -110,10 +110,10 @@
                     event.preventDefault(); // Prevent the form from submitting via the browser's default action
                     $('#IDresponses').html('');
                     // Get the last name from the input field
-                    var name = $('input[name="nameSearch"]').val();
+                    var patientName = $('input[name="name"]').val();
 
                     // Send a GET request to your Flask app's searchPatients route
-                    $.get('/searchPatients', { name: name }, function(data){
+                    $.get('/searchPatients', { name: patientName }, function(data){
                         console.log(data)
 
                         $('#IDresponses').html(data)

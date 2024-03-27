@@ -166,12 +166,12 @@
                             $('input[name="Day"]').val() + " " + $('input[name="Time"]').val()
                         },
                         success: function(response) {
-                            document.getElementById("submissionError").value = "Bill Added";
+                            document.getElementById("submissionError").html("Bill Added");
                             alert("Bill Added");
                             },
                         error: function(xhr, status, error) {
                             // This function is called if the request fails
-                            document.getElementById("submissionError").value = "Error, please try again";
+                            document.getElementById("submissionError").html("Error, please try again");
                             alert("Error");
                         }
                     });

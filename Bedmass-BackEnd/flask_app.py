@@ -127,6 +127,14 @@ def get_appointment_by_date():
         return getAppointmentsByDate(date)
     else:
         return "Date parameter is missing", 400
+    
+@app.route('/api/appointments/patientid', methods=["GET"])
+def get_appointment_by_patient_id():
+    id = request.args.get('patientid')
+    if id:
+        return searchByPatientId(id)
+    else:
+        return "Id parameter is missing", 400
 
 @app.route('/api/bills', methods=["GET"])
 def get_all_bills():
@@ -167,6 +175,15 @@ def get_record_by_patient_id():
         return filterTable("medical_history", "patientid", id)
     else:
         return "Patient ID parameter is missing", 400
+    
+
+@app.route('/api/doctor/name', methods=["GET"])
+def get_doctor_by_name():
+    name = request.args.get('name')
+    if name:
+        return searchByDoctorName(name)
+    else:
+        return "Name parameter is missing", 400
 
 
 #Table Formats: JSON
@@ -310,15 +327,10 @@ def delete_record():
 @app.route('/createAccount', methods=["GET", "POST"])
 def createAccount():
     if request.method == 'POST':
-        first_name = request.json.firstname
-        last_name = request.json.lastname
-        phone_number = request.json.number
-        email_address = request.json.email
-        password = request.json.password
-        speciality = request.json.specialty
-        #check if the account can be created
-        #add it to the database
-        #create role for the database? or do we just use one role shared for all staff
+        info = request.json
+        if validLogin(role, login):
+            if role == admin:
+                addDataAdmin()
         return render_template("main")
     return render_template("create.html")
 
@@ -364,7 +376,7 @@ def adminRecords():
 
 #If POST, return JSON data of the appointemnts corresponding the date sent with
 #response.json.date in (YYYY-MM-DD) format
-#if GET, render template to corresponding html file
+#if GET, render template to coFsearrresponding html file
 @app.route('/adminAppointments', methods=["GET", "POST"])
 def adminAppointments():
     if request.method == 'POST':

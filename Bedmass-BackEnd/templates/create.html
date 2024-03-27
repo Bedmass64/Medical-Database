@@ -92,12 +92,12 @@
                     url: '/createAccount',
                     type: 'POST',
                     data: {
-                        name: document.getElementById("firstname").value + " " + document.getElementById("lastname").value,
-                        number: document.getElementById("number").value,
-                        email: document.getElementById("username").value,
+                        name: "Dr. " + document.getElementById("firstname").value + " " + document.getElementById("lastname").value,
+                        contact: document.getElementById("number").value,
+                        login: document.getElementById("username").value,
                         password: document.getElementById("password").value,
-                        role: document.getElementById('role').value,
-                        specialty: document.getElementById("specialty").value
+                        adminOrStaff: document.getElementById('role').value,
+                        role: document.getElementById("specialty").value
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails

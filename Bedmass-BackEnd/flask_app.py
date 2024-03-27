@@ -132,7 +132,7 @@ def get_appointment_by_date():
 def get_appointment_by_patient_id():
     id = request.args.get('patientid')
     if id:
-        return searchByPatientId(id)
+        return searchAppointmentsByPatientId(id)
     else:
         return "Id parameter is missing", 400
 
@@ -519,7 +519,7 @@ def makeRecordUpdate():
 
 #The search patients field that takes a name argument and searchis for corresponding fields
 # This only returns name and id fields
-@app.route('/searchPatients', methods=["POST"]) #Search for only name and id
+@app.route('/searchPatients', methods=["GET"]) #Search for only name and id
 def searchPatients():
     name = request.args.get('name')
     search_data = searchByPatientName(name)

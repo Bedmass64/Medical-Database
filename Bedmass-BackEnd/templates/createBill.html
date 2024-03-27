@@ -33,12 +33,10 @@
                     <h3>Patient Id:</h3>
                     <input type="text" name="PatientId">
                 </div>
-
-
                 <!-- Start of Patient Search Module -->
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
-                    <input type="text" name="nameSearch" id="patientid">
+                    <input type="text" name="nameSearch" id="patientname">
                     <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
                     <div id="IDresponses">
                         <!-- Results go here -->
@@ -53,7 +51,7 @@
                 </div>
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Patient ID:</h6>
-                    <input type="text" name="patientIdForAppointment">
+                    <input type="text" name="PatientIdForAppointment">
                     <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="SearchForAppointment">
                     <table id="appointmentID" class="table">
                     </table>
@@ -74,7 +72,7 @@
                 <div class="col"></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown">
+                    <select id="month" name="Month">
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -145,7 +143,7 @@
                 $('#SearchForAppointment').click(function(event){
                     event.preventDefault();
                     // Get the last name from the input field
-                    var patientId = $('input[name="patientIdForAppointment"]').val();
+                    var patientId = $('input[name="PatientIdForAppointment"]').val();
                     // Send a GET request to your Flask app's searchPatients route
                     $.get('/searchPatients', { id: patientId }, function(data){
                         console.log(data)
@@ -160,7 +158,7 @@
                         type: 'POST',
                         data: {
                             patientid: $('input[name="PatientId"]').val(),
-                            doctorid: $('input[name="AppointmentId"]').val(),
+                            appointmentid: $('input[name="AppointmentId"]').val(),
                             amount: $('input[name="cost"]').val(),
                             paymethod: $('input[name="PaymentMethod"]').val(),
                             payconfirmed: "FALSE",
@@ -168,11 +166,13 @@
                             $('input[name="Day"]').val() + " " + $('input[name="Time"]').val()
                         },
                         success: function(response) {
-                            document.getElementById("submissionError").value = "Bill Added"
+                            document.getElementById("submissionError").value = "Bill Added";
+                            alert("Bill Added");
                             },
                         error: function(xhr, status, error) {
                             // This function is called if the request fails
-                            document.getElementById("submissionError").value = "Error, please try again"
+                            document.getElementById("submissionError").value = "Error, please try again";
+                            alert("Error");
                         }
                     });
                 });

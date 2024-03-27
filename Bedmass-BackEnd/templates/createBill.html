@@ -38,49 +38,24 @@
                 <!-- Start of Patient Search Module -->
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
-                    <input type="text" name="nameSearch" id="patientname">
+                    <input type="text" name="nameSearch" id="patientid">
                     <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
                     <div id="IDresponses">
                         <!-- Results go here -->
                     </div>
                 </div>
-                <script>
-                    /*For Patient name search*/
-                    $('#namesearch').click(function(event){
-                        $.ajax({
-                            url: '/api/patients/name',
-                            type: 'GET',
-                            data: {
-                                name: document.getElementById("patientname").value
-                            },
-                            success: function(response) {
-                                $('#IDresponses').html(response)
-                            },
-                            error: function(xhr, status, error) {
-                                $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
-                            }
-                        });
-                    });
-                </script>
-                <!-- End of Patient Search Module -->
-
-
             </div>
             <hr>
             <div class="row my-1"> <!--User Query for Appointment ID-->
                 <div class="col ms-2">
                     <h3>Appointment Id:</h3>
-                    <input type="text" name="DoctorId">
+                    <input type="text" name="AppointmentId">
                 </div>
                 <div class="col bg-lightblue rounded mx-2">
-                    <h6 class="mt-1 ms-1">Search by Last Name:</h6>
-                    <input type="text" name="LastName">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                    <h6 class="mt-1 ms-1">Search by Patient ID:</h6>
+                    <input type="text" name="patientIdForAppointment">
+                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="SearchForAppointment">
                     <table id="appointmentID" class="table">
-                        <tr>
-                            <th>Name:</th>
-                            <th>Appointment ID:</th>
-                        </tr>
                     </table>
                 </div>
             </div>
@@ -100,18 +75,18 @@
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
                     <select id="month" name="MonthDropdown">
-                        <option value="jan">January</option>
-                        <option value="feb">February</option>
-                        <option value="mar">March</option>
-                        <option value="apl">April</option>
-                        <option value="may">May</option>
-                        <option value="jun">June</option>
-                        <option value="jul">July</option>
-                        <option value="aug">August</option>
-                        <option value="sep">September</option>
-                        <option value="oct">October</option>
-                        <option value="nov">November</option>
-                        <option value="dec">December</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                       </select>
                 </div>
                 <div class="col">
@@ -130,17 +105,10 @@
             </div>
             <hr>
             <div class="row my-1">
-                <div class="col ms-2"><h3>Reason for Billing:</h3></div>
-            </div>
-            <div class="row my-1 px-4">
-                <input type="text" name="reason">
-            </div>
-            <hr>
-            <div class="row my-1">
-                <div class="col ms-2"><h3>Contact Info:</h3></div>
+                <div class="col ms-2"><h3>Payment Method:</h3></div>
                 <div class="col">
-                    <h6 class="my-0 ms-1">Phone Number:</h6>
-                    <input type="number" name="FirstName">
+                    <h6 class="my-0 ms-1">Method:</h6>
+                    <input type="number" name="PaymentMethod">
                 </div>
             </div>
             <hr>
@@ -155,5 +123,60 @@
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                /*For Patient name search*/
+                $('#namesearch').click(function(event){
+                    $.ajax({
+                        url: '/searchPatients',
+                        type: 'GET',
+                        data: {
+                            name: document.getElementById("patientname").value
+                        },
+                        success: function(response) {
+                            $('#IDresponses').html(response)
+                        },
+                        error: function(xhr, status, error) {
+                            $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                        }
+                    });
+                });
+                //Doctor ID search
+                $('#SearchForAppointment').click(function(event){
+                    event.preventDefault();
+                    // Get the last name from the input field
+                    var patientId = $('input[name="patientIdForAppointment"]').val();
+                    // Send a GET request to your Flask app's searchPatients route
+                    $.get('/searchPatients', { id: patientId }, function(data){
+                        console.log(data)
+                        $('#appointmentID').html(data)
+                    });
+                });
+
+                //Appointment Create Button
+                $('#createAppointment').click(function(event){
+                    $.ajax({
+                        url: '/api/appointments',
+                        type: 'POST',
+                        data: {
+                            patientid: $('input[name="PatientId"]').val(),
+                            doctorid: $('input[name="AppointmentId"]').val(),
+                            amount: $('input[name="cost"]').val(),
+                            paymethod: $('input[name="PaymentMethod"]').val(),
+                            payconfirmed: "FALSE",
+                            date: $('input[name="Year"]').val() + "-" + $('input[name="Month"]').val() + "-" +
+                            $('input[name="Day"]').val() + " " + $('input[name="Time"]').val()
+                        },
+                        success: function(response) {
+                            document.getElementById("submissionError").value = "Bill Added"
+                            },
+                        error: function(xhr, status, error) {
+                            // This function is called if the request fails
+                            document.getElementById("submissionError").value = "Error, please try again"
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>

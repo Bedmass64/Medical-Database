@@ -257,6 +257,58 @@ def searchByPatientName(rowValue):
     #print(html_output)  # Print the HTML table
     return html_output
 
+def searchByDoctorName(name):
+    tableName = 'doctor'
+    row = 'name'
+    getConnection()
+    response = supabase.table(tableName).select("name, doctorid").ilike(row, f'%{name}%').execute()
+
+    # Check if data is present in the response
+    if not response.data:  # Simplified error handling
+        print("No data found or error in fetching data")
+        return None
+
+    # Construct HTML table from response data
+    html_output = table_format  # Start the table and add headers
+
+    # Add column headers based on the first item keys if there's data
+    if response.data:
+        html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
+
+        # Fill the table rows with the data
+        for item in response.data:
+            html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
+
+    html_output += "</table>"  # Close the table
+    #print(html_output)  # Print the HTML table
+    return html_output
+
+def searchByPatientId(id):
+    tableName = 'appointment'
+    row = 'patientid'
+    getConnection()
+    response = supabase.table(tableName).select("appointmentid, patientid, date, time").eq(row, id).execute()
+
+    # Check if data is present in the response
+    if not response.data:  # Simplified error handling
+        print("No data found or error in fetching data")
+        return None
+
+    # Construct HTML table from response data
+    html_output = table_format  # Start the table and add headers
+
+    # Add column headers based on the first item keys if there's data
+    if response.data:
+        html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
+
+        # Fill the table rows with the data
+        for item in response.data:
+            html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
+
+    html_output += "</table>"  # Close the table
+    #print(html_output)  # Print the HTML table
+    return html_output
+
 # # Test the function
 # filterTable('billing', 'billid', 15)
 
@@ -268,6 +320,7 @@ def searchByUsernameDoctor(Username: str):
     return password
 
 
+    
 def searchByUsernameAdmin(Username: str):
     response = supabase.table('admin').select("password").eq('login', Username).execute()
     # Extracting password from response

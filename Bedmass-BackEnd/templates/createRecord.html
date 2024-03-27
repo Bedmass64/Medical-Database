@@ -33,68 +33,48 @@
                     <h3>Patient Id:</h3>
                     <input type="text" name="PatientId">
                 </div>
-
-                <!-- Start of Patient Search Module -->
                 <div class="col bg-lightblue rounded mx-2">
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
                     <input type="text" name="nameSearch">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="nameSearch">
                     <div id="IDresponses">
                         <!-- Results go here -->
                     </div>
-                    <script>
-                        $(document).ready(function(){
-                            $('input[type="submit"]').click(function(event){
-                                event.preventDefault(); // Prevent the form from submitting via the browser's default action
-                                $('#IDresponses').html('');
-                                // Get the last name from the input field
-                                var name = $('input[name="nameSearch"]').val();
-
-                                // Send a GET request to your Flask app's searchPatients route
-                                $.get('/searchPatients', { name: name }, function(data){
-                                    console.log(data)
-
-                                    $('#IDresponses').html(data)
-                                });
-                            });
-                        });
-                    </script>
                 </div>
-            <!-- End of Patient Search Module -->
             </div>
             <hr>
             <div class="row my-1">
                 <div class="col ms-2"><h3>Date of Appointment:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Time:</h6>
-                    <input type="text" name="Time">
+                    <input type="text" name="Time" id="Time">
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Day:</h6>
-                    <input type="number" name="Day">
+                    <input type="number" name="Day" id="Day">
                 </div>
             <div class="row my-1 ms-1">
                 <div class="col"></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown">
-                        <option value="jan">January</option>
-                        <option value="feb">February</option>
-                        <option value="mar">March</option>
-                        <option value="apl">April</option>
-                        <option value="may">May</option>
-                        <option value="jun">June</option>
-                        <option value="jul">July</option>
-                        <option value="aug">August</option>
-                        <option value="sep">September</option>
-                        <option value="oct">October</option>
-                        <option value="nov">November</option>
-                        <option value="dec">December</option>
+                    <select id="Month" name="MonthDropdown">
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                       </select>
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Year:</h6>
-                    <input type="number" name="Year">
+                    <input type="number" name="Year" id="Year">
                 </div>
             </div>
             </div>
@@ -119,10 +99,49 @@
                         <div class="col">
                             <h2 id="submissionError"></h2><!--Container to show error if error should occur-->
                         </div>
-                        <input type="submit" class="btn btn-primary mx-5 my-3" value="Create Appointment">
+                        <input type="submit" class="btn btn-primary mx-5 my-3" value="Create" id="CreateRecord">
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function(){
+                $("#nameSearch").click(function(event){
+                    event.preventDefault(); // Prevent the form from submitting via the browser's default action
+                    $('#IDresponses').html('');
+                    // Get the last name from the input field
+                    var name = $('input[name="nameSearch"]').val();
+
+                    // Send a GET request to your Flask app's searchPatients route
+                    $.get('/searchPatients', { name: name }, function(data){
+                        console.log(data)
+
+                        $('#IDresponses').html(data)
+                    });
+                });
+
+                //Record Create Button
+                $('#CreateRecord').click(function(event){
+                        $.ajax({
+                            url: '/api/records',
+                            type: 'POST',
+                            data: {
+                                patientid: $('input[name="PatientId"]').val(),
+                                date: document.getElementById("Year").value + "-" + document.getElementById("Month").value + "-" +
+                                + document.getElementById("Day").value + " " + document.getElementById("Time").value,
+                                diagnosis: $('input[name="diagnosis"]').val(),
+                                treatment: $('input[name="treatment"]').val()
+                            },
+                            success: function(response) {
+                                document.getElementById("submissionError").value = "Record Added"
+                             },
+                            error: function(xhr, status, error) {
+                                // This function is called if the request fails
+                                document.getElementById("submissionError").value = "Error, please try again"
+                            }
+                        });
+                    });
+            });
+        </script>
     </body>
 </html>

@@ -324,14 +324,21 @@ def delete_record():
 #For POST, login with fields stated below. If success, log user in and create an account and
 #redirect to main page. If not, throw an error
 #For GET, render the create html page
+#More to be done to actually create the pages
 @app.route('/createAccount', methods=["GET", "POST"])
 def createAccount():
     if request.method == 'POST':
-        info = request.json
-        if validLogin(role, login):
-            if role == admin:
-                addDataAdmin()
-        return render_template("main")
+        info = request.get_json()
+        if validLogin(info['login']):
+            try:
+                if info['role'] == "admin":
+                    addDataAdmin(info)
+                else:
+                    addDataDoctor(info)
+                return render_template("main.html")
+            except Exception as e:
+                print(e)
+        return render_template("create.html")
     return render_template("create.html")
 
 #Admin Pages---------------------------------------------------------

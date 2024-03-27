@@ -111,7 +111,7 @@
                     $('#IDresponses').html('');
                     // Get the last name from the input field
                     var patientName = $('input[name="name"]').val();
-
+                    alert($('input[name="name"]').val());
                     // Send a GET request to your Flask app's searchPatients route
                     $.get('/searchPatients', { name: patientName }, function(data){
                         console.log(data)

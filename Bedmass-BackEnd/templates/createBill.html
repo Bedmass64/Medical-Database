@@ -154,7 +154,7 @@
                 //Bill Create Button
                 $('#CreateBill').click(function(event){
                     $.ajax({
-                        url: '/api/records',
+                        url: '/api/bills',
                         type: 'POST',
                         data: {
                             patientid: $('input[name="PatientId"]').val(),

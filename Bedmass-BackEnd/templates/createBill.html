@@ -164,12 +164,10 @@
                         type: 'POST',
                         data: JSON.stringify(billData),
                         success: function(response) {
-                            document.getElementById("submissionError").html("Bill Added");
                             alert("Bill Added");
                             },
                         error: function(xhr, status, error) {
                             // This function is called if the request fails
-                            document.getElementById("submissionError").html("Error, please try again");
                             alert("Error");
                         }
                     });

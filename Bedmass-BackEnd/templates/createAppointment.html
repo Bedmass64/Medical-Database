@@ -94,7 +94,7 @@
                     </div>
                     <div class="col">
                         <h6 class="my-0 ms-1">Year:</h6>
-                        <input type="number" name="Year" id="Time">
+                        <input type="number" name="Year" id="Year">
                     </div>
                 </div>
                 </div>
@@ -154,8 +154,7 @@
                             data: {
                                 patientid: document.getElementById("PatientId").value,
                                 doctorid: document.getElementById("DoctorId").value,
-                                date: document.getElementById("Year").value + "-" + document.getElementById("Month").value + "-" +
-                                + document.getElementById("Day").value,
+                                date: document.getElementById("Year").value + "-" + document.getElementById("Month").value + "-" + document.getElementById("Day").value,
                                 time: document.getElementById("Time").value,
                                 purpose: document.getElementById("Purpose").value
                             },

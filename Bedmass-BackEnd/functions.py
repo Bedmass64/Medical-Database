@@ -235,7 +235,8 @@ def searchByPatientName(rowValue):
     tableName = 'patient'
     row = 'name'
     getConnection()
-    response = supabase.table(tableName).select("name, patientid").eq(row, rowValue).execute
+    print("got Connection")
+    response = supabase.table(tableName).select("name, patientid").eq(row, rowValue).execute()
 
     # Check if data is present in the response
     if not response.data:  # Simplified error handling

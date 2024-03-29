@@ -51,7 +51,7 @@
                         <input type="text" id="DoctorId">
                     </div>
                     <div class="col bg-lightblue rounded mx-2">
-                        <h6 class="mt-1 ms-1">Search by Last Name:</h6>
+                        <h6 class="mt-1 ms-1">Search by Name:</h6>
                         <input type="text" name="docName">
                         <input type="button" class="btn btn-primary mx-5 my-3" value="Search" id="docIdSearch">
                         <table id="DocResponses" class="table">
@@ -126,10 +126,19 @@
                         var patientName = $('input[name="nameSearch"]').val();
 
                         // Send a GET request to your Flask app's searchPatients route
-                        $.get('/searchPatients', { name: patientName }, function(data){
-                            console.log(data)
-
-                            $('#IDresponses').html(data)
+                        $.ajax({
+                            url: '/searchPatients',
+                            type: 'GET',
+                            contentType: 'application/json',
+                            data: JSON.stringify({name: patientName}),
+                            success: function(response) {
+                                console.log(response);
+                                $('#IDresponses').html(response);
+                             },
+                            error: function(xhr, status, error) {
+                                // This function is called if the request fails
+                                alert("Error");
+                            }
                         });
                     });
 
@@ -139,25 +148,36 @@
                         // Get the last name from the input field
                         var docName = $('input[name="docName"]').val();
                         // Send a GET request to your Flask app's searchPatients route
-                        $.get('/api/doctor/name', { name: docName }, function(data){
-                            console.log(data)
-
-                            $('#Docresponses').html(data)
+                        $.ajax({
+                            url: '/api/doctor/name',
+                            type: 'GET',
+                            contentType: 'application/json',
+                            data: JSON.stringify({name: docName}),
+                            success: function(response) {
+                                $('#Docresponses').html(response);
+                             },
+                            error: function(xhr, status, error) {
+                                // This function is called if the request fails
+                                alert("Error");
+                            }
                         });
                     });
 
                     //Appointment Create Button
                     $('#createAppointment').click(function(event){
-                        $.ajax({
-                            url: '/api/appointments',
-                            type: 'POST',
-                            data: {
+                        let toInsert = {
                                 patientid: document.getElementById("PatientId").value,
                                 doctorid: document.getElementById("DoctorId").value,
                                 date: document.getElementById("Year").value + "-" + document.getElementById("Month").value + "-" + document.getElementById("Day").value,
                                 time: document.getElementById("Time").value,
                                 purpose: document.getElementById("Purpose").value
-                            },
+                            };
+                            console.log(toInsert);
+                        $.ajax({
+                            url: '/api/appointments',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(toInsert),
                             success: function(response) {
                                 document.getElementById("submissionError").value = "Appointment Added";
                                 alert("Appointment Added");
@@ -171,7 +191,6 @@
                     });
                     
                 });
-                
             </script>
     </body>
 </html>

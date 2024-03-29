@@ -108,37 +108,47 @@
             $(document).ready(function(){
                 $("#nameSearch").click(function(event){
                     event.preventDefault(); // Prevent the form from submitting via the browser's default action
-                    $('#IDresponses').html('');
                     // Get the last name from the input field
                     var patientName = $('input[name="name"]').val();
                     // Send a GET request to your Flask app's searchPatients route
-                    $.get('/searchPatients', { name: patientName }, function(data){
-                        console.log(data);
-                        $('#IDresponses').html(data);
+                    $.ajax({
+                        url: '/searchPatients',
+                        type: 'GET',
+                        contentType: 'application/json',
+                        data: JSON.stringify({name: patientName}),
+                        success: function(response) {
+                            console.log(response);
+                            $('#IDresponses').html(response);
+                            },
+                        error: function(xhr, status, error) {
+                            // This function is called if the request fails
+                            alert("Error");
+                        }
                     });
                 });
 
                 //Record Create Button
                 $('#CreateRecord').click(function(event){
-                        $.ajax({
-                            url: '/api/records',
-                            type: 'POST',
-                            data: {
+                    let toInsert = {
                                 patientid: $('input[name="PatientId"]').val(),
                                 date: document.getElementById("Year").value + "-" + document.getElementById("Month").value + "-" +
                                 + document.getElementById("Day").value + " " + document.getElementById("Time").value,
                                 diagnosis: $('input[name="diagnosis"]').val(),
                                 treatment: $('input[name="treatment"]').val()
+                            };
+                    $.ajax({
+                        url: '/api/records',
+                        type: 'POST',
+                        data: JSON.stringify(toInsert),
+                        success: function(response) {
+                            alert("Record Added");
                             },
-                            success: function(response) {
-                                document.getElementById("submissionError").value = "Record Added"
-                             },
-                            error: function(xhr, status, error) {
-                                // This function is called if the request fails
-                                document.getElementById("submissionError").value = "Error, please try again"
-                            }
-                        });
+                        error: function(xhr, status, error) {
+                            // This function is called if the request fails
+                            alert("Error");
+                        }
                     });
+                });
             });
         </script>
     </body>

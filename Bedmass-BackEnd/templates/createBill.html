@@ -125,17 +125,21 @@
             $(document).ready(function(){
                 /*For Patient name search*/
                 $('#namesearch').click(function(event){
+                    let patientName = document.getElementById("patientname").value;
+
+                    // Send a GET request to your Flask app's searchPatients route
                     $.ajax({
                         url: '/searchPatients',
                         type: 'GET',
-                        data: {
-                            name: document.getElementById("patientname").value
-                        },
+                        contentType: 'application/json',
+                        data: JSON.stringify({name: patientName}),
                         success: function(response) {
-                            $('#IDresponses').html(response)
-                        },
+                            console.log(response);
+                            $('#IDresponses').html(response);
+                            },
                         error: function(xhr, status, error) {
-                            $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                            // This function is called if the request fails
+                            alert("Error");
                         }
                     });
                 });

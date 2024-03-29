@@ -522,6 +522,7 @@ def makeRecordUpdate():
 @app.route('/searchPatients', methods=["GET"]) #Search for only name and id
 def searchPatients():
     name = request.args.get('name')
+    print(name)
     search_data = searchByPatientName(name)
     return jsonify(search_data)
 

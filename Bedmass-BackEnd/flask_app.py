@@ -523,7 +523,7 @@ def makeRecordUpdate():
 def searchPatients():
     name = request.args.get('name')
     search_data = searchByPatientName(name)
-    return search_data
+    return jsonify(search_data)
 
 #Searches appointments by date (YYYY-MM-DD), returns name, date and appointment id
 @app.route('/searchAppointments', methods=["GET", "POST"])

@@ -524,7 +524,6 @@ def searchPatients():
     name = request.args.get('name')
     print(name)
     search_data = searchByPatientName(name)
-    print(search_data)
     return jsonify(search_data)
 
 #Searches appointments by date (YYYY-MM-DD), returns name, date and appointment id

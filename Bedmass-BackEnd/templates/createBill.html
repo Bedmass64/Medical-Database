@@ -157,7 +157,7 @@
 
                 //Bill Create Button
                 $('#CreateBill').click(function(event){
-                    let amountCost = parseInt(document.getElementById("cost"), 10);
+                    let amountCost = parseInt(document.getElementById("cost").value, 10);
                     console.log(amountCost);
                     var billData = {
                         patientid: $('input[name="PatientId"]').val(),

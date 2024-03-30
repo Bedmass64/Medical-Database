@@ -238,6 +238,8 @@ def searchByPatientName(rowValue):
     print("got Connection")
     try:
         response = supabase.table(tableName).select("name, patientid").eq(row, rowValue).execute()
+        if response.error:
+            return "No results found"
         # Construct HTML table from response data
         html_output = table_format  # Start the table and add headers
 

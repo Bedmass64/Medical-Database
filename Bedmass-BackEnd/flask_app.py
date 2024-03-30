@@ -521,7 +521,7 @@ def makeRecordUpdate():
 # This only returns name and id fields
 @app.route('/searchPatients', methods=['GET']) #Search for only name and id
 def searchPatients():
-    name = 'Riley Meyers'
+    name = request.form.get('name')
     print(name)
     search_data = searchByPatientName(name)
     return jsonify(search_data)

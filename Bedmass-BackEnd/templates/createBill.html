@@ -160,6 +160,9 @@
                     var billData = {
                         patientid: $('input[name="PatientId"]').val(),
                         appointmentid: $('input[name="AppointmentId"]').val(),
+                        date:  $('input[name="Year"]').val() + "-" +  $('input[name="Month"]').val() + "-" +  $('input[name="Day"]').val() + " " 
+                        +  $('input[name="Time"]').val(),
+                        amount: Number( $('input[name="cash"]').val()),
                         paymethod: $('input[name="PaymentMethod"]').val(),
                         payconfirmed: false
                     };

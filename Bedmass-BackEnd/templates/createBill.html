@@ -162,7 +162,7 @@
                         appointmentid: $('input[name="AppointmentId"]').val(),
                         date:  $('input[name="Year"]').val() + "-" +  $('input[name="Month"]').val() + "-" +  $('input[name="Day"]').val() + " " 
                         +  $('input[name="Time"]').val(),
-                        amount: Number( $('input[name="cash"]').val()),
+                        amount: parseInt($('input[name="cash"]').val(), 10),
                         paymethod: $('input[name="PaymentMethod"]').val(),
                         payconfirmed: false
                     };

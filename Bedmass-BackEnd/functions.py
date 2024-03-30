@@ -238,6 +238,7 @@ def searchByPatientName(rowValue):
     print("got Connection")
     try:
         response = supabase.table(tableName).select("name, patientid").eq(row, rowValue).execute()
+        print(response)  # See what the response object actually contains
         if response.error:
             return "No results found"
         # Construct HTML table from response data

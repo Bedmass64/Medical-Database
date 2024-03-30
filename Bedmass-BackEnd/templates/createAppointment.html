@@ -128,7 +128,7 @@
                         // Send a GET request to your Flask app's searchPatients route
                         $.ajax({
                             url: '/searchPatients',
-                            type: 'POST',
+                            type: 'GET',
                             contentType: 'application/json',
                             data: JSON.stringify({name: patientName}),
                             success: function(response) {

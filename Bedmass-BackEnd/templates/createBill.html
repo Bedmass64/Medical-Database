@@ -169,6 +169,7 @@
                     $.ajax({
                         url: '/api/bills',
                         type: 'POST',
+                        contentType: 'application/json',
                         data: JSON.stringify(billData),
                         success: function(response) {
                             alert("Bill Added");

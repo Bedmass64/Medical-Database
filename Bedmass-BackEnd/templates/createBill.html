@@ -164,8 +164,9 @@
                         + " " + $('input[name="Time"]').val(),
                         amount: $('input[name="cost"]').val(),
                         paymethod: $('input[name="PaymentMethod"]').val(),
-                        payconfirmed: "False"
+                        payconfirmed: false
                     };
+                    console.log(billData);
                     $.ajax({
                         url: '/api/bills',
                         type: 'POST',

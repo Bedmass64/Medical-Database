@@ -158,10 +158,13 @@
                 //Bill Create Button
                 $('#CreateBill').click(function(event){
                     var billData = {
-                        name: $('input[name="FirstName"]').val() + ' ' + $('input[name="LastName"]').val(),
-                        address: $('input[name="Address"]').val() + ', ' + $('input[name="Province"]').val() + ', ' + $('input[name="Country"]').val(),
-                        dob: $('input[name="year"]').val() + '-' + $('#month').val() + '-' + $('input[name="Day"]').val(),
-                        contact: $('input[name="Number"]').val()
+                        patientid: $('input[name="PatientId"]').val(),
+                        appointmentid: $('input[name="AppointmentId"]').val(),
+                        date: $('input[name="Year"]').val() + "-" + $('input[name="Month"]').val() + "-" + $('input[name="Day"]').val()
+                        + " " + $('input[name="Time"]').val(),
+                        amount: $('input[name="cost"]').val(),
+                        paymethod: $('input[name="PaymentMethod"]').val(),
+                        payconfirmed: "False"
                     };
                     $.ajax({
                         url: '/api/bills',

@@ -98,7 +98,7 @@
                 <div class="col ms-2"><h3>Cost:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Cost:</h6>
-                    <input type="text" name="cost">
+                    <input type="text" name="cost" id="cost">
                 </div>
             </div>
             <hr>
@@ -157,12 +157,14 @@
 
                 //Bill Create Button
                 $('#CreateBill').click(function(event){
+                    let amountCost = parseInt(document.getElementById("cost"), 10);
+                    console.log(amountCost);
                     var billData = {
                         patientid: $('input[name="PatientId"]').val(),
                         appointmentid: $('input[name="AppointmentId"]').val(),
                         date:  $('input[name="Year"]').val() + "-" +  $('select[name="Month"]').val() + "-" +  $('input[name="Day"]').val() + " " 
                         +  $('input[name="Time"]').val(),
-                        amount: $('input[name="cost"]').val(),
+                        amount: amountCost,
                         paymethod: $('input[name="PaymentMethod"]').val(),
                         payconfirmed: false
                     };

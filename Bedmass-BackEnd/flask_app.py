@@ -519,7 +519,7 @@ def makeRecordUpdate():
 
 #The search patients field that takes a name argument and searchis for corresponding fields
 # This only returns name and id fields
-@app.route('/searchPatients', methods=["POST"]) #Search for only name and id
+@app.route('/searchPatients', methods=['GET']) #Search for only name and id
 def searchPatients():
     name = request.args.get('name')
     print(name)

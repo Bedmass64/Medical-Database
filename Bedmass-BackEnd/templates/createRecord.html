@@ -141,6 +141,7 @@
                     $.ajax({
                         url: '/api/records',
                         type: 'POST',
+                        contentType: 'application/json',
                         data: JSON.stringify(toInsert),
                         success: function(response) {
                             alert("Record Added");

@@ -128,6 +128,7 @@
             
             // Patient search by name
             $('#namesearch').click(function(event){
+                event.preventDefault(); 
                 $.ajax({
                     url: '/api/patients/name',
                     type: 'GET',
@@ -145,6 +146,7 @@
 
             // Search by patient id and place patient info above form
             $('#idsearch').click(function() {
+                event.preventDefault(); 
                 $.ajax({
                     url: '/api/patients/id',
                     type: 'GET',

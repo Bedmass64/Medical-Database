@@ -47,7 +47,7 @@
         </div>
     </div>
     
-    <div class="container rounded bg-blue font-cambria">
+    <div class="container rounded bg-blue font-cambria" id="formsection">
         <div class="response-placeholder"><!-- Place for search response --></div>
         <h1>Patient Info:</h1>
         <form>
@@ -153,7 +153,7 @@
                     data: { patientid: $('#patientid').val() },
                     success: function(response) {
                         // Place response above form
-                        $('.response-placeholder').html(response).prependTo('#content');
+                        $('.response-placeholder').html(response).prependTo('#formsection');
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
@@ -163,10 +163,63 @@
             });
 
             // Update patient info
+            $('#update').click(function() {
+                event.preventDefault(); 
+                // Fields are patientid, name, address, dob, and contact
+                // Return an error if any of the fields are empty
+                if ($('#patientid').val() == '' || $('#FirstName').val() == '' || $('#LastName').val() == '' || $('#Address').val() == '' || $('#Province').val() == '' || $('#Country').val() == '' || $('#Day').val() == '' || $('#MonthDropdown').val() == '' || $('#year').val() == '' || $('#number').val() == '') {
+                    alert("Please fill in all fields.");
+                    return;
+                }
 
+                patient_id = $('#patientid').val();
+                patient_name = $('#FirstName').val() + ' ' + $('#LastName').val();
+                patient_address = $('#Address').val() + ', ' + $('#Province').val() + ', ' + $('#Country').val();
+                patient_dob = $('#Day').val() + '/' + $('#MonthDropdown').val() + '/' + $('#year').val();
+                patient_contact = $('#number').val();
+
+
+                $.ajax({
+                    url: '/api/patients',
+                    type: 'PUT',
+                    data: {
+                        patientid: patient_id,
+                        name: patient_name,
+                        address: patient_address,
+                        dob: patient_dob,
+                        contact: patient_contact
+                    },
+                    success: function(response) {
+                        alert("Patient info updated.");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to update patient info.");
+                    }
+                });
+            });
 
             // Delete patient info
-            
+            $('#delete').click(function() {
+                event.preventDefault(); 
+                if ($('#patientid').val() == '') {
+                    alert("Please fill in the patient id.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/api/patients',
+                    type: 'DELETE',
+                    data: {
+                        patientid: $('#patientid').val()
+                    },
+                    success: function(response) {
+                        alert("Patient info deleted.");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to delete patient info.");
+                    }
+                });
+            });
             
         });
     </script>

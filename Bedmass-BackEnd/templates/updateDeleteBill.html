@@ -30,26 +30,23 @@
         <div class="row my-1 font-cambria py-2">
             <div class="col ms-2">
                 <h5>Search By Bill Id:</h5>
-                <input type="text" name="patient_id">
-                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                <input type="text" id="bill_id">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="billidsearch">
             </div>
             <div class="col bg-lightblue rounded mx-2">
-                <h6 class="mb-2 ms-1">Search by Name:</h6>
-                <input type="text" name="LastName" id="patientsearch">
-                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
-                <table id="IDresponses" class="table">
-                    <tr>
-                        <th>Name:</th>
-                        <th>Bill ID:</th>
-                        <th>Amount</th>
-                    </tr>
-                </table>
+                <h6 class="mt-1 ms-1">Search by Patient ID:</h6>
+                <input type="text" id="patient_id">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="patientidsearch">
+                <div id="idResponses">
+                    <!-- Results go here -->
+                </div>
             </div>
         </div>
     </div>
-    <div class="container rounded bg-blue font-cambria">
+    <div class="container rounded bg-blue font-cambria" id="formsection">
+        <div class="response-placeholder"><!-- Place for search response --></div>
         <h1>Bill Info:</h1>
-        <form action="patientInfo">
+        <form>
             <div class="row my-1">
                 <div class="col ms-2"><h3>Date of Creation:</h3></div>
                 <div class="col">
@@ -58,13 +55,13 @@
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Day:</h6>
-                    <input type="number" name="Day" id="dat">
+                    <input type="number" name="Day" id="date">
                 </div>
             <div class="row my-1 ms-1">
                 <div class="col"></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown" id="month">
+                    <select id="month">
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -101,6 +98,21 @@
                 <input type="text" name="reason" id="PaymentMethod">
             </div>
             <hr>
+            <div class="row my-1">
+                <div class="col ms-2"><h3>Appointment ID:</h3></div>
+            </div>
+            <div class="row my-1 px-4">
+                <input type="text" name="reason" id="appointment_id">
+            </div>
+            <hr>
+            
+            <div class="row my-1">
+                <div class="col ms-2"><h3>Payment Confirmed:</h3></div>
+            </div>
+            <div class="row my-1 px-4">
+                <input type="text" name="reason" id="payconfirmed">
+            </div>
+            <hr>
             <div class="row">
                 <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update" id="update"></div>
                <div class=col><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete/Pay Bill" id="delete"></div>
@@ -108,97 +120,121 @@
         </form>
     </div>
     <script>
-        var currentBill = undefined;
         $(document).ready(function(){
-            /*For Patient ID search*/
-            $('#namesearch').click(function(event){
+
+
+            // Billing search by patient id
+            $('#patientidsearch').click(function(event){
+                event.preventDefault();
                 $.ajax({
-                    url: '/searchBills',
-                    type: 'POST',
+                    url: '/api/bills/patientid',
+                    type: 'GET',
                     data: {
-                        name: document.getElementById("patientsearch").value
+                        id: document.getElementById("patient_id").value
                     },
                     success: function(response) {
-                        $('#IDresponses').html(response)
+                        $('#idResponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                        $('#idResponses').html('<h1> Error: ' + error + "</h1>");
                     }
                 });
             });
 
-            /*Bill Search by ID*/
-            $('#submit').click(function() {
+            // Search by bill id and place bill info above form
+            $('#billidsearch').click(function() {
+                event.preventDefault();
                 $.ajax({
-                    url: '/adminPatients',
-                    type: 'POST',
-                    data: {
-                        appointmentid: document.getElementById("appointmentid").value
-                    },
+                    url: '/api/bills/id',
+                    type: 'GET',
+                    data: { id: $('#bill_id').val() },
                     success: function(response) {
-                        currentBill = response;
-                        document.getElementById('time').value = response.time;
-                        document.getElementById('patientid').value = response.patientid;
-                        document.getElementById('day').value = response.date.substr(5,2);
-                        document.getElementById('year').value = response.date.substr(0,4);
-                        document.getElementById('month').value = response.date.substr(8,2);
+                        // Place response above form
+                        $('.response-placeholder').html(response).prependTo('#formsection');
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        alert("Failed to load bill info.");
                     }
                 });
             });
 
-            /*Update*/
-            $('#update').click(function(){
-                if (currentBill != undefined){
-                    let toUpdate = {};
-                    if (document.getElementById('amount').value !=  currentAppointment.patientid){
-                        toUpdate.patientid = currentAppointment.patientid;
-                    }
-                    let date = document.getElementById('year').value + "-" + document.getElementById('month').value;
-                    date += "-" + document.getElementById("day").value;
-                    if (date !=  currentAppointment.date.substr(0,10)){
-                        toUpdate.date = date;
-                    }
-                    if (document.getElementById('reason').value != currentAppointment.purpose){
-                        currentAppointment.purpose = document.getElementById('reason').value;
-                    }
-                    if (toUpdate != {}){
-                        $.ajax({
-                            url: '/makeRecordUpdate',
-                            type: 'POST',
-                            data: toUpdate,
-                            error: function(xhr, status, error) {
-                                console.log("error");
-                            }
-                        })
-                    }
-                }
+            $('form').on('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting through HTTP
             });
 
-
-            /*Delete*/
-            $('#delete').click(function(){
-                if (currentAppointment != undefined){
-                    $.ajax({
-                        url: '/deleteRecord',
-                        type: 'POST',
-                        data: {
-                            appointmentid: currentAppointment.appointmentid
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("error");
-                        }
-                    })
+            // Update Bill info
+            $('#update').click(function() {
+                event.preventDefault();
+                // Fields are billid, patientid, date, amount, paymethod, appointmentid, payconfirmed
+                // Return an error if any of the fields are empty
+                if ($('#bill_id').val() == '' || $('#patient_id').val() == '' || $('#date').val() == '' || $('#month').val() == '' || $('#year').val() == '' || $('#cost').val() == '' || $('#PaymentMethod').val() == '' || $('#appointment_id').val() == '' || $('#payconfirmed').val() == '') {
+                    alert("Please fill in all fields.");
+                    return;
                 }
-            });
 
-            /*For Logout*/
-            $('#logout').click(function(){
+                let bill_id = $('#bill_id').val();
+                let patient_id = $('#patient_id').val();
+                let bill_date = $('#date').val() + '/' + $('#month').val() + '/' + $('#year').val();
+                let bill_amount = $('#cost').val();
+                let bill_paymethod = $('#PaymentMethod').val();
+                let bill_appointmentid = $('#appointment_id').val();
+                let bill_payconfirmed = $('#payconfirmed').val();
+
+
+
+                let bill_data = {
+                    billid: bill_id,
+                    patientid: patient_id,
+                    date: bill_date,
+                    amount: bill_amount,
+                    paymethod: bill_paymethod,
+                    appointmentid: bill_appointmentid,
+                    payconfirmed: bill_payconfirmed
+                };
+                console.log(bill_data);
+
+                
+
                 $.ajax({
-                    url: '/logout',
-                    type: 'GET'
-                })
+                    url: '/api/bills',
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(bill_data),
+                    dataType: 'json',
+                    success: function(response) {
+                        alert("Bill info updated.");
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to update Bill info.");
+                        //console.log(data);
+                    }
+                });
             });
-        });
+
+            // Delete Bill info
+            $('#delete').click(function() {
+                event.preventDefault();
+                let bill_id = $('#bill_id').val()
+                if (bill_id == '') {
+                    alert("Please fill in the bill id.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/api/bills?id=' + encodeURIComponent(patient_id),
+                    type: 'DELETE',
+                    success: function(response) {
+                        alert("Bill info deleted.");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to delete Bill info.");
+                    }
+                });
+            });
+
+            });
     </script>
 </body>
 </html>

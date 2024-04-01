@@ -117,8 +117,9 @@
             </div>
             <hr>
             <div class="row">
-                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update"></div>
-               <div class=col><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete Patient"></div>
+                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update" id="update"></div>
+                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete Patient" id="delete"></div>
+
             </div>
         </form>
     </div>
@@ -160,6 +161,10 @@
                         alert("Failed to load patient info.");
                     }
                 });
+            });
+
+            $('form').on('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting through HTTP
             });
 
             // Update patient info

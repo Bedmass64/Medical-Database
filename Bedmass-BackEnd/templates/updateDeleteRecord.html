@@ -32,7 +32,7 @@
             <div class="col ms-2">
                 <form>
                     <h5>Search By Record Id:</h5>
-                    <input type="text" name="record_id">
+                    <input type="text" id="record_id">
                     <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="recordidsearch">
                 </form>
             </div>
@@ -84,7 +84,7 @@
 
 
             // Record search by patient id
-            $('#recordidsearch').click(function(event){
+            $('#patientidsearch').click(function(event){
                 event.preventDefault();
                 $.ajax({
                     url: '/api/records/patientid',
@@ -141,7 +141,7 @@
                 let record_data = {
                     historyid: record_id,
                     patientid: patient_id,
-                    diagnosis: diagnosis,   
+                    diagnosis: diagnosis,
                     treatment: treatment
                 };
                 console.log(record_data);

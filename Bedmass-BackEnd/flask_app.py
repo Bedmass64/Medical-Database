@@ -518,10 +518,9 @@ def makeRecordUpdate():
 
 #The search patients field that takes a name argument and searchis for corresponding fields
 # This only returns name and id fields
-@app.route('/searchPatients', methods=['GET']) #Search for only name and id
+@app.route('/searchPatients', methods=['GET'])
 def searchPatients():
-    nameOfPatient = request.json.nameOfPatient
-    print(request.args['nameOfPatient'])
+    nameOfPatient = request.args.get('nameOfPatient') 
     print(nameOfPatient)
     search_data = searchByPatientName(nameOfPatient)
     return jsonify(search_data)

@@ -125,6 +125,7 @@
             $(document).ready(function(){
                 /*For Patient name search*/
                 $('#namesearch').click(function(event){
+                    event.preventDefault();
                     let patientName = document.getElementById("patientname").value;
                     console.log(patientName);
 

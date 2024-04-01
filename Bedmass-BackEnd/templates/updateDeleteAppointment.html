@@ -168,7 +168,7 @@
 
                 let appointment_data = {
                     appointmentid: appointment_id,
-                    patientId: appointment_patient_id,
+                    patientid: appointment_patient_id,
                     date: appointment_date,
                     time: appointment_time,
                     purpose: appointment_reason
@@ -203,7 +203,7 @@
                 }
 
                 $.ajax({
-                    url: '/api/appointments?id=' + encodeURIComponent(patient_id),
+                    url: '/api/appointments?id=' + encodeURIComponent(appointment_id),
                     type: 'DELETE',
                     success: function(response) {
                         alert("Appointment info deleted.");

@@ -49,40 +49,13 @@
         <h1>Bill Info:</h1>
         <form>
             <div class="row my-1">
-                <div class="col ms-2"><h3>Date of Creation:</h3></div>
+                <div class="col ms-2"><h3>Bill Info:</h3></div>
                 <div class="col">
-                    <h6 class="my-0 ms-1">Time:</h6>
-                    <input type="text" name="Time" id="time">
-                </div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Day:</h6>
-                    <input type="number" name="Day" id="date">
-                </div>
-            <div class="row my-1 ms-1">
-                <div class="col"></div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month">
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                      </select>
-                </div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Year:</h6>
-                    <input type="number" name="Year" id="year">
+                    <h6 class="my-0 ms-1">Patient Id:</h6>
+                    <input type="text" id="bill_patient_id">
                 </div>
             </div>
-            </div>
+
             <hr>
             <div class="row my-1">
                 <div class="col ms-2"><h3>Cost:</h3></div>
@@ -106,7 +79,7 @@
                 <input type="text" name="reason" id="appointment_id">
             </div>
             <hr>
-            
+
             <div class="row my-1">
                 <div class="col ms-2"><h3>Payment Confirmed:</h3></div>
             </div>
@@ -131,7 +104,7 @@
                     url: '/api/bills/patientid',
                     type: 'GET',
                     data: {
-                        id: document.getElementById("patient_id").value
+                        patientid: document.getElementById("patient_id").value
                     },
                     success: function(response) {
                         $('#idResponses').html(response)
@@ -169,14 +142,14 @@
                 event.preventDefault();
                 // Fields are billid, patientid, date, amount, paymethod, appointmentid, payconfirmed
                 // Return an error if any of the fields are empty
-                if ($('#bill_id').val() == '' || $('#patient_id').val() == '' || $('#date').val() == '' || $('#month').val() == '' || $('#year').val() == '' || $('#cost').val() == '' || $('#PaymentMethod').val() == '' || $('#appointment_id').val() == '' || $('#payconfirmed').val() == '') {
+                if ($('#bill_id').val() == '' || $('#bill_patient_id').val() == '' || $('#cost').val() == '' || $('#PaymentMethod').val() == '' || $('#appointment_id').val() == '' || $('#payconfirmed').val() == '') {
                     alert("Please fill in all fields.");
                     return;
                 }
 
                 let bill_id = $('#bill_id').val();
-                let patient_id = $('#patient_id').val();
-                let bill_date = $('#date').val() + '/' + $('#month').val() + '/' + $('#year').val();
+                let patient_id = $('#bill_patient_id').val();
+                //let bill_date = $('#date').val() + '/' + $('#month').val() + '/' + $('#year').val();
                 let bill_amount = $('#cost').val();
                 let bill_paymethod = $('#PaymentMethod').val();
                 let bill_appointmentid = $('#appointment_id').val();
@@ -187,7 +160,7 @@
                 let bill_data = {
                     billid: bill_id,
                     patientid: patient_id,
-                    date: bill_date,
+                    //date: bill_date,
                     amount: bill_amount,
                     paymethod: bill_paymethod,
                     appointmentid: bill_appointmentid,
@@ -195,7 +168,7 @@
                 };
                 console.log(bill_data);
 
-                
+
 
                 $.ajax({
                     url: '/api/bills',
@@ -224,7 +197,7 @@
                 }
 
                 $.ajax({
-                    url: '/api/bills?id=' + encodeURIComponent(patient_id),
+                    url: '/api/bills?id=' + encodeURIComponent(bill_id),
                     type: 'DELETE',
                     success: function(response) {
                         alert("Bill info deleted.");

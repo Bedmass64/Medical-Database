@@ -237,23 +237,24 @@ def searchByPatientName(rowValue):
     getConnection()
     print("got Connection")
     try:
+        print(rowValue)
         response = supabase.table(tableName).select("name, patientid").eq(row, rowValue).execute()
+        print("Response recieved")
         print(response)  # See what the response object actually contains
-        if response.error:
-            return "No results found"
-        # Construct HTML table from response data
-        html_output = table_format  # Start the table and add headers
 
         # Add column headers based on the first item keys if there's data
         if response.data:
+            html_output = table_format  # Start the table and add headers
             html_output += '<tr>' + ''.join([f'<th>{col.capitalize()}</th>' for col in response.data[0].keys()]) + '</tr>'
 
             # Fill the table rows with the data
             for item in response.data:
                 html_output += '<tr>' + ''.join([f'<td>{item[col]}</td>' for col in item.keys()]) + '</tr>'
 
-        html_output += "</table>"  # Close the table
-        #print(html_output)  # Print the HTML table
+            html_output += "</table>"  # Close the table
+        else:
+            print("No results found")
+        print(html_output)  
         return html_output
     except:
         return "No results found"

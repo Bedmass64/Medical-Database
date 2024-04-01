@@ -520,12 +520,10 @@ def makeRecordUpdate():
 # This only returns name and id fields
 @app.route('/searchPatients', methods=['GET']) #Search for only name and id
 def searchPatients():
-    name = request.json.name
-    print(request.json.name)
-    print(request.name)
-    print(request.args['name'])
-    print(name)
-    search_data = searchByPatientName(name)
+    nameOfPatient = request.json.nameOfPatient
+    print(request.args['nameOfPatient'])
+    print(nameOfPatient)
+    search_data = searchByPatientName(nameOfPatient)
     return jsonify(search_data)
 
 #Searches appointments by date (YYYY-MM-DD), returns name, date and appointment id

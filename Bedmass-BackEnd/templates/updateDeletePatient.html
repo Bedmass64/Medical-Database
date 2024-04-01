@@ -46,7 +46,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container rounded bg-blue font-cambria" id="formsection">
         <div class="response-placeholder"><!-- Place for search response --></div>
         <h1>Patient Info:</h1>
@@ -55,11 +55,11 @@
                 <div class="col ms-2"><h3>Name:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">First Name:</h6>
-                    <input type="text" name="FirstName">
+                    <input type="text" id="FirstName">
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Last Name:</h6>
-                    <input type="text" name="LastName">
+                    <input type="text" id="LastName">
                 </div>
             </div>
             <hr>
@@ -67,15 +67,15 @@
                 <div class="col ms-2"><h3>Address:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Street Address:</h6>
-                    <input type="text" name="Address">
+                    <input type="text" id="Address">
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Province/Territory:</h6>
-                    <input type="text" name="Province">
+                    <input type="text" id="Province">
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Country:</h6>
-                    <input type="text" name="Country">
+                    <input type="text" id="Country">
                 </div>
             </div>
             <hr>
@@ -83,11 +83,11 @@
                 <div class="col ms-2"><h3>Date of Birth:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Day:</h6>
-                    <input type="number" name="Day">
+                    <input type="number" id="Day">
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown" id="month">
+                    <select id="MonthDropdown">
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Year:</h6>
-                    <input type="number" name="year">
+                    <input type="number" id="year">
                 </div>
             </div>
             <hr>
@@ -112,7 +112,7 @@
                 <div class="col ms-2"><h3>Contact Info:</h3></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Phone Number:</h6>
-                    <input type="number" name="number">
+                    <input type="number" id="number">
                 </div>
             </div>
             <hr>
@@ -126,10 +126,10 @@
     <script>
         $(document).ready(function(){
 
-            
+
             // Patient search by name
             $('#namesearch').click(function(event){
-                event.preventDefault(); 
+                event.preventDefault();
                 $.ajax({
                     url: '/api/patients/name',
                     type: 'GET',
@@ -147,7 +147,7 @@
 
             // Search by patient id and place patient info above form
             $('#idsearch').click(function() {
-                event.preventDefault(); 
+                event.preventDefault();
                 $.ajax({
                     url: '/api/patients/id',
                     type: 'GET',
@@ -169,7 +169,7 @@
 
             // Update patient info
             $('#update').click(function() {
-                event.preventDefault(); 
+                event.preventDefault();
                 // Fields are patientid, name, address, dob, and contact
                 // Return an error if any of the fields are empty
                 if ($('#patientid').val() == '' || $('#FirstName').val() == '' || $('#LastName').val() == '' || $('#Address').val() == '' || $('#Province').val() == '' || $('#Country').val() == '' || $('#Day').val() == '' || $('#MonthDropdown').val() == '' || $('#year').val() == '' || $('#number').val() == '') {
@@ -177,46 +177,51 @@
                     return;
                 }
 
-                patient_id = $('#patientid').val();
-                patient_name = $('#FirstName').val() + ' ' + $('#LastName').val();
-                patient_address = $('#Address').val() + ', ' + $('#Province').val() + ', ' + $('#Country').val();
-                patient_dob = $('#Day').val() + '/' + $('#MonthDropdown').val() + '/' + $('#year').val();
-                patient_contact = $('#number').val();
+                let patient_id = $('#patientid').val();
+                let patient_name = $('#FirstName').val() + ' ' + $('#LastName').val();
+                let patient_address = $('#Address').val() + ', ' + $('#Province').val() + ', ' + $('#Country').val();
+                let patient_dob = $('#Day').val() + '/' + $('#MonthDropdown').val() + '/' + $('#year').val();
+                let patient_contact = $('#number').val();
 
+                let patient_data = {
+                    patientid: patient_id,
+                    name: patient_name,
+                    address: patient_address,
+                    dob: patient_dob,
+                    contact: patient_contact
+                };
+
+                console.log(patient_data);
 
                 $.ajax({
                     url: '/api/patients',
                     type: 'PUT',
-                    data: {
-                        patientid: patient_id,
-                        name: patient_name,
-                        address: patient_address,
-                        dob: patient_dob,
-                        contact: patient_contact
-                    },
+                    contentType: 'application/json',
+                    data: JSON.stringify(patient_data),
+                    dataType: 'json',
                     success: function(response) {
                         alert("Patient info updated.");
+                        console.log(response);
                     },
                     error: function(xhr, status, error) {
                         alert("Failed to update patient info.");
+                        //console.log(data);
                     }
                 });
             });
 
             // Delete patient info
             $('#delete').click(function() {
-                event.preventDefault(); 
-                if ($('#patientid').val() == '') {
+                event.preventDefault();
+                let patient_id = $('#patientid').val()
+                if (patient_id == '') {
                     alert("Please fill in the patient id.");
                     return;
                 }
 
                 $.ajax({
-                    url: '/api/patients',
+                    url: '/api/patients?id=' + encodeURIComponent(patient_id),
                     type: 'DELETE',
-                    data: {
-                        id: $('#patientid').val()
-                    },
                     success: function(response) {
                         alert("Patient info deleted.");
                     },
@@ -225,7 +230,7 @@
                     }
                 });
             });
-            
+
         });
     </script>
 </body>

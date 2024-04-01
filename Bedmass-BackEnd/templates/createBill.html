@@ -133,7 +133,7 @@
                         url: '/searchPatients',
                         type: 'GET',
                         // Remove contentType when using GET, as you're not sending a JSON body
-                        data: {name: patientName},  
+                        data: {nameOfPatient: patientName},  
                         success: function(response) {
                             console.log(response);
                             $('#IDresponses').html(response);

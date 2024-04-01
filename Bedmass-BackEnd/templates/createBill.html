@@ -130,12 +130,18 @@
                     console.log(patientName);
 
                     // Send a GET request to your Flask app's searchPatients route
-                    $.get('/searchPatients', {nameOfPatient: patientName}, function(data){
-                        console.log(data)
-                        $('#IDresponses').html(response);
-                    }).fail(function() {
-                        $('#IDresponses').html("No patients matching the name: " + patientName);
-                        // Handle failure here, like showing a message to the user
+                    $.ajax({
+                        url: /searchPatients',
+                        type: 'GET',
+                        data: {nameOfPatient: patientName},
+                        success: function(data){
+                            console.log(data)
+                            $('#IDresponses').html(response);
+                        }
+                        error: function(xhr, status, error) {
+                            // This function is called if the request fails
+                            $('#IDresponses').html("No patients matching the name: " + patientName);
+                        }
                     });
                 });
                 //Doctor ID search

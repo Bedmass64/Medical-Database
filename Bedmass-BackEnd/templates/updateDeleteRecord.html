@@ -30,87 +30,161 @@
         <hr>
         <div class="row my-1 font-cambria py-2">
             <div class="col ms-2">
-                <form action="viewData" method="post">
+                <form>
                     <h5>Search By Record Id:</h5>
-                    <input type="text" name="patient_id">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
+                    <input type="text" name="record_id">
+                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="recordidsearch">
                 </form>
             </div>
             <div class="col bg-lightblue rounded mx-2">
-                <h6 class="mb-2 ms-1">Search by Last Name:</h6>
-                <form action="idSearch">
-                    <input type="text" name="LastName">
-                    <input type="submit" class="btn btn-primary mx-5 my-3" value="Search">
-                </form>
-                <table id="IDresponses" class="table">
-                    <tr>
-                        <th>Name:</th>
-                        <th>Date</th>
-                        <th>Record ID:</th>
-                    </tr>
-                </table>
+                <h6 class="mt-1 ms-1">Search by Patient ID:</h6>
+                <input type="text" id="patient_id">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="patientidsearch">
+                <div id="idResponses">
+                    <!-- Results go here -->
+                </div>
             </div>
         </div>
     </div>
-    <div class="container rounded bg-blue font-cambria">
+    <div class="container rounded bg-blue font-cambria" id="formsection">
+        <div class="response-placeholder"><!-- Place for search response --></div>
         <h1>Record Info:</h1>
         <hr>
-        <form action="patientInfo">
+        <form>
             <div class="row my-1">
-                <div class="col ms-2"><h3>Date of Appointment:</h3></div>
+                <div class="col ms-2"><h3>Record Info:</h3></div>
                 <div class="col">
-                    <h6 class="my-0 ms-1">Time:</h6>
-                    <input type="text" name="Time">
+                    <h6 class="my-0 ms-1">Patient Id:</h6>
+                    <input type="text" id="record_patient_id">
                 </div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Day:</h6>
-                    <input type="number" name="Day">
-                </div>
-            <div class="row my-1 ms-1">
-                <div class="col"></div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown" id="month">
-                        <option value="01">January</option>
-                        <option value="02">February</option>
-                        <option value="03">March</option>
-                        <option value="04">April</option>
-                        <option value="05">May</option>
-                        <option value="06">June</option>
-                        <option value="07">July</option>
-                        <option value="08">August</option>
-                        <option value="09">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
-                      </select>
-                </div>
-                <div class="col">
-                    <h6 class="my-0 ms-1">Year:</h6>
-                    <input type="number" name="Year">
-                </div>
-            </div>
             </div>
             <hr>
             <div class="row my-1">
                 <div class="col ms-2"><h3>Diagnosis:</h3></div>
             </div>
             <div class="row mx-5">
-                <input type="text" name="diagnosis">
+                <input type="text" id="diagnosis">
             </div>
             <hr>
             <div class="row my-1">
                 <div class="col ms-2"><h3>Treatment:</h3></div>
             </div>
             <div class="row mx-5">
-                <input type="text" name="treatment">
+                <input type="text" id="treatment">
             </div>
             <hr>
             <div class="row">
-                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update"></form></div>
-               <div class=col><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete/ Pay Bill"></form></div>
+                <div class="col"><input type="submit" class="btn btn-primary mx-5 my-3" value="Update" id="update"></form></div>
+               <div class=col><input type="submit" class="btn btn-primary mx-5 my-3" value="Delete/ Pay Bill" id="delete"></form></div>
             </div>
         </form>
     </div>
+    <script>
+        $(document).ready(function(){
+
+
+            // Record search by patient id
+            $('#recordidsearch').click(function(event){
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/records/patientid',
+                    type: 'GET',
+                    data: {
+                        patientid: document.getElementById("patient_id").value
+                    },
+                    success: function(response) {
+                        $('#idResponses').html(response)
+                    },
+                    error: function(xhr, status, error) {
+                        $('#idResponses').html('<h1> Error: ' + error + "</h1>");
+                    }
+                });
+            });
+
+            // Search by record id and place record info above form
+            $('#recordidsearch').click(function() {
+                event.preventDefault();
+                $.ajax({
+                    url: '/api/records/id',
+                    type: 'GET',
+                    data: { id: $('#record_id').val() },
+                    success: function(response) {
+                        // Place response above form
+                        $('.response-placeholder').html(response).prependTo('#formsection');
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        alert("Failed to load record info.");
+                    }
+                });
+            });
+
+            $('form').on('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting through HTTP
+            });
+
+            // Update record info
+            $('#update').click(function() {
+                event.preventDefault();
+                // Fields are recordid, patientid, diagnosis, treatment
+                // Return an error if any of the fields are empty
+                if ($('#record_id').val() == '' || $('#record_patient_id').val() == '' || $('#diagnosis').val() == '' || $('#treatment').val() == '') {
+                    alert("Please fill in all fields.");
+                    return;
+                }
+
+                let record_id = $('#record_id').val();
+                let patient_id = $('#record_patient_id').val();
+                let diagnosis = $('#diagnosis').val();
+                let treatment = $('#treatment').val();
+
+                let record_data = {
+                    historyid: record_id,
+                    patientid: patient_id,
+                    diagnosis: diagnosis,   
+                    treatment: treatment
+                };
+                console.log(record_data);
+
+                $.ajax({
+                    url: '/api/records',
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(record_data),
+                    dataType: 'json',
+                    success: function(response) {
+                        alert("Record info updated.");
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to update Record info.");
+                        //console.log(data);
+                    }
+                });
+            });
+
+            // Delete Record info
+            $('#delete').click(function() {
+                event.preventDefault();
+                let record_id = $('#record_id').val();
+                if (record_id == '') {
+                    alert("Please fill in the record id.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/api/records?id=' + encodeURIComponent(record_id),
+                    type: 'DELETE',
+                    success: function(response) {
+                        alert("Record info deleted.");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to delete Record info.");
+                    }
+                });
+            });
+
+        });
+    </script>
 </body>
 </html>

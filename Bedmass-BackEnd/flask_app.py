@@ -127,7 +127,7 @@ def get_appointment_by_date():
         return getAppointmentsByDate(date)
     else:
         return "Date parameter is missing", 400
-    
+
 @app.route('/api/appointments/patientid', methods=["GET"])
 def get_appointment_by_patient_id():
     id = request.args.get('id')
@@ -175,7 +175,7 @@ def get_record_by_patient_id():
         return filterTable("medical_history", "patientid", id)
     else:
         return "Patient ID parameter is missing", 400
-    
+
 
 @app.route('/api/doctor/name', methods=["GET"])
 def get_doctor_by_name():

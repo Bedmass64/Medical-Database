@@ -27,7 +27,7 @@ def addDataPatient(data: dict):
     print(response)
     return response.data
 
-print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
+#print(addDataPatient({"name": "Joe Shmoe", "address": "123 Hamburger ln", "dob": "1999-12-12", "contact": "123-456-7890"}))
 
 def addDataAppointment(data: dict):
     getConnection()
@@ -194,7 +194,7 @@ def readTableData(tableName: str):
     return html_output
 
 # Test the function
-readTableData("patient")
+# readTableData("patient")
 
 
 def updateRow(tableName: str, coloum: str, value, row: str, rowValue):
@@ -321,7 +321,7 @@ def searchByUsernameDoctor(Username: str):
     return password
 
 
-    
+
 def searchByUsernameAdmin(Username: str):
     response = supabase.table('admin').select("password").eq('login', Username).execute()
     # Extracting password from response
@@ -369,7 +369,7 @@ def getAppointmentsByDate(date_str: str):  # JSON into HTML
     else:
         print("No appointments found on the specified date")
         return None
-    
+
 
 def validLogin(login):
     responseOne = supabase.table('admin').select("login").eq('login', login).execute()

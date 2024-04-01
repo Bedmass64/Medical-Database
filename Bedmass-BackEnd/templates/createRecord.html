@@ -111,6 +111,7 @@
                     // Get the last name from the input field
                     var patientName = $('input[name="name"]').val();
                     // Send a GET request to your Flask app's searchPatients route
+                    console.log(patientName);
                     $.ajax({
                         url: '/searchPatients',
                         type: 'GET',
@@ -132,7 +133,7 @@
                     let toInsert = {
                                 patientid: $('input[name="PatientId"]').val(),
                                 date: document.getElementById("Year").value + "-" + document.getElementById("Month").value + "-" +
-                                + document.getElementById("Day").value + " " + document.getElementById("Time").value,
+                                document.getElementById("Day").value + " " + document.getElementById("Time").value,
                                 diagnosis: $('input[name="diagnosis"]').val(),
                                 treatment: $('input[name="treatment"]').val()
                             };

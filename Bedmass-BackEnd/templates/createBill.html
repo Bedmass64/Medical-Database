@@ -133,8 +133,8 @@
                     $.get('/searchPatients', {nameOfPatient: patientName}, function(data){
                         console.log(data)
                         $('#IDresponses').html(response);
-                    }).fail(function(data) {
-                        console.error(data);
+                    }).fail(function() {
+                        $('#IDresponses').html("No patients matching the name: " + patientName);
                         // Handle failure here, like showing a message to the user
                     });
                 });

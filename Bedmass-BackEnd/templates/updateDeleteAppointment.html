@@ -31,22 +31,23 @@
         <div class="row my-1 font-cambria py-2">
             <div class="col ms-2">
                 <h5>Search By Appointment Id:</h5>
-                <input type="text" name="patient_id">
+                <input type="text" id="appointment_id">
                 <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="appointmentid">
             </div>
             <div class="col bg-lightblue rounded mx-2">
-                <h6 class="mb-2 ms-1">Search by Last Name:</h6>
-                <input type="text" name="LastName" id="appointmentidsearch">
-                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="idsearch">
-                <table id="IDresponses" class="table">
-
-                </table>
+                <h6 class="mt-1 ms-1">Search by Patient ID:</h6>
+                <input type="text" id="patient_id">
+                <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="patientidsearch">
+                <div id="idResponses">
+                    <!-- Results go here -->
+                </div>
             </div>
         </div>
     </div>
-    <div class="container rounded bg-blue font-cambria">
+    <div class="container rounded bg-blue font-cambria" id="formsection">
+        <div class="response-placeholder"><!-- Place for search response --></div>
         <h1>Appointment Info:</h1>
-        <form action="appointmentInfo">
+        <form>
             <div class="row my-1">
                 <div class="col ms-2"><h3>Date of Appointment:</h3></div>
                 <div class="col">
@@ -61,7 +62,7 @@
                 <div class="col"></div>
                 <div class="col">
                     <h6 class="my-0 ms-1">Month:</h6>
-                    <select id="month" name="MonthDropdown" id="month">
+                    <select id="month">
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -105,97 +106,114 @@
         </form>
     </div>
     <script>
-        var currentAppointment = undefined;
         $(document).ready(function(){
-            /*For Patient search by Last Name*/
-            $('#idsearch').click(function(event){
+
+
+            // Appointment search by patient id
+            $('#patientidsearch').click(function(event){
+                event.preventDefault();
                 $.ajax({
-                    url: '/searchAppointments',
-                    type: 'POST',
+                    url: '/api/appointments/patientid',
+                    type: 'GET',
                     data: {
-                        name: document.getElementById("appointmentidsearch").value
+                        id: document.getElementById("patient_id").value
                     },
                     success: function(response) {
-                        $('#IDresponses').html(response)
+                        $('#idResponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#IDresponses').html('<h1>Error: ' + error + "</h1>");
+                        $('#idResponses').html('<h1> Error: ' + error + "</h1>");
                     }
                 });
             });
 
-            /*Appointment Search by ID*/
-            $('#submit').click(function() {
+            // Search by appointment id and place appointment info above form
+            $('#appointmentid').click(function() {
+                event.preventDefault();
                 $.ajax({
-                    url: '/adminPatients',
-                    type: 'POST',
-                    data: {
-                        appointmentid: document.getElementById("appointmentid").value
-                    },
+                    url: '/api/appointments/id',
+                    type: 'GET',
+                    data: { appointmentid: $('#appointment_id').val() },
                     success: function(response) {
-                        currentAppointment = response;
-                        document.getElementById('reason').value = response.purpose;
-                        document.getElementById('time').value = response.time;
-                        document.getElementById('patientid').value = response.patientid;
-                        document.getElementById('day').value = response.date.substr(5,2);
-                        document.getElementById('year').value = response.date.substr(0,4);
-                        document.getElementById('month').value = response.date.substr(8,2);
+                        // Place response above form
+                        $('.response-placeholder').html(response).prependTo('#formsection');
+                    },
+                    error: function(xhr, status, error) {
+                        // This function is called if the request fails
+                        alert("Failed to load appointment info.");
                     }
                 });
             });
 
-            /*Update*/
-            $('#update').click(function(){
-                if (currentAppointment != undefined){
-                    let toUpdate = {};
-                    if (document.getElementById('patientid').value !=  currentAppointment.patientid){
-                        toUpdate.patientid = currentAppointment.patientid;
-                    }
-                    let date = document.getElementById('year').value + "-" + document.getElementById('month').value;
-                    date += "-" + document.getElementById("day").value;
-                    if (date !=  currentAppointment.date){
-                        toUpdate.date = date;
-                    }
-                    if (document.getElementById('reason').value != currentAppointment.purpose){
-                        currentAppointment.purpose = document.getElementById('reason').value;
-                    }
-                    if (toUpdate != {}){
-                        $.ajax({
-                            url: '/makeRecordUpdate',
-                            type: 'POST',
-                            data: toUpdate,
-                            error: function(xhr, status, error) {
-                                console.log("error");
-                            }
-                        })
-                    }
-                }
+            $('form').on('submit', function(event) {
+                event.preventDefault(); // Prevent the form from submitting through HTTP
             });
 
-
-            /*Delete*/
-            $('#delete').click(function(){
-                if (currentAppointment != undefined){
-                    $.ajax({
-                        url: '/deleteRecord',
-                        type: 'POST',
-                        data: {
-                            appointmentid: currentAppointment.appointmentid
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("error");
-                        }
-                    })
+            // Update Appointment info
+            $('#update').click(function() {
+                event.preventDefault();
+                // Fields are appointmentid, doctorId, patientId, date, time, purpose
+                // Return an error if any of the fields are empty
+                if ($('#appointment_id').val() == '' || $('#time').val() == '' || $('#date').val() == '' || $('#month').val() == '' || $('#year').val() == '' || $('#patientid').val() == '' || $('#reason').val() == '') {
+                    alert("Please fill in all fields.");
+                    return;
                 }
-            });
 
-            /*For Logout*/
-            $('#logout').click(function(){
+                let appointment_id = $('#appointment_id').val();
+                let appointment_patient_id = $('#patientid').val();
+                let appointment_date = $('#date').val() + '/' + $('#month').val() + '/' + $('#year').val();
+                let appointment_time = $('#time').val();
+                let appointment_reason = $('#reason').val();
+
+
+                let appointment_data = {
+                    appointmentid: appointment_id,
+                    patientId: appointment_patient_id,
+                    date: appointment_date,
+                    time: appointment_time,
+                    purpose: appointment_reason
+                };
+
+                console.log(appointment_data);
+
                 $.ajax({
-                    url: '/logout',
-                    type: 'GET'
-                })
+                    url: '/api/appointments',
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(appointment_data),
+                    dataType: 'json',
+                    success: function(response) {
+                        alert("Appointment info updated.");
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to update Appointment info.");
+                        //console.log(data);
+                    }
+                });
             });
+
+            // Delete Appointment info
+            $('#delete').click(function() {
+                event.preventDefault();
+                let appointment_id = $('#appointment_id').val()
+                if (appointment_id == '') {
+                    alert("Please fill in the appointment id.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/api/appointments?id=' + encodeURIComponent(patient_id),
+                    type: 'DELETE',
+                    success: function(response) {
+                        alert("Appointment info deleted.");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Failed to delete Appointment info.");
+                    }
+                });
+            });
+
         });
     </script>
 </body>

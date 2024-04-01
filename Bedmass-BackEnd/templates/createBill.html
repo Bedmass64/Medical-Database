@@ -126,6 +126,7 @@
                 /*For Patient name search*/
                 $('#namesearch').click(function(event){
                     let patientName = document.getElementById("patientname").value;
+                    console.log(patientName);
 
                     // Send a GET request to your Flask app's searchPatients route
                     $.ajax({

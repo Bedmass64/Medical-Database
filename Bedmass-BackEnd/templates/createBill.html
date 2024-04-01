@@ -137,7 +137,7 @@
                         success: function(data){
                             console.log(data)
                             $('#IDresponses').html(response);
-                        }
+                        },
                         error: function(xhr, status, error) {
                             // This function is called if the request fails
                             $('#IDresponses').html("No patients matching the name: " + patientName);

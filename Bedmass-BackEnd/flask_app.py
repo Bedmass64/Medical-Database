@@ -1,4 +1,3 @@
-
 # Continue this tutorial the next time you work on this
 # https://blog.pythonanywhere.com/121/
 
@@ -521,7 +520,7 @@ def makeRecordUpdate():
 # This only returns name and id fields
 @app.route('/searchPatients', methods=['GET']) #Search for only name and id
 def searchPatients():
-    name = request.form.get('name')
+    name = request.json.get('name')
     print(name)
     search_data = searchByPatientName(name)
     return jsonify(search_data)

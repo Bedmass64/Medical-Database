@@ -130,19 +130,9 @@
                     console.log(patientName);
 
                     // Send a GET request to your Flask app's searchPatients route
-                    $.ajax({
-                        url: '/searchPatients',
-                        type: 'GET',
-                        // Remove contentType when using GET, as you're not sending a JSON body
-                        data: {nameOfPatient: patientName},  
-                        success: function(response) {
-                            console.log(response);
-                            $('#IDresponses').html(response);
-                        },
-                        error: function(xhr, status, error) {
-                            // This function is called if the request fails
-                            alert("Error");
-                        }
+                    $.get('/searchPatients', {nameOfPatient: patientName}, function(data){
+                        console.log(data)
+                        $('#IDresponses').html(response);
                     });
                 });
                 //Doctor ID search

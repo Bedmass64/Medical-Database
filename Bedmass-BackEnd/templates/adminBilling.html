@@ -38,7 +38,8 @@
             </div>
         </div>
         <hr>
-        <div class="row my-1 font-cambria py-2"> <!--User Query for Patient ID-->
+        <div class="row my-1 font-cambria py-2"> 
+            <!--User Query for Patient ID-->
             <div class="col mx-2">
                 <h5>Search By Patient Id:</h5>
                 <input type="text" name="patientid" id="patientid">
@@ -76,6 +77,14 @@
 
             /*For Patient ID search*/
             $('#namesearch').click(function(event){
+                patient_name = document.getElementById("patientname").value;
+                // Input validation using REGEX, only letters and spaces and not empty
+                if (!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name == "") {
+                    alert("Please enter a valid name.");
+                    $('#IDresponses').html("");
+                    return;
+                }
+
                 $.ajax({
                     url: '/api/patients/name',
                     type: 'GET',
@@ -86,14 +95,20 @@
                         $('#IDresponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                        $('#IDresponses').html('<h1> Error: Patient not found</h1>');
                     }
                 });
             });
 
             /*For Bill search*/
             $('#submit').click(function() {
-
+                let patient_id = document.getElementById("patientid").value;
+                // Input validation using REGEX, only numbers and not empty
+                if (!patient_id.match(/^[0-9]*$/) || patient_id == "") {
+                    alert("Please enter a valid patient ID.");
+                    $('#billingcontent').html("");
+                    return;
+                }
 
                 $.ajax({
                     url: '/api/bills/patientid',

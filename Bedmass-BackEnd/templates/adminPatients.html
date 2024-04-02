@@ -63,13 +63,21 @@
                     $('#patientcontent').html(response);
                 },
                 error: function(xhr, status, error) {
-                    $('#patientcontent').html("Failed to load patients.");
+                    $('#patientcontent').html("<p>Failed to load patients.</p>");
                 }
             });
 
 
             /*For Patient search*/
             $('#submit').click(function() {
+                let patient_name = document.getElementById("name").value;
+                //Input validation using REGEX
+                if (!patient_name.match(/^[a-zA-Z\s]*$/)) {
+                    alert("Please enter a valid name.");
+                    $('#patientcontent').html("");
+                    return;
+                }
+
                 $.ajax({
                     url: '/api/patients/name',
                     type: 'GET',
@@ -81,7 +89,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        $('#patientcontent').html('<h1> Error: ' + error + "</h1>");
+                        $('#patientcontent').html('<h1> Error: Patient not found.</h1>');
                     }
                 });
             });

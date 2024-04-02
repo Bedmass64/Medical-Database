@@ -67,6 +67,14 @@
 
 
             $('#submit').click(function() {
+                let appointmentdate = document.getElementById("date").value;
+                //Input validation using REGEX YYYY-MM-DD
+                if (!appointmentdate.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                    alert("Please enter a valid date in the format YYYY-MM-DD");
+                    $('#appointmentcontent').html("");
+                    return;
+                }
+
                 $.ajax({
                     url: '/api/appointments/date',
                     type: 'GET',
@@ -78,7 +86,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        $('#appointmentcontent').html('<h1> Error: ' + error + "</h1>");
+                        $('#appointmentcontent').html('<h1> Error: ' + error + "</h1><p>Appointment not found</p>");
                     }
                 });
             });

@@ -55,6 +55,14 @@
             <script>
                 /*For Patient name search*/
                 $('#namesearch').click(function(event){
+                    let patient_name = document.getElementById("patientname").value;
+                    // Input validation using REGEX (only letters and spaces) and check for empty string
+                    if (patient_name === "" || !patient_name.match(/^[a-zA-Z\s]*$/)) {
+                        alert("Please enter a valid name.");
+                        $('#IDresponses').html('');
+                        return;
+                    }
+
                     $.ajax({
                         url: '/api/patients/name',
                         type: 'GET',
@@ -65,7 +73,7 @@
                             $('#IDresponses').html(response)
                         },
                         error: function(xhr, status, error) {
-                            $('#IDresponses').html('<h1> Error: ' + error + "</h1>");
+                            $('#IDresponses').html("<h1> Patient not found. </h1>");
                         }
                     });
                 });
@@ -97,6 +105,13 @@
 
             /*For Record search*/
             $('#submit').click(function() {
+                let patient_id = document.getElementById("patientid").value;
+                // Input validation with REGEX (only numbers) and check for empty
+                if (!patient_id.match(/^[0-9]*$/) || patient_id === "") {
+                    alert("Please enter a valid patient ID.");
+                    $('#recordcontent').html("");
+                    return;
+                }
                 $.ajax({
                     url: '/api/records/patientid',
                     type: 'GET',
@@ -108,7 +123,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        $('#recordcontent').html('<h1> Error: ' + error + "</h1>");
+                        $('#recordcontent').html('<h1> Error: Record not found.</h1>');
                     }
                 });
             });

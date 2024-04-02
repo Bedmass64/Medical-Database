@@ -71,8 +71,8 @@
             /*For Patient search*/
             $('#submit').click(function() {
                 let patient_name = document.getElementById("name").value;
-                //Input validation using REGEX
-                if (!patient_name.match(/^[a-zA-Z\s]*$/)) {
+                //Input validation using REGEX and check for empty string
+                if (!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name === "") {
                     alert("Please enter a valid name.");
                     $('#patientcontent').html("");
                     return;

@@ -130,6 +130,8 @@
                     },
                     error: function(xhr, status, error) {
                         $('#idResponses').html('<h1> Error: Patient not found.</h1>');
+                        //Clear patient_id field
+                        $('#patient_id').val('');
                     }
                 });
             });
@@ -150,10 +152,11 @@
                     success: function(response) {
                         // Place response above form
                         $('.response-placeholder').html(response).prependTo('#formsection');
+                        
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        alert("Failed to load appointment info.");
+                        alert("Failed to load appointment info.Check that a valid appointment id is entered.");
                     }
                 });
             });
@@ -222,6 +225,8 @@
                     success: function(response) {
                         alert("Appointment info updated.");
                         console.log(response);
+                        // Clear search results
+                        $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
                         alert("Failed to update Appointment info. Check that a valid patient id is entered.");
@@ -236,6 +241,7 @@
                 let appointment_id = $('#appointment_id').val()
                 if (appointment_id == '' || !appointment_id.match(/^[0-9]*$/)) {
                     alert("Please ensure a valid appointment id is entered.");
+                    $('.response-placeholder').html('');
                     return;
                 }
                 // Confirm deletion
@@ -248,9 +254,18 @@
                     type: 'DELETE',
                     success: function(response) {
                         alert("Appointment info deleted.");
+                        // Clear form and search results
+                        $('#appointment_id').val('');
+                        $('#time').val('');
+                        $('#date').val('');
+                        $('#month').val('');
+                        $('#year').val('');
+                        $('#patientid').val('');
+                        $('#reason').val('');
+                        $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to delete Appointment info.");
+                        alert("Failed to delete Appointment info. Ensure that a valid appointment id is entered.");
                     }
                 });
             });

@@ -143,6 +143,7 @@
                 // Input validation using REGEX, only numbers and not empty
                 if (!appointment_id.match(/^[0-9]*$/) || appointment_id == "") {
                     alert("Please enter a valid appointment id.");
+                    $('.response-placeholder').html('');
                     return;
                 }
                 $.ajax({

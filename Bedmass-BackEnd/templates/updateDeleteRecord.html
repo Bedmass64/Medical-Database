@@ -86,6 +86,13 @@
             // Record search by patient id
             $('#patientidsearch').click(function(event){
                 event.preventDefault();
+                let patient_id = $('#patient_id').val();
+                // Input validation using REGEX, only numbers and not empty
+                if (!patient_id.match(/^[0-9]*$/) || patient_id == "") {
+                    alert("Please enter a valid patient id.");
+                    $('#idResponses').html("");
+                    return;
+                }
                 $.ajax({
                     url: '/api/records/patientid',
                     type: 'GET',
@@ -96,7 +103,9 @@
                         $('#idResponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#idResponses').html('<h1> Error: ' + error + "</h1>");
+                        $('#idResponses').html('<h1> Error: No appointments found associated with this patient id </h1>');
+                        //Clear patient_id field
+                        $('#patient_id').val('');
                     }
                 });
             });
@@ -104,6 +113,14 @@
             // Search by record id and place record info above form
             $('#recordidsearch').click(function() {
                 event.preventDefault();
+                let record_id = $('#record_id').val();
+                // Input validation using REGEX, only numbers and not empty
+                if (!record_id.match(/^[0-9]*$/) || record_id == "") {
+                    alert("Please enter a valid record id.");
+                    $('#record_id').val('');
+                    $('.response-placeholder').html("");
+                    return;
+                }
                 $.ajax({
                     url: '/api/records/id',
                     type: 'GET',
@@ -114,7 +131,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        alert("Failed to load record info.");
+                        alert("Failed to load record info. Check that a valid record id is entered.");
                     }
                 });
             });
@@ -138,6 +155,17 @@
                 let diagnosis = $('#diagnosis').val();
                 let treatment = $('#treatment').val();
 
+                // Input validation on each field
+                if (!record_id.match(/^[0-9]*$/)) {
+                    alert("Please enter a valid record id.");
+                    return;
+                }
+                if (!patient_id.match(/^[0-9]*$/)) {
+                    alert("Please enter a valid patient id.");
+                    return;
+                }
+                // Diagnosis and treatment can be any string, no validation needed
+
                 let record_data = {
                     historyid: record_id,
                     patientid: patient_id,
@@ -145,6 +173,11 @@
                     treatment: treatment
                 };
                 console.log(record_data);
+
+                // Confirm update
+                if (!confirm("Are you sure you want to update this record?")) {
+                    return;
+                }
 
                 $.ajax({
                     url: '/api/records',
@@ -155,9 +188,11 @@
                     success: function(response) {
                         alert("Record info updated.");
                         console.log(response);
+                        // Clear search results
+                        $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to update Record info.");
+                        alert("Failed to update Record info. Chek that a valid record id and patient id are entered.");
                         //console.log(data);
                     }
                 });
@@ -167,19 +202,30 @@
             $('#delete').click(function() {
                 event.preventDefault();
                 let record_id = $('#record_id').val();
-                if (record_id == '') {
-                    alert("Please fill in the record id.");
+                if (record_id == '' || !record_id.match(/^[0-9]*$/)) {
+                    alert("Please ensure that a valid record id is entered.");
+                    $('.response-placeholder').html('');
                     return;
                 }
 
+                // Confirm delete
+                if (!confirm("Are you sure you want to delete this record?")) {
+                    return;
+                }
                 $.ajax({
                     url: '/api/records?id=' + encodeURIComponent(record_id),
                     type: 'DELETE',
                     success: function(response) {
                         alert("Record info deleted.");
+                        // Clear form and search results
+                        $('#record_id').val('');
+                        $('#record_patient_id').val('');
+                        $('#diagnosis').val('');
+                        $('#treatment').val('');
+                        $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to delete Record info.");
+                        alert("Failed to delete Record info. Ensure that a valid record id is entered.");
                     }
                 });
             });

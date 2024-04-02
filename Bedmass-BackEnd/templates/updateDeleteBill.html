@@ -100,6 +100,13 @@
             // Billing search by patient id
             $('#patientidsearch').click(function(event){
                 event.preventDefault();
+                let patient_id = $('#patient_id').val();
+                // Input validation using REGEX and checking if the input is empty
+                if (patient_id == '' || !/^[0-9]+$/.test(patient_id)) {
+                    alert("Please enter a valid patient id.");
+                    $('#idResponses').html("");
+                    return;
+                }
                 $.ajax({
                     url: '/api/bills/patientid',
                     type: 'GET',
@@ -110,7 +117,9 @@
                         $('#idResponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#idResponses').html('<h1> Error: ' + error + "</h1>");
+                        $('#idResponses').html('<h1> Error: No bills found associated with this patient id.</h1>');
+                        // Clear patient id input
+                        $('#patient_id').val("");
                     }
                 });
             });
@@ -118,6 +127,14 @@
             // Search by bill id and place bill info above form
             $('#billidsearch').click(function() {
                 event.preventDefault();
+                let bill_id = $('#bill_id').val();
+                // Input validation using REGEX and checking if the input is empty
+                if (bill_id == '' || !/^[0-9]+$/.test(bill_id)) {
+                    alert("Please enter a valid bill id.");
+                    $('#bill_id').val("");
+                    $('.response-placeholder').html("");
+                    return;
+                }
                 $.ajax({
                     url: '/api/bills/id',
                     type: 'GET',
@@ -128,7 +145,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        alert("Failed to load bill info.");
+                        alert("Failed to load bill info. Check that a valid bill id was entered.");
                     }
                 });
             });
@@ -155,6 +172,32 @@
                 let bill_appointmentid = $('#appointment_id').val();
                 let bill_payconfirmed = $('#payconfirmed').val();
 
+                // Input validation on each field
+                if (!bill_id.match(/^[0-9]+$/)) {
+                    alert("Please enter a valid bill id.");
+                    return;
+                }
+                if (!patient_id.match(/^[0-9]+$/)) {
+                    alert("Please enter a valid patient id.");
+                    return;
+                }
+                if (!bill_amount.match(/^[0-9]+$/)) {
+                    alert("Please enter a valid amount.");
+                    return;
+                }
+                if (!bill_paymethod.match(/^[a-zA-Z]+$/)) {
+                    alert("Please enter a valid payment method.");
+                    return;
+                }
+                if (!bill_appointmentid.match(/^[0-9]+$/)) {
+                    alert("Please enter a valid appointment id.");
+                    return;
+                }
+                // Pay confirmed can be True or False
+                if (bill_payconfirmed != 'True' && bill_payconfirmed != 'False') {
+                    alert("Please enter a valid pay confirmed value.");
+                    return;
+                }
 
 
                 let bill_data = {
@@ -168,7 +211,10 @@
                 };
                 console.log(bill_data);
 
-
+                // Confirm update
+                if (!confirm("Are you sure you want to update this bill?")) {
+                    return;
+                }
 
                 $.ajax({
                     url: '/api/bills',
@@ -179,9 +225,11 @@
                     success: function(response) {
                         alert("Bill info updated.");
                         console.log(response);
+                        // Clear search results
+                        $('.response-placeholder').html("");
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to update Bill info.");
+                        alert("Failed to update Bill info. Check that a valid patient id, bill id, and appointment id were entered.");
                         //console.log(data);
                     }
                 });
@@ -191,8 +239,13 @@
             $('#delete').click(function() {
                 event.preventDefault();
                 let bill_id = $('#bill_id').val();
-                if (bill_id == '') {
-                    alert("Please fill in the bill id.");
+                if (bill_id == '' || !bill_id.match(/^[0-9]+$/)) {
+                    alert("Please ensure a valid bill id is entered.");
+                    return;
+                }
+
+                // Confirm deletion
+                if (!confirm("Are you sure you want to delete this bill?")) {
                     return;
                 }
 
@@ -201,9 +254,18 @@
                     type: 'DELETE',
                     success: function(response) {
                         alert("Bill info deleted.");
+                        // Clear form and search results
+                        $('#bill_id').val("");
+                        $('#bill_patient_id').val("");
+                        $('#cost').val("");
+                        $('#PaymentMethod').val("");
+                        $('#appointment_id').val("");
+                        $('#payconfirmed').val("");
+                        $('.response-placeholder').html("");
+
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to delete Bill info.");
+                        alert("Failed to delete Bill info. Check that a valid bill id was entered.");
                     }
                 });
             });

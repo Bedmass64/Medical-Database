@@ -130,6 +130,13 @@
             // Patient search by name
             $('#namesearch').click(function(event){
                 event.preventDefault();
+                let patient_name = $('#patientname').val();
+                // Input validation using REGEX, only letters and spaces allowed and no empty strings
+                if(!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name == '') {
+                    alert("Please enter a valid name.");
+                    $('#patientname').val('');
+                    return;
+                }
                 $.ajax({
                     url: '/api/patients/name',
                     type: 'GET',
@@ -140,7 +147,9 @@
                         $('#nameResponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#nameResponses').html('<h1> Error: ' + error + "</h1>");
+                        $('#nameResponses').html('<h1> Error: No patient found with that name.</h1>');
+                        // Clear the input field
+                        $('#patientname').val('');
                     }
                 });
             });
@@ -148,6 +157,14 @@
             // Search by patient id and place patient info above form
             $('#idsearch').click(function() {
                 event.preventDefault();
+                let patient_id = $('#patientid').val();
+                // Input validation using REGEX, only numbers allowed and no empty strings
+                if(!patient_id.match(/^[0-9]*$/) || patient_id == '') {
+                    alert("Please enter a valid patient id.");
+                    $('#patientid').val('');
+                    $('.response-placeholder').html('');
+                    return;
+                }
                 $.ajax({
                     url: '/api/patients/id',
                     type: 'GET',
@@ -158,7 +175,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        alert("Failed to load patient info.");
+                        alert("Failed to load patient info. Check that a valid patient id was entered.");
                     }
                 });
             });
@@ -183,6 +200,29 @@
                 let patient_dob = $('#year').val() + '-' + $('#MonthDropdown').val() + '-' + $('#Day').val();
                 let patient_contact = $('#number').val();
 
+                // Input validation on each field
+                if(!patient_id.match(/^[0-9]*$/)) {
+                    alert("Please enter a valid patient id.");
+                    return;
+                }
+                if(!patient_name.match(/^[a-zA-Z\s]*$/)) {
+                    alert("Please enter a valid name.");
+                    return;
+                }
+                if(!patient_address.match(/^[a-zA-Z0-9\s]*$/)) {
+                    alert("Please enter a valid address.");
+                    return;
+                }
+                if(!patient_dob.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/)) {
+                    alert("Please enter a valid date of birth.");
+                    return;
+                }
+                // Contact can be phone number or email
+                if(!patient_contact.match(/^[0-9]*$/) && !patient_contact.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+                    alert("Please enter a valid phone number or email.");
+                    return;
+                }
+
                 let patient_data = {
                     patientid: patient_id,
                     name: patient_name,
@@ -193,6 +233,11 @@
 
                 console.log(patient_data);
 
+                // Confirm update
+                if (!confirm("Are you sure you want to update this patient's info?")) {
+                    return;
+                }
+
                 $.ajax({
                     url: '/api/patients',
                     type: 'PUT',
@@ -202,10 +247,13 @@
                     success: function(response) {
                         alert("Patient info updated.");
                         console.log(response);
+                        // Clear search results
+                        $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to update patient info.");
+                        alert("Failed to update patient info. Check that a valid patient id was entered.");
                         //console.log(data);
+
                     }
                 });
             });
@@ -214,8 +262,14 @@
             $('#delete').click(function() {
                 event.preventDefault();
                 let patient_id = $('#patientid').val()
-                if (patient_id == '') {
-                    alert("Please fill in the patient id.");
+                if (patient_id == '' || !patient_id.match(/^[0-9]*$/)) {
+                    alert("Please ensure that a valid patient id is entered.");
+                    $('.response-placeholder').html('');
+                    return;
+                }
+
+                // Confirm deletion
+                if (!confirm("Are you sure you want to delete this patient's info?")) {
                     return;
                 }
 
@@ -224,9 +278,20 @@
                     type: 'DELETE',
                     success: function(response) {
                         alert("Patient info deleted.");
+                        // Clear form and search results
+                        $('#patientid').val('');
+                        $('#FirstName').val('');
+                        $('#LastName').val('');
+                        $('#Address').val('');
+                        $('#Province').val('');
+                        $('#Country').val('');
+                        $('#Day').val('');
+                        $('#year').val('');
+                        $('#number').val('');
+                        $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to delete patient info.");
+                        alert("Failed to delete patient info. Ensure that a valid patient id was entered.");
                     }
                 });
             });

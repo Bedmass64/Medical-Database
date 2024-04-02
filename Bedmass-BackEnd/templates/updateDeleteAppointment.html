@@ -129,7 +129,7 @@
                         $('#idResponses').html(response)
                     },
                     error: function(xhr, status, error) {
-                        $('#idResponses').html('<h1> Error: Patient not found.</h1>');
+                        $('#idResponses').html('<h1> Error: No appointments found associated with this patient id </h1>');
                         //Clear patient_id field
                         $('#patient_id').val('');
                     }
@@ -143,6 +143,7 @@
                 // Input validation using REGEX, only numbers and not empty
                 if (!appointment_id.match(/^[0-9]*$/) || appointment_id == "") {
                     alert("Please enter a valid appointment id.");
+                    $('#appointment_id').val('');
                     $('.response-placeholder').html('');
                     return;
                 }
@@ -157,7 +158,7 @@
                     },
                     error: function(xhr, status, error) {
                         // This function is called if the request fails
-                        alert("Failed to load appointment info.Check that a valid appointment id is entered.");
+                        alert("Failed to load appointment info. Check that a valid appointment id is entered.");
                     }
                 });
             });
@@ -230,7 +231,7 @@
                         $('.response-placeholder').html('');
                     },
                     error: function(xhr, status, error) {
-                        alert("Failed to update Appointment info. Check that a valid patient id is entered.");
+                        alert("Failed to update Appointment info. Check that a valid appointment id and patient id is entered.");
                         //console.log(data);
                     }
                 });

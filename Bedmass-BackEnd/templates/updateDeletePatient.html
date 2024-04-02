@@ -180,7 +180,7 @@
                 let patient_id = $('#patientid').val();
                 let patient_name = $('#FirstName').val() + ' ' + $('#LastName').val();
                 let patient_address = $('#Address').val() + ', ' + $('#Province').val() + ', ' + $('#Country').val();
-                let patient_dob = $('#Day').val() + '/' + $('#MonthDropdown').val() + '/' + $('#year').val();
+                let patient_dob = $('#year').val() + '-' + $('#MonthDropdown').val() + '-' + $('#Day').val();
                 let patient_contact = $('#number').val();
 
                 let patient_data = {

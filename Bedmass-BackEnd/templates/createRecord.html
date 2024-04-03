@@ -114,6 +114,7 @@
                     if(!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name == '') {
                         alert("Please enter a valid name.");
                         $('#patientname').val('');
+                        $('#nameResponses').html('');
                         return;
                     }
                     $.ajax({

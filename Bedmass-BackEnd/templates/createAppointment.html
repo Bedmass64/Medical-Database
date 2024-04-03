@@ -127,6 +127,7 @@
                         if(!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name == '') {
                             alert("Please enter a valid name.");
                             $('#patientname').val('');
+                            $('#nameResponses').html('');
                             return;
                         }
                         $.ajax({
@@ -149,9 +150,17 @@
                     //Doctor ID search
                     $('#docIdSearch').click(function(event){
                         event.preventDefault();
-                        // Get the last name from the input field
+                        
                         var docName = $('input[name="docName"]').val();
-                        // Send a GET request to your Flask app's searchPatients route
+
+                        // Input validation using REGEX, only letters and spaces allowed and no empty strings
+                        if(!docName.match(/^[a-zA-Z\s]*$/) || docName == '') {
+                            alert("Please enter a valid name.");
+                            $('input[name="docName"]').val('');
+                            $('#Docresponses').html('');
+                            return;
+                        }
+                        console.log(docName);
                         $.ajax({
                             url: '/api/doctor/name',
                             type: 'GET',
@@ -162,7 +171,7 @@
                              },
                             error: function(xhr, status, error) {
                                 // This function is called if the request fails
-                                alert("Error");
+                                alert("Error getting doctors.");
                             }
                         });
                     });
@@ -219,6 +228,8 @@
                                 document.getElementById("Day").value = '';
                                 document.getElementById("Time").value = '';
                                 document.getElementById("Purpose").value = '';
+                                $('#nameResponses').html('');
+                                $('#Docresponses').html('');
                              },
                             error: function(xhr, status, error) {
                                 // This function is called if the request fails

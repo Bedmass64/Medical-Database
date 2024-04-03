@@ -131,6 +131,7 @@
                     if(!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name == '') {
                         alert("Please enter a valid name.");
                         $('#patientname').val('');
+                        $('#nameResponses').html(''); 
                         return;
                     }
                     $.ajax({
@@ -222,10 +223,10 @@
                         alert("Please enter a valid date.");
                         return;
                     }
-                    if(!billData.amount.match(/^[0-9]*$/)) {
-                        alert("Please enter a valid amount.");
-                        return;
-                    }
+                    // if(!billData.amount.match(/^[0-9]*$/)) {
+                    //     alert("Please enter a valid amount.");
+                    //     return;
+                    // }
                     if(!billData.paymethod.match(/^[a-zA-Z\s]*$/)) {
                         alert("Please enter a valid payment method.");
                         return;
@@ -244,7 +245,6 @@
                             $('input[name="PatientId"]').val('');
                             $('input[name="AppointmentId"]').val('');
                             $('input[name="Year"]').val('');
-                            $('select[name="Month"]').val('');
                             $('input[name="Day"]').val('');
                             $('input[name="Time"]').val('');
                             $('input[name="PaymentMethod"]').val('');

@@ -223,10 +223,11 @@
                         alert("Please enter a valid date.");
                         return;
                     }
-                    // if(!billData.amount.match(/^[0-9]*$/)) {
-                    //     alert("Please enter a valid amount.");
-                    //     return;
-                    // }
+                    // Check that the cost is a number
+                    if(isNaN(billData.amount)) {
+                        alert("Please enter a valid cost.");
+                        return;
+                    }
                     if(!billData.paymethod.match(/^[a-zA-Z\s]*$/)) {
                         alert("Please enter a valid payment method.");
                         return;

@@ -22,8 +22,9 @@ To deploy this project simply click the link below
 
 
 ## Screenshots
-![Screenshot_134](https://github.com/Bedmass64/Medical-Database/assets/93494539/c2294300-49d1-49a4-a8f1-82db8724f749)
 
+
+![Screenshot_138](https://github.com/Bedmass64/Medical-Database/assets/93494539/c1c63574-3e65-488e-8890-a3bb862c7416)
 
 
 ## Authors

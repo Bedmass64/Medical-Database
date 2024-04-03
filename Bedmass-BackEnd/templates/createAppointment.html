@@ -58,10 +58,6 @@
                         <input type="text" name="docName">
                         <input type="button" class="btn btn-primary mx-5 my-3" value="Search" id="docIdSearch">
                         <table id="DocResponses" class="table">
-                            <tr>
-                                <th>Name:</th>
-                                <th>ID:</th>
-                            </tr>
                         </table>
                     </div>
                 </div>
@@ -168,8 +164,7 @@
                         $.ajax({
                             url: '/api/doctor/name',
                             type: 'GET',
-                            contentType: 'application/json',
-                            data: JSON.stringify({name: docName}),
+                            data: {name: docName},
                             success: function(response) {
                                 $('#Docresponses').html(response);
                              },

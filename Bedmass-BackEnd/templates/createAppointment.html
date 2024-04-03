@@ -160,12 +160,13 @@
                             $('#Docresponses').html('');
                             return;
                         }
-                        console.log(docName);
+                        console.log("got name");
                         $.ajax({
                             url: '/api/doctor/name',
                             type: 'GET',
                             data: {name: docName},
                             success: function(response) {
+                                console.log(response);
                                 $('#Docresponses').html(response);
                              },
                             error: function(xhr, status, error) {

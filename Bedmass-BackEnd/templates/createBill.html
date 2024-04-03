@@ -16,8 +16,8 @@
                 <div class="row w-100">
                     <ul class="navbar-nav flex-row text-white">
                         <li class="nav-item my-0 py-0" ><a href="{{ url_for('main') }}"><img src="{{ url_for('static', filename='imgs/LogoNoText.png') }}" alt="Logo" width="90"></a></li>
-                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('workbench')}}">Workbench</a></li>
-                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main')}}">Document Generator</a></li>
+                        <!-- <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('workbench')}}">Workbench</a></li>
+                        <li class="nav-item border border-white border-1 rounded-3 mx-2 p-2 my-1"><a class="text-white no-underline" href="{{ url_for('main')}}">Document Generator</a></li> -->
                         <li class="nav-item mx-2 p-2 my-1 ms-auto"><a class="text-white no-underline" href="{{ url_for('main') }}">Logout</a></li>
                     </ul>
                 </div>
@@ -38,7 +38,7 @@
                     <h6 class="mt-1 ms-1">Search by Name:</h6>
                     <input type="text" name="nameSearch" id="patientname">
                     <input type="submit" class="btn btn-primary mx-5 my-3" value="Search" id="namesearch">
-                    <div id="IDresponses">
+                    <div id="nameResponses">
                         <!-- Results go here -->
                     </div>
                 </div>
@@ -123,43 +123,81 @@
         </div>
         <script>
             $(document).ready(function(){
-                /*For Patient name search*/
+                // Patient search by name
                 $('#namesearch').click(function(event){
                     event.preventDefault();
-                    let patientName = document.getElementById("patientname").value;
-                    console.log(patientName);
-
-                    // Send a GET request to your Flask app's searchPatients route
+                    let patient_name = $('#patientname').val();
+                    // Input validation using REGEX, only letters and spaces allowed and no empty strings
+                    if(!patient_name.match(/^[a-zA-Z\s]*$/) || patient_name == '') {
+                        alert("Please enter a valid name.");
+                        $('#patientname').val('');
+                        return;
+                    }
                     $.ajax({
-                        url: '/searchPatients',
+                        url: '/api/patients/name',
                         type: 'GET',
-                        data: {nameOfPatient: patientName},
-                        success: function(data){
-                            console.log(data)
-                            $('#IDresponses').html(data);
+                        data: {
+                            name: document.getElementById("patientname").value
+                        },
+                        success: function(response) {
+                            $('#nameResponses').html(response)
                         },
                         error: function(xhr, status, error) {
-                            // This function is called if the request fails
-                            $('#IDresponses').html("No patients matching the name: " + patientName);
+                            $('#nameResponses').html('<h1> Error: No patient found with that name.</h1>');
+                            // Clear the input field
+                            $('#patientname').val('');
                         }
                     });
                 });
-                //Doctor ID search
+                //Appointment ID search
                 $('#SearchForAppointment').click(function(event){
                     event.preventDefault();
                     // Get the last name from the input field
                     var patientId = $('input[name="PatientIdForAppointment"]').val();
+                    // Perform input validation
+                    if(patientId == '' || !patientId.match(/^[0-9]*$/)) {
+                        alert("Please enter a valid Patient ID.");
+                        $('input[name="PatientIdForAppointment"]').val('');
+                        $('#appointmentID').html(''); // Clear the table
+                        return;
+                    }
+
                     // Send a GET request to your Flask app's searchPatients route
                     $.get('/api/appointments/patientid', { id: patientId }, function(data){
                         console.log(data)
                         $('#appointmentID').html(data)
                     });
+
+                    $.ajax({
+                    url: '/api/appointments/patientid',
+                    type: 'GET',
+                    data: {
+                        id: patientId
+                    },
+                    success: function(response) {
+                        $('#appointmentID').html(response)
+                    },
+                    error: function(xhr, status, error) {
+                        $('#appointmentID').html('<p> Error: No appointments found associated with this patient id </p>');
+                        //Clear patient_id field
+                        $('#patient_id').val('');
+                    }
+                });
                 });
 
                 //Bill Create Button
                 $('#CreateBill').click(function(event){
+                    event.preventDefault();
                     let amountCost = parseInt(document.getElementById("cost").value, 10);
                     console.log(amountCost);
+
+                    // Fields are patientid, appointmentid, date, amount, paymethod, payconfirmed
+                    // Return an error if any of the fields are empty
+                    if($('input[name="PatientId"]').val() == '' || $('input[name="AppointmentId"]').val() == '' || $('input[name="Year"]').val() == '' || $('select[name="Month"]').val() == '' || $('input[name="Day"]').val() == '' || $('input[name="Time"]').val() == '' || $('input[name="PaymentMethod"]').val() == '' || amountCost == '') {
+                        alert("Please fill in all fields.");
+                        return;
+                    }
+
                     var billData = {
                         patientid: $('input[name="PatientId"]').val(),
                         appointmentid: $('input[name="AppointmentId"]').val(),
@@ -170,17 +208,51 @@
                         payconfirmed: false
                     };
                     console.log(billData);
+
+                    // Input validation on each field
+                    if(!billData.patientid.match(/^[0-9]*$/)) {
+                        alert("Please enter a valid Patient ID.");
+                        return;
+                    }
+                    if(!billData.appointmentid.match(/^[0-9]*$/)) {
+                        alert("Please enter a valid Appointment ID.");
+                        return;
+                    }
+                    if(!billData.date.match(/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$/)) {
+                        alert("Please enter a valid date.");
+                        return;
+                    }
+                    if(!billData.amount.match(/^[0-9]*$/)) {
+                        alert("Please enter a valid amount.");
+                        return;
+                    }
+                    if(!billData.paymethod.match(/^[a-zA-Z\s]*$/)) {
+                        alert("Please enter a valid payment method.");
+                        return;
+                    }
+                    
+                    
                     $.ajax({
                         url: '/api/bills',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify(billData),
+                        dataType: 'json',
                         success: function(response) {
                             alert("Bill Added");
-                            },
+                            // Clear the input fields
+                            $('input[name="PatientId"]').val('');
+                            $('input[name="AppointmentId"]').val('');
+                            $('input[name="Year"]').val('');
+                            $('select[name="Month"]').val('');
+                            $('input[name="Day"]').val('');
+                            $('input[name="Time"]').val('');
+                            $('input[name="PaymentMethod"]').val('');
+                            $('input[name="cost"]').val('');
+                        },
                         error: function(xhr, status, error) {
                             // This function is called if the request fails
-                            alert("Error");
+                            alert("Failed to create Bill. Check that a valid patient id and appointment id were entered.");
                         }
                     });
                 });

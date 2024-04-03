@@ -42,7 +42,7 @@ class User(UserMixin):
         self.username = username
         self.password = password
 
-users = {1: User(1, 'user1', 'password')}
+users = {1: User(1, 'riley.meyers', 'password')}
 
 #Login Functionality
 @login_manager.user_loader
@@ -66,7 +66,7 @@ def login():
         # username = request.form['username']
         # password = request.form['password']
         # This is where you would validate the username and password.
-        user = User(1, 'user1', 'password') # Example user, replace with database lookup
+        user = User(1, 'riley.meyers', 'password') # Example user, replace with database lookup
         if username == user.username and password == user.password:
             login_user(user)
             print(jsonify({"redirect": url_for('adminPatients')}))

@@ -57,8 +57,8 @@
                         <h6 class="mt-1 ms-1">Search by Name:</h6>
                         <input type="text" name="docName">
                         <input type="button" class="btn btn-primary mx-5 my-3" value="Search" id="docIdSearch">
-                        <table id="DocResponses" class="table">
-                        </table>
+                        <div id="DocResponses" >
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -167,7 +167,7 @@
                             data: {name: docName},
                             success: function(response) {
                                 console.log(response);
-                                $('#Docresponses').html(response);
+                                $('#DocResponses').html(response);
                              },
                             error: function(xhr, status, error) {
                                 // This function is called if the request fails

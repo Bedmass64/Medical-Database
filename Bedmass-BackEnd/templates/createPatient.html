@@ -113,8 +113,17 @@
                                         event.preventDefault();
                                         // Fields are patientid, name, address, dob, and contact
                                         // Return an error if any of the fields are empty
-                                        if ($('#FirstName').val() == '' || $('#LastName').val() == '' || $('#Address').val() == '' || $('#Province').val() == '' || $('#Country').val() == '' || $('#Day').val() == '' || $('#month').val() == '' || $('#year').val() == '' || $('#Number').val() == '') {
+                                        if ($('#FirstName').val() == '' || $('#LastName').val() == '' || $('#Address').val() == '' || $('#Province').val() == '' || $('#Country').val() == '' || $('#Day').val() == '' || $('#year').val() == '' || $('#Number').val() == '') {
                                             alert("Please fill in all fields.");
+                                            console.log($('#FirstName').val());
+                                            console.log($('#LastName').val());
+                                            console.log($('#Address').val());
+                                            console.log($('#Province').val());
+                                            console.log($('#Country').val());
+                                            console.log($('#Day').val());
+                                            console.log($('#year').val());
+                                            console.log($('#Number').val());
+                                            
                                             return;
                                         }
 

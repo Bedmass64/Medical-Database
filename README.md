@@ -20,8 +20,9 @@ To deploy this project simply click the link below
 ## Features
 
 - Login Features
-- No need for download hosted live
-- Search Functions
+- No need for download
+- CRUD Operations
+- Track patients, billing, appointments, and medical records
 
 
 ## Screenshots

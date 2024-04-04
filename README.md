@@ -12,6 +12,9 @@ To deploy this project simply click the link below
 
   https://skyjam99.pythonanywhere.com/main                              
 
+  Username: riley.meyers  
+  Password: password
+
 ![LogoSmall](https://github.com/Bedmass64/Medical-Database/assets/93494539/53f20a97-0600-4880-9a2d-a7da1524fd72)
 
 ## Features
